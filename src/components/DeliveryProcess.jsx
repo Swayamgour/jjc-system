@@ -1,6 +1,8 @@
 import { useInView, motion } from 'framer-motion';
 import React, { useRef } from 'react'
 import { Icons } from '../utils/data';
+import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
+import { useSplitText } from '../hooks/useSplitText';
 
 
 
@@ -14,7 +16,7 @@ function DeliveryProcess() {
     ];
 
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-60px" });
+     const inView = useInView(ref, { once: true, amount: 0.2 });
 
     const fadeUp = {
         hidden: { opacity: 0, y: 40 },
@@ -25,9 +27,14 @@ function DeliveryProcess() {
     };
 
     const slideRight = {
-        hidden: { opacity: 0, x: 50 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } },
+        hidden: { opacity: 0, x: 40 },
+        visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
     };
+
+    const textRef = useRef(null)
+
+    useSplitText(textRef)
+
 
 
 
@@ -51,11 +58,11 @@ function DeliveryProcess() {
                                 : "hidden"
                         }
                     >
-                        <div className="section-tag">
-                            ← OUR APPROACH →
-                        </div>
+                        {/* <div style={{textAlign:'start'}} className="section-tag">
+                            <GoArrowLeft style={{ fontSize: '16px' }} />  OUR APPROACH <GoArrowRight style={{ fontSize: '16px' }} />
+                        </div> */}
 
-                        <h2 className="approach-title">
+                        <h2 ref={textRef} className="approach-title">
                             A Proven Approach to Deliver Value.
                         </h2>
                     </motion.div>

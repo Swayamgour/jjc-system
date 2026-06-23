@@ -6,7 +6,7 @@ import { Icons } from '../utils/data';
 
 function CTASection() {
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-60px" });
+     const inView = useInView(ref, { once: true, amount: 0.2 });
 
     const slideRight = {
         hidden: { opacity: 0, x: 50 },

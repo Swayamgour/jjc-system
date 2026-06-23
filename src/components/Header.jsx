@@ -1,186 +1,237 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { HiMenuAlt3, HiX } from "react-icons/hi";
-import { Icons, megaMenus } from "../utils/data";
+import React, { useState, useEffect, useRef } from 'react';
+import { ChevronDown, Menu, X, ArrowRight } from 'lucide-react';
+import gsap from "gsap";
+import { menuData } from '../utils/data';
 
-export default function Header() {
-    const [openMenu, setOpenMenu] = useState(null);
-    const [mobileMenu, setMobileMenu] = useState(false);
-    const [scrolled, setScrolled] = useState(false);
+const Navbar = () => {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [activeMobileSubmenu, setActiveMobileSubmenu] = useState(null);
+    const [activeDropdown, setActiveDropdown] = useState(null);
+    const [activeTab, setActiveTab] = useState(0); // Track right side panel slider
+    const [isScrolling, setIsScrolling] = useState(false);
+
+    const dropdownTimerRef = useRef(null);
+    const navbarRef = useRef(null);
+    const logoRef = useRef(null);
+    const menuRef = useRef(null);
+    const ctaRef = useRef(null);
+
+    // Prevent body scroll when mobile menu is open
+    useEffect(() => {
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMobileMenuOpen]);
 
     useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 30);
-        };
+        gsap.to(".btn-contact", {
+            scale: 1.05,
+            duration: 1.5,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
 
-        window.addEventListener("scroll", handleScroll);
-
-        return () => window.removeEventListener("scroll", handleScroll);
+        gsap.set(".navbar-container", { y: -100 });
+        gsap.to(".navbar-container", {
+            y: 0,
+            duration: 1,
+            ease: "power4.out"
+        });
     }, []);
 
-    const navItems = [
-        "Microsoft Services",
-        "Solutions",
-        "Industries",
-        "Case Studies",
-        "Insights",
-        "Company",
-    ];
+    // Handle dropdown hover with delay
+    const handleDropdownEnter = (index) => {
+        if (dropdownTimerRef.current) {
+            clearTimeout(dropdownTimerRef.current);
+        }
+        setActiveDropdown(index);
+        setActiveTab(0); // Reset to first tab when opening a new dropdown
+    };
+
+    const handleDropdownLeave = () => {
+        dropdownTimerRef.current = setTimeout(() => {
+            setActiveDropdown(null);
+        }, 200);
+    };
+
+    const handleDropdownStay = () => {
+        if (dropdownTimerRef.current) {
+            clearTimeout(dropdownTimerRef.current);
+        }
+    };
+
+    const toggleMobileSubmenu = (index) => {
+        setActiveMobileSubmenu(activeMobileSubmenu === index ? null : index);
+    };
+
+    const handleDropdownScroll = (e) => {
+        e.stopPropagation();
+        setIsScrolling(true);
+        clearTimeout(dropdownTimerRef.current);
+        dropdownTimerRef.current = setTimeout(() => {
+            setIsScrolling(false);
+        }, 100);
+    };
 
     return (
-        <motion.header
-            initial={{ y: -80 }}
-            animate={{ y: 0 }}
-            transition={{ duration: 0.5 }}
-            className={`header ${scrolled ? "header-scrolled" : ""}`}
-            onMouseLeave={() => setOpenMenu(null)}
-        >
-            <div className="header-container">
-
-                {/* Logo */}
-                <div className="header-logo">
-                    {/* <Icons.Logo />
-
-                    <div>
-                        <div className="header-logo-title">
-                            JJC
-                        </div>
-
-                        <div className="header-logo-subtitle">
-                            SYSTEMS
-                        </div>
-                    </div> */}.
-
-                    <img src='https://jjcsystems.com/wp-content/uploads/2024/07/jjc-systems-logo-mobile.png' alt="jjc system logo" />
+        <nav className="navbar-container" ref={navbarRef}>
+            <div className="navbar">
+                {/* Brand Logo */}
+                <div ref={logoRef} className="nav-logo">
+                    <img src='https://jjcsystems.com/wp-content/uploads/2024/07/jjc-systems-logo-mobile.png' alt='logo' />
                 </div>
 
-                {/* Desktop Menu */}
-                <div className="right-section">
+                {/* Desktop Navigation Links */}
+                <ul ref={menuRef} className="nav-menu">
+                    {menuData.map((menu, idx) => (
+                        <li
+                            key={idx}
+                            className={`nav-item ${activeDropdown === idx ? 'active' : ''}`}
+                            onMouseEnter={(e) => {
+                                if (!menu.hasDropdown) return;
+                                handleDropdownEnter(idx);
 
-                    <nav className="header-nav">
+                                const dropdown = e.currentTarget.querySelector(".mega-dropdown");
+                                gsap.fromTo(dropdown,
+                                    { opacity: 0, y: 15, scale: 0.99 },
+                                    { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "power2.out" }
+                                );
+                            }}
+                            onMouseLeave={handleDropdownLeave}
+                        >
+                            <span className="nav-links">
+                                {menu.title}
+                                {menu.hasDropdown && <ChevronDown size={16} className="chevron-icon" />}
+                                {menu.hasDropdown && <span className="nav-indicator"></span>}
+                            </span>
 
-                        {navItems.map((item) => {
-
-                            const hasMega = megaMenus[item];
-
-                            return (
+                            {/* --- New Tabbed Mega Dropdown Layout --- */}
+                            {menu.hasDropdown && (
                                 <div
-                                    key={item}
-                                    className="nav-item-wrapper"
-                                    onMouseEnter={() =>
-                                        hasMega
-                                            ? setOpenMenu(item)
-                                            : setOpenMenu(null)
-                                    }
+                                    className={`mega-dropdown ${activeDropdown === idx ? 'show' : ''}`}
+                                    onMouseEnter={handleDropdownStay}
+                                    onMouseLeave={handleDropdownLeave}
+                                    onScroll={handleDropdownScroll}
                                 >
-                                    <button
-                                        className={`nav-item ${openMenu === item
-                                            ? "nav-item-active"
-                                            : ""
-                                            }`}
-                                    >
-                                        {item}
+                                    <div className="tabbed-dropdown-container">
 
-                                        {hasMega && (
-                                            <Icons.ChevronDown />
-                                        )}
-                                    </button>
-
-                                    <AnimatePresence>
-
-                                        {openMenu === item &&
-                                            hasMega && (
-
-                                                <motion.div
-                                                    className="mega-menu"
-
+                                        {/* LEFT SIDEBAR: Vertical Tabs */}
+                                        <div className="dropdown-sidebar">
+                                            {menu.groups.map((group, gIdx) => (
+                                                <div
+                                                    key={gIdx}
+                                                    className={`sidebar-tab-item ${activeTab === gIdx ? 'tab-active' : ''}`}
+                                                    onMouseEnter={() => setActiveTab(gIdx)}
                                                 >
+                                                    <span>{group.heading}</span>
+                                                    <ArrowRight size={16} className="sidebar-arrow" />
+                                                </div>
+                                            ))}
+                                        </div>
 
-                                                    {megaMenus[item].map(
-                                                        (menu) => (
-                                                            <div
-                                                                key={
-                                                                    menu.label
-                                                                }
-                                                                className="mega-menu-item"
+                                        {/* RIGHT SIDEBAR: Content Dynamic Panel Slider */}
+                                        <div className="dropdown-content-panel">
+                                            {menu.groups.map((group, gIdx) => (
+                                                <div
+                                                    key={gIdx}
+                                                    className={`panel-pane ${activeTab === gIdx ? 'pane-active' : ''}`}
+                                                >
+                                                    {/* <div className="panel-header-desc">
+                                                        <h3>{group.heading}</h3>
+                                                        <p>{group.description}</p>
+                                                       
+                                                    </div> */}
+
+                                                    <div className="panel-links-grid">
+                                                        {group.items.map((item, iIdx) => (
+                                                            <a
+                                                                key={iIdx}
+                                                                href={`/#${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                                                className="panel-grid-link"
                                                             >
-                                                                {/* <div className="mega-icon">
-                                                                    🚀
-                                                                </div> */}
+                                                                <span>{item}</span>
+                                                            </a>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
 
-                                                                <div>
-                                                                    <div className="mega-menu-title">
-                                                                        {
-                                                                            menu.label
-                                                                        }
-                                                                    </div>
-
-                                                                    <div className="mega-menu-subtitle">
-                                                                        {
-                                                                            menu.sub
-                                                                        }
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        )
-                                                    )}
-                                                </motion.div>
-                                            )}
-                                    </AnimatePresence>
+                                    </div>
                                 </div>
-                            );
-                        })}
-                    </nav>
+                            )}
+                        </li>
+                    ))}
+                </ul>
 
-                    <button className="header-btn">
-                        Contact Us
+                {/* Right Side Actions / CTA */}
+                <div ref={ctaRef} className="nav-actions">
+                    <button className="btn-contact">Contact Us</button>
+                    <button
+                        className="menu-toggle"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                        aria-label="Toggle Menu"
+                    >
+                        {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
                     </button>
                 </div>
-
-                {/* Mobile Toggle */}
-                <button
-                    className="mobile-toggle"
-                    onClick={() =>
-                        setMobileMenu(!mobileMenu)
-                    }
-                >
-                    {mobileMenu ? (
-                        <HiX size={28} />
-                    ) : (
-                        <HiMenuAlt3 size={28} />
-                    )}
-                </button>
             </div>
 
-            {/* Mobile Drawer */}
-            <AnimatePresence>
+            {/* --- Mobile Fullscreen Accordion Menu --- */}
+            <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'open' : ''}`}>
+                {menuData.map((menu, idx) => (
+                    <div key={idx} className="mobile-nav-item">
+                        {menu.hasDropdown ? (
+                            <>
+                                <button className="mobile-nav-link" onClick={() => toggleMobileSubmenu(idx)}>
+                                    {menu.title}
+                                    <ChevronDown
+                                        size={20}
+                                        style={{
+                                            transform: activeMobileSubmenu === idx ? 'rotate(180deg)' : 'rotate(0deg)',
+                                            transition: 'transform 0.2s'
+                                        }}
+                                    />
+                                </button>
 
-                {mobileMenu && (
-                    <motion.div
-                        className="mobile-menu"
-                        initial={{ x: "100%" }}
-                        animate={{ x: 0 }}
-                        exit={{ x: "100%" }}
-                        transition={{
-                            duration: 0.35,
-                        }}
-                    >
-                        {navItems.map((item) => (
-                            <div
-                                key={item}
-                                className="mobile-item"
+                                <div className={`mobile-submenu ${activeMobileSubmenu === idx ? 'open' : ''}`}>
+                                    {menu.groups.map((group, gIdx) => (
+                                        <div key={gIdx}>
+                                            <div className="mobile-sub-title">{group.heading}</div>
+                                            {group.items.map((item, iIdx) => (
+                                                <a
+                                                    key={iIdx}
+                                                    href={`/#${item.toLowerCase().replace(/\s+/g, '-')}`}
+                                                    onClick={() => setIsMobileMenuOpen(false)}
+                                                >
+                                                    {item}
+                                                </a>
+                                            ))}
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        ) : (
+                            <a
+                                href={`/#${menu.title.toLowerCase()}`}
+                                className="mobile-nav-link"
+                                onClick={() => setIsMobileMenuOpen(false)}
                             >
-                                {item}
-                            </div>
-                        ))}
-
-                        <button className="mobile-btn">
-                            Contact Us
-                        </button>
-                    </motion.div>
-                )}
-
-            </AnimatePresence>
-        </motion.header>
+                                {menu.title}
+                            </a>
+                        )}
+                    </div>
+                ))}
+                <button className="mobile-cta">Contact Us</button>
+            </div>
+        </nav>
     );
-}
+};
+
+export default Navbar;

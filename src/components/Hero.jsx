@@ -1,7 +1,14 @@
 
+
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+// import SplitText from "gsap/SplitText";
+import SplitType from "split-type";
 import { motion } from "framer-motion";
-import image from "../assets/banner.jpeg";
+import image from "../assets/1-01.png";
 import { Icons, stats, floatingCards } from "../utils/data";
+
+// gsap.registerPlugin(SplitText);
 
 const fadeLeft = {
     hidden: { opacity: 0, x: -60 },
@@ -22,10 +29,139 @@ const fadeRight = {
 };
 
 export default function Hero() {
-    return (
-        <section className="hero">
 
-            <div className="container hero-container">
+    // const titleRef = useRef(null);
+    const heroRef = useRef(null);
+    const tagRef = useRef(null);
+    const titleRef = useRef(null);
+    const descRef = useRef(null);
+    const actionsRef = useRef(null);
+    const partnersRef = useRef(null);
+    const imageRef = useRef(null);
+
+    useLayoutEffect(() => {
+        const ctx = gsap.context(() => {
+
+            const split = new SplitType(titleRef.current, {
+                types: "chars"
+            });
+
+            const tl = gsap.timeline({
+                defaults: {
+                    ease: "power4.out"
+                }
+            });
+
+            tl.from(tagRef.current, {
+                y: 40,
+                opacity: 0,
+                duration: 0.6
+            })
+
+                .from(split.chars, {
+                    x: 150,
+                    opacity: 0,
+                    duration: 0.7,
+                    stagger: 0.04,
+                    ease: "power4.out"
+                }, "-=0.2")
+
+                .from(descRef.current, {
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.6
+                }, "-=0.3")
+
+                .from(actionsRef.current.children, {
+                    y: 30,
+                    opacity: 0,
+                    stagger: 0.15,
+                    duration: 0.5
+                }, "-=0.3")
+
+                .from(partnersRef.current.children, {
+                    y: 20,
+                    opacity: 0,
+                    stagger: 0.1,
+                    duration: 0.5
+                }, "-=0.2")
+
+                .from(imageRef.current, {
+                    y: -120,
+                    opacity: 0,
+                    scale: 0.9,
+                    duration: 1.2,
+                    ease: "power4.out"
+                }, "-=0.8");
+
+            // Floating cards entry
+            gsap.from(".floating-card", {
+                scale: 0,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.15,
+                ease: "back.out(1.7)",
+                delay: 1.4
+            });
+
+            // Floating motion
+            gsap.to(".floating-card", {
+                y: -15,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                stagger: 0.2,
+                ease: "sine.inOut"
+            });
+
+            // Mouse parallax
+            const moveImage = (e) => {
+                gsap.to(imageRef.current, {
+                    y: (e.clientY - window.innerHeight / 2) * 0.02,
+                    duration: 1,
+                    ease: "power2.out"
+                });
+            };
+
+            window.addEventListener("mousemove", moveImage);
+
+            // Responsive split refresh
+            const handleResize = () => {
+                split.revert();
+
+                const newSplit = new SplitType(titleRef.current, {
+                    types: "chars"
+                });
+
+                gsap.from(newSplit.chars, {
+                    x: 150,
+                    opacity: 0,
+                    duration: 0.7,
+                    stagger: 0.04,
+                    ease: "power4.out"
+                });
+            };
+
+            window.addEventListener("resize", handleResize);
+
+            return () => {
+                split.revert();
+                window.removeEventListener("mousemove", moveImage);
+                window.removeEventListener("resize", handleResize);
+            };
+
+        }, heroRef);
+
+        return () => ctx.revert();
+
+    }, []);
+
+
+    return (
+        // <section className="hero">
+        <section ref={heroRef} className="hero">
+
+            <div className="container-hero hero-container">
 
                 {/* Left */}
 
@@ -35,11 +171,13 @@ export default function Hero() {
                     initial="hidden"
                     animate="show"
                 >
-                    <span className="hero-tag">
+                    <span ref={tagRef} className="hero-tag">
                         SMART SOLUTIONS. REAL IMPACT.
                     </span>
 
-                    <h1 className="hero-title">
+
+
+                    <h1 ref={titleRef} className="hero-title">
                         Microsoft Consulting
                         <br />
                         Services for
@@ -48,13 +186,13 @@ export default function Hero() {
                         Business Operations
                     </h1>
 
-                    <p className="hero-description">
+                    <p ref={descRef} className="hero-description">
                         JJC Partners helps enterprises unlock the full potential
                         of Microsoft technologies to drive efficiency,
                         agility, and growth.
                     </p>
 
-                    <div className="hero-actions">
+                    <div ref={actionsRef} className="hero-actions">
 
                         <button className="btn-primary">
                             Schedule a Consultation
@@ -67,14 +205,14 @@ export default function Hero() {
 
                     </div>
 
-                    <div className="hero-partners">
+                    <div ref={partnersRef} className="hero-partners">
 
                         <div className="partner-item">
                             <Icons.M365 />
                             <div className="partner-services-span">
 
                                 <span>Microsoft </span>
-                                <span style={{fontSize:'10px'}}>Microsoft </span>
+                                <span style={{ fontSize: '10px' }}>Microsoft </span>
                             </div>
                         </div>
 
@@ -98,16 +236,11 @@ export default function Hero() {
 
                 {/* Right */}
 
-                <motion.div
-                    className="hero-image-area"
-                    variants={fadeRight}
-                    initial="hidden"
-                    animate="show"
-                >
+                <div ref={imageRef} className="hero-image-area">
 
-                    <div className="hero-team-card">
-                        <img src={image} alt="team" />
-                    </div>
+                    {/* <div className="hero-team-card"> */}
+                    <img src={image} alt="team" />
+                    {/* </div> */}
 
                     {floatingCards.map((card, index) => (
                         <motion.div
@@ -136,38 +269,17 @@ export default function Hero() {
                                 {card.value}
                             </div>
 
-                            <div className="floating-label">
+                            <div style={{ color: 'var(--bg-white)' }} className="floating-label">
                                 {card.label}
                             </div>
                         </motion.div>
                     ))}
 
-                </motion.div>
+                </div>
 
             </div>
 
-            {/* <div className="container">
 
-                <div className="hero-stats">
-
-                    {stats.map((item, index) => (
-                        <div
-                            key={index}
-                            className="hero-stat"
-                        >
-                            <div className="hero-stat-value">
-                                {item.value}
-                            </div>
-
-                            <div className="hero-stat-label">
-                                {item.label}
-                            </div>
-                        </div>
-                    ))}
-
-                </div>
-
-            </div> */}
 
         </section>
     );

@@ -1,6 +1,8 @@
 import React from 'react'
 import { cols, Icons } from '../utils/data';
 import { useInView, motion } from 'framer-motion';
+import { LiaLinkedin } from 'react-icons/lia';
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 
 
 function Footer() {
@@ -18,12 +20,16 @@ function Footer() {
 
                         <div className="footer-logo">
 
-                            <div className="footer-logo-icon">
+                            {/* <div className="footer-logo-icon">
                                 <span>JJC</span>
                             </div>
 
                             <div className="footer-logo-text">
                                 JJC SYSTEMS
+                            </div> */}
+
+                            <div>
+                                <img src='https://jjcsystems.com/wp-content/uploads/2024/07/jjc-systems-logo-mobile.png' alt='logo' />
                             </div>
 
                         </div>
@@ -34,7 +40,7 @@ function Footer() {
                         </p>
 
                         <div className="footer-socials">
-                            {["in", "in", "r", "▶"].map((item, index) => (
+                            {[<FaLinkedinIn />, <FaFacebookF />, <FaInstagram />].map((item, index) => (
                                 <div
                                     key={index}
                                     className="footer-social"
@@ -123,7 +129,7 @@ function Footer() {
                 <div className="footer-bottom">
 
                     <div className="footer-copyright">
-                        © 2024 JJC Systems. All Rights Reserved.
+                        © 2026 JJC Systems. All Rights Reserved.
                     </div>
 
                     <div className="footer-bottom-links">

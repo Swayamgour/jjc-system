@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { cases, Icons } from '../utils/data';
-import { useInView , motion } from 'framer-motion';
+import { useInView, motion } from 'framer-motion';
+import { useSplitText } from '../hooks/useSplitText';
 
 
 
@@ -17,8 +18,11 @@ function CaseStudies() {
     };
 
     const stagger = {
-  visible: { transition: { staggerChildren: 0.1 } },
-};
+        visible: { transition: { staggerChildren: 0.1 } },
+    };
+
+    const textRef = useRef(null)
+    useSplitText(textRef)
 
 
 
@@ -40,7 +44,7 @@ function CaseStudies() {
                     className="case-studies-header"
                 >
                     <div className="section-tag">
-                        SUCCESS STORIES 
+                        SUCCESS STORIES
                     </div>
                 </motion.div>
 
@@ -53,6 +57,7 @@ function CaseStudies() {
                             : "hidden"
                     }
                     className="case-studies-grid"
+
                 >
 
                     {cases.map((item, index) => (
@@ -63,9 +68,9 @@ function CaseStudies() {
                                 scale: 1.02
                             }}
                             className="case-study-card"
-                            style={{
-                                background: item.color
-                            }}
+                            style={{ background: item.color }}
+
+
                         >
 
                             <div className="case-study-overlay" />

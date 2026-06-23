@@ -2,6 +2,8 @@ import { cards } from '../utils/data';
 import React, { useRef } from 'react'
 // import { useInView } from 'framer-motion';
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
+import { useSplitText } from '../hooks/useSplitText';
+// import useSplitText from '../hooks/useSplitText';
 
 function Services() {
     const fadeUp = {
@@ -16,8 +18,14 @@ function Services() {
 
 
     const ref = useRef(null);
-    const inView = useInView
-        (ref, { once: true, margin: "-60px" });
+   
+    const inView = useInView(ref, { once: true, amount: 0.2 });
+
+    const titleRef = useRef(null);
+
+    useSplitText(titleRef)
+
+
 
     return (
         <section ref={ref} className="services-section">
@@ -30,11 +38,12 @@ function Services() {
                     className="section-heading"
                 >
                     <div className="section-tag">
-                        MICROSOFT SERVICES
+                       platform
                     </div>
 
-                    <h2 className="section-title">
-                        End-to-end Microsoft Solutions
+                    <h2 ref={titleRef} className="section-title">
+                        {/* End-to-end Microsoft Solutions */}
+                         Your Useful platform 
                     </h2>
                 </motion.div>
 

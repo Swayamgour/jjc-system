@@ -46,7 +46,7 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  /* font-family: 'Inter', sans-serif; */
   color: var(--text-body);
   overflow-x: hidden;
   background: var(--bg-white);
@@ -66,7 +66,7 @@ img {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -75,5 +75,5 @@ img {
 
 ::-webkit-scrollbar-thumb {
   background: var(--primary);
-  border-radius: 3px;
+  border-radius: 2px;
 }

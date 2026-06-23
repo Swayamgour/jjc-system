@@ -1,6 +1,7 @@
 import { useInView, motion } from 'framer-motion';
 import React, { useRef } from 'react'
 import { Icons, industries } from '../utils/data';
+import { useSplitText } from '../hooks/useSplitText';
 
 
 
@@ -8,7 +9,7 @@ function Industries() {
     //    industries
 
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-60px" });
+     const inView = useInView(ref, { once: true, amount: 0.2 });
 
     const fadeUp = {
         hidden: { opacity: 0, y: 40 },
@@ -19,6 +20,11 @@ function Industries() {
         visible: { transition: { staggerChildren: 0.1 } },
     };
 
+
+    const textRef = useRef(null)
+
+
+    useSplitText(textRef)
 
     return (
         <section
@@ -37,7 +43,7 @@ function Industries() {
                         INDUSTRIES WE SERVE
                     </div>
 
-                    <h2 className="industries-title">
+                    <h2 ref={textRef} className="industries-title">
                         Industry Expertise. Real Impact.
                     </h2>
                 </motion.div>
@@ -59,7 +65,7 @@ function Industries() {
                                 {industry.icon}
                             </div>
 
-                            <div className="industry-label">
+                            <div className="service-card-title">
                                 {industry.label}
                             </div>
                         </motion.div>

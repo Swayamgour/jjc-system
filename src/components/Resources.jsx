@@ -1,6 +1,7 @@
-import { useInView, motion } from 'framer-motion';
+import { useInView, motion, useSpring } from 'framer-motion';
 import React, { useRef } from 'react'
 import { items } from '../utils/data';
+import { useSplitText } from '../hooks/useSplitText';
 
 
 
@@ -8,7 +9,7 @@ function Resources() {
     //    items
 
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-60px" });
+     const inView = useInView(ref, { once: true, amount: 0.2 });
 
 
 
@@ -21,6 +22,14 @@ function Resources() {
     const stagger = {
         visible: { transition: { staggerChildren: 0.1 } },
     };
+
+    // const textRef = useRef(null)
+
+    // useSpring(textRef)
+
+    const textRef = useRef(null)
+    useSplitText(textRef)
+
 
     return (
         <section
@@ -39,7 +48,7 @@ function Resources() {
                         RESOURCES & INSIGHTS
                     </div>
 
-                    <h2 className="resources-title">
+                    <h2 ref={textRef} className="resources-title">
                         Learn. Explore. Stay Ahead.
                     </h2>
                 </motion.div>
@@ -65,11 +74,11 @@ function Resources() {
                                 {item.icon}
                             </div>
 
-                            <div className="resource-title">
+                            <div className="service-card-title">
                                 {item.title}
                             </div>
 
-                            <div className="resource-description">
+                            <div style={{marginBottom:'5px'}} className="service-card-desc">
                                 {item.sub}
                             </div>
 

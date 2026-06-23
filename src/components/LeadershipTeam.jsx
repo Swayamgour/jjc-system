@@ -9,7 +9,7 @@ function LeadershipTeam() {
     const colors = ["#2563EB", "#0F3D91", "#4F8CFF", "#1D4ED8", "#3B82F6"];
 
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-60px" });
+     const inView = useInView(ref, { once: true, amount: 0.2 });
 
      const fadeUp = {
         hidden: { opacity: 0, y: 40 },

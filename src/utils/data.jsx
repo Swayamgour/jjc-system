@@ -1,3 +1,5 @@
+import imageBg from '../assets/team.jpg'
+
 // ============================================================
 // ICONS (SVG inline)
 // ============================================================
@@ -25,7 +27,7 @@ export const Icons = {
             <rect x="2" y="16" width="10" height="10" rx="2" fill="#00A4EF" />
             <rect x="16" y="16" width="10" height="10" rx="2" fill="#FFB900" />
         </svg>
-        
+
     ),
     M365: () => (
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
@@ -34,7 +36,7 @@ export const Icons = {
             <rect x="2" y="16" width="10" height="10" rx="2" fill="#00A4EF" />
             <rect x="16" y="16" width="10" height="10" rx="2" fill="#FFB900" />
         </svg>
-        
+
     ),
     Azure: () => (
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
@@ -243,16 +245,23 @@ export const Icons = {
 // MEGA MENU DATA
 // ============================================================
 export const megaMenus = {
-    "Microsoft Services": [
-        { label: "Microsoft 365", sub: "Empower your workforce" },
-        { label: "Azure", sub: "Cloud infrastructure" },
-        { label: "Dynamics 365", sub: "Business applications" },
-        { label: "Power Platform", sub: "Automate & analyze" },
-        { label: "Security", sub: "Protect your environment" },
-        { label: "SharePoint", sub: "Collaboration intranet" },
-        { label: "Teams", sub: "Communication hub" },
-        { label: "Copilot", sub: "AI-powered productivity" },
+    "What We Do": [
+        {
+
+        },
+        // { label: "Microsoft 365", sub: "Empower your workforce", slug: "microsoft-365" },
+        // { label: "Dynamics 365", sub: "Business applications", slug: "dynamics-365" },
+        // { label: "Power Platform", sub: "Automate & analyze", slug: "power-platform" },
+        // { label: "Power Bi", sub: "Automate & analyze", slug: "power-bi" },
+        // { label: "SharePoint", sub: "Collaboration intranet", slug: "sharepoint" },
+        // { label: "Azure", sub: "Cloud infrastructure", slug: "" },
+        // { label: "Security", sub: "Protect your environment", slug: "" },
+        // { label: "Teams", sub: "Communication hub", slug: "" },
+        // { label: "Copilot", sub: "AI-powered productivity", slug: "" },
     ],
+
+
+
     Solutions: [
         { label: "Modern Work", sub: "Hybrid workforce solutions" },
         { label: "Security", sub: "Zero-trust framework" },
@@ -282,6 +291,146 @@ export const megaMenus = {
     ],
 };
 
+export const menuData = [
+    {
+        title: "What We Do",
+        hasDropdown: true,
+        groups: [
+            {
+                heading: "Industry Solutions",
+                items: [
+                    "Healthcare",
+                    "Legal",
+                    "Professional Services",
+                    "Financial Services",
+                    "Manufacturing",
+                    "Nonprofits & Associations",
+                    "Education",
+                    "Construction & Field Services",
+                    "Small & Mid-Market Enterprises"
+                ]
+            },
+            {
+                heading: "Services",
+                items: [
+                    "ERP, Finance & Operations",
+                    "CRM, Customer Service & Sales Operations",
+                    "AI Readiness & Copilot Enablement",
+                    "Modern Workplace",
+                    "Intranet Portals & Document Management",
+                    "Security, Identity & Compliance",
+                    "Data, Business Intelligence & Reporting",
+                    "Endpoint & Device Management",
+                    "Business Process Automation",
+                    "Teams Calling & Business Voice",
+                    "Cloud, Virtual Desktop & Infrastructure",
+                    "Enterprise System Integration",
+                    "Microsoft Licensing & Optimization"
+                ]
+            },
+            {
+                heading: "Platforms",
+                items: [
+                    "Microsoft 365",
+                    "SharePoint",
+                    "Microsoft Security",
+                    "Microsoft Teams",
+                    "Microsoft Defender",
+                    "Threat Protection",
+                    "Microsoft Entra ID",
+                    "Microsoft Intune",
+                    "Microsoft Fabric & Power BI",
+                    "Power Platform",
+                    "Power Apps",
+                    "Power Virtual Agent"
+                ]
+            },
+
+        ],
+        featured: {
+            title: "Transform Your Business with Microsoft Cloud & AI Solutions",
+            tag: "Featured Solution"
+        }
+    },
+    {
+        title: "Why Us",
+        hasDropdown: false,
+        groups: [
+            {
+                heading: "About Us",
+                items: [
+                    "Company Overview",
+                    "Leadership Team",
+                    "Our Methodology",
+                    "Microsoft Partnerships"
+                ]
+            },
+            {
+                heading: "Success Stories",
+                items: [
+                    "Case Studies",
+                    "Client Testimonials",
+                    "Customer Success Stories",
+                    "Industry Experience"
+                ]
+            },
+            {
+                heading: "Our Advantages",
+                items: [
+                    "Certified Experts",
+                    "24/7 Support",
+                    "Security First Approach",
+                    "Proven Delivery Framework"
+                ]
+            }
+        ],
+        featured: {
+            title: "Trusted Microsoft Partner for Digital Transformation",
+            tag: "Why Organizations Choose Us"
+        }
+    },
+    {
+        title: "Resources",
+        hasDropdown: false,
+        groups: [
+            {
+                heading: "Insights",
+                items: [
+                    "Blog",
+                    "Articles",
+                    "Whitepapers",
+                    "Industry Reports"
+                ]
+            },
+            {
+                heading: "Learning Center",
+                items: [
+                    "Microsoft 365 Guides",
+                    "Azure Resources",
+                    "Security Best Practices",
+                    "Power Platform Tutorials"
+                ]
+            },
+            {
+                heading: "Downloads",
+                items: [
+                    "eBooks",
+                    "Case Studies",
+                    "Solution Briefs",
+                    "Webinars"
+                ]
+            }
+        ],
+        featured: {
+            title: "Latest Microsoft Technology Insights & Best Practices",
+            tag: "Knowledge Hub"
+        }
+    },
+    {
+        title: "Contact Us",
+        hasDropdown: false
+    }
+];
 
 export const stats = [
     { value: "100+", label: "Certifications" },
@@ -365,18 +514,22 @@ export const cases = [
         title: "Streamlined Operations with Dynamics 365",
         desc: "Implemented Dynamics 365 to unify operations and improve productivity by 30%.",
         color: "#1a4a8a",
+        img: imageBg
+
     },
     {
         tag: "Healthcare",
         title: "Secure Collaboration with Microsoft 365",
         desc: "Enabled secure remote collaboration and improved patient communication.",
         color: "#0f3460",
+        img: imageBg
     },
     {
         tag: "Construction",
         title: "Power BI Dashboards for Data-Driven Decisions",
         desc: "Built real-time dashboards that improved project visibility and reduced delays.",
         color: "#0d2b6b",
+        img: imageBg
     },
 ];
 
@@ -390,4 +543,178 @@ export const industries = [
     { icon: <Icons.Leaf />, label: "Energy" },
     { icon: <Icons.Truck />, label: "Logistics" },
     { icon: <Icons.GraduationCap />, label: "Education" },
+];
+
+
+
+
+
+export const clientLogos = [
+
+    {
+        name: "Adama US",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/07/Adama-JJC-Client.png"
+    },
+    {
+        name: "Infleqtion",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/06/JJC-Client-Infleqtion.png"
+    },
+    {
+        name: "Sharps",
+        image: "https://jjcsystems.com/wp-content/uploads/2026/04/Sharps-JJC-Client.png"
+    },
+    {
+        name: "WCBDD",
+        image: "https://jjcsystems.com/wp-content/uploads/2026/02/WCBDD-JJC-Client.png"
+    },
+    {
+        name: "OSS",
+        image: "https://jjcsystems.com/wp-content/uploads/2026/02/OSS-JJC-Client-1.png"
+    },
+    {
+        name: "Rantoul Foods",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/11/Rantoul-foods-.png"
+    },
+    {
+        name: "Hohman",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/03/JJC-Client-Hohman.png"
+    },
+    {
+        name: "Phillips Murrah",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/09/Phillips-Murrah-Client.png"
+    },
+    {
+        name: "High Plains",
+        image: "https://jjcsystems.com/wp-content/uploads/2026/02/High-Plains-JJC-Client-1.png"
+    },
+    {
+        name: "Bali",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/04/JJC-Bali-Client.png"
+    },
+    {
+        name: "ESS",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/11/ESS-.png"
+    },
+    {
+        name: "JJC Client 4",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/08/JJC-Client-4.png"
+    },
+    {
+        name: "Conrad Polygraph",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/08/Conrad-Polygraph-JJC-Client-1-1.png"
+    },
+    {
+        name: "QPR",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/08/QPR-JJC-Client-2-2.png"
+    },
+    {
+        name: "JJC Client 3",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/08/JJC-Client-3.png"
+    },
+    {
+        name: "JJC Client 6",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/08/JJC-Client-6.png"
+    },
+    {
+        name: "JJC Client 7",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/09/JJC-Client-7.png"
+    },
+    {
+        name: "JJC Client 8",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/08/JJC-Client-8.png"
+    },
+    {
+        name: "JJC Client 5",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/08/JJC-Client-5.png"
+    },
+    {
+        name: "JJC Client 9",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/08/JJC-Client-9.png"
+    },
+    {
+        name: "JJC Client 10",
+        image: "https://jjcsystems.com/wp-content/uploads/2024/08/JJC-Client-10.png"
+    },
+    {
+        name: "JJC VA Affairs",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/04/JJC-VA-Affairs.png"
+    },
+    {
+        name: "GSA",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/02/GSA-Logo-1.png"
+    },
+    {
+        name: "ACU",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/01/JJC-Client-ACU.png"
+    },
+    {
+        name: "Tico Tractors",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/05/JJC-Tico-Tractors.png"
+    },
+    {
+        name: "Invio Automation",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/06/Invio-Automation-JJC-Client.png"
+    },
+    {
+        name: "Carr",
+        image: "https://jjcsystems.com/wp-content/uploads/2025/04/JJC-Client-Carr.png"
+    },
+];
+
+
+
+
+
+import {
+    Building2,
+    Users,
+    Bot,
+    MonitorSmartphone,
+    ShieldCheck,
+    BarChart3,
+    Workflow,
+    Cloud,
+} from "lucide-react";
+
+export const businessServices = [
+    {
+        icon: <Building2 />,
+        title: "ERP, Finance & Operations",
+        desc: "Streamline financial processes, planning and enterprise operations."
+    },
+    {
+        icon: <Users />,
+        title: "CRM & Sales Operations",
+        desc: "Improve customer engagement and sales productivity."
+    },
+    {
+        icon: <Bot />,
+        title: "AI Readiness & Copilot",
+        desc: "Prepare your organization for AI-powered transformation."
+    },
+    {
+        icon: <MonitorSmartphone />,
+        title: "Modern Workplace",
+        desc: "Enable collaboration, communication and hybrid work."
+    },
+    {
+        icon: <ShieldCheck />,
+        title: "Security & Compliance",
+        desc: "Protect identities, devices and business data."
+    },
+    {
+        icon: <BarChart3 />,
+        title: "Business Intelligence",
+        desc: "Transform data into actionable business insights."
+    },
+    {
+        icon: <Workflow />,
+        title: "Process Automation",
+        desc: "Automate repetitive workflows and reduce manual effort."
+    },
+    {
+        icon: <Cloud />,
+        title: "Cloud Infrastructure",
+        desc: "Build scalable and secure cloud environments."
+    }
 ];

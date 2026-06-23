@@ -1,6 +1,7 @@
 import { useInView, motion } from 'framer-motion';
 import React, { useRef } from 'react'
 import { Icons } from '../utils/data';
+import { useSplitText } from '../hooks/useSplitText';
 
 
 
@@ -16,7 +17,7 @@ function Challenges() {
     ];
 
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-60px" });
+     const inView = useInView(ref, { once: true, amount: 0.2 });
 
     const fadeUp = {
         hidden: { opacity: 0, y: 40 },
@@ -26,6 +27,10 @@ function Challenges() {
     const stagger = {
         visible: { transition: { staggerChildren: 0.1 } },
     };
+
+    const titleRef = useRef(null)
+
+    useSplitText(titleRef)
 
     return (
         <section
@@ -44,7 +49,7 @@ function Challenges() {
                         BUSINESS CHALLENGES WE SOLVE
                     </div>
 
-                    <h2 className="challenges-title">
+                    <h2 ref={titleRef} className="challenges-title">
                         Helping You Overcome What's Holding You Back
                     </h2>
                 </motion.div>
@@ -67,11 +72,11 @@ function Challenges() {
                                 {item.icon}
                             </div>
 
-                            <div className="challenge-title">
+                            <div className="service-card-title">
                                 {item.title}
                             </div>
 
-                            <div className="challenge-subtitle">
+                            <div className="service-card-desc">
                                 {item.sub}
                             </div>
                         </motion.div>

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { Icons, reviews } from '../utils/data';
 import { useInView , motion } from 'framer-motion';
+import { FaQuoteLeft } from "react-icons/fa6";
 
 
 
@@ -8,7 +9,7 @@ function Testimonials() {
     //    reviews
 
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, margin: "-60px" });
+     const inView = useInView(ref, { once: true, amount: 0.2 });
 
      const fadeUp = {
         hidden: { opacity: 0, y: 40 },
@@ -65,7 +66,7 @@ function Testimonials() {
                         >
 
                             <div className="testimonial-quote">
-                                "
+                                <FaQuoteLeft />
                             </div>
 
                             <p className="testimonial-text">

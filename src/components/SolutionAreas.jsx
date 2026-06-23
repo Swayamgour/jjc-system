@@ -4,6 +4,7 @@ import {
 } from 'framer-motion';
 import React, { useRef } from 'react'
 import { Icons } from '../utils/data';
+import { useSplitText } from '../hooks/useSplitText';
 
 
 
@@ -22,7 +23,7 @@ function SolutionAreas() {
   ];
 
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-60px" });
+   const inView = useInView(ref, { once: true, amount: 0.2 });
 
   const fadeUp = {
     hidden: { opacity: 0, y: 40 },
@@ -32,6 +33,8 @@ function SolutionAreas() {
   const stagger = {
     visible: { transition: { staggerChildren: 0.1 } },
   };
+  const textRef = useRef(null)
+  useSplitText(textRef)
 
 
   return (
@@ -51,7 +54,7 @@ function SolutionAreas() {
             OUR SOLUTION AREAS
           </div>
 
-          <h2 className="solutions-title">
+          <h2 ref={textRef} className="solutions-title">
             Solutions That Drive Real Business Outcomes
           </h2>
         </motion.div>
@@ -77,11 +80,11 @@ function SolutionAreas() {
                 {sol.icon}
               </div>
 
-              <div className="solution-card-title">
+              <div className="service-card-title">
                 {sol.title}
               </div>
 
-              <div className="solution-card-description">
+              <div className="service-card-desc">
                 {sol.desc}
               </div>
             </motion.div>
