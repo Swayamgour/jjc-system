@@ -1,11 +1,16 @@
 
+
 import { useParams, Link } from "react-router-dom";
 import ServicePage from "./ServicePage";
-import { allServices } from "../utils/servicesData";
+import { getServiceData } from "../utils/Platforms";
 
-export default function ServiceRoute() {
+export default function Platforms() {
     const { slug } = useParams();
-    const data = allServices[slug];
+    const data = getServiceData(slug);
+
+    console.log(getServiceData)
+
+    console.log(data , slug)
 
     // console.log(slug , data)
 

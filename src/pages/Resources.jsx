@@ -1,15 +1,15 @@
-
+import React from 'react'
 import { useParams, Link } from "react-router-dom";
 import ServicePage from "./ServicePage";
-import { allServices } from "../utils/servicesData";
+import { aboutPageData, allServices, contactUsData , resourcesData } from "../utils/servicesData";
 
-export default function ServiceRoute() {
-    const { slug } = useParams();
-    const data = allServices[slug];
+
+function Resources() {
 
     // console.log(slug , data)
 
-    if (!data) {
+
+    if (!resourcesData) {
         return (
             <div style={{ padding: 120, textAlign: "center" }}>
                 <h2>Service not found</h2>
@@ -18,6 +18,14 @@ export default function ServiceRoute() {
         );
     }
 
-    return <ServicePage data={data} />;
+    return <ServicePage data={resourcesData} />;
 }
+
+export default Resources
+
+
+
+
+
+
 

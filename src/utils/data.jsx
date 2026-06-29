@@ -246,9 +246,7 @@ export const Icons = {
 // ============================================================
 export const megaMenus = {
     "What We Do": [
-        {
 
-        },
         // { label: "Microsoft 365", sub: "Empower your workforce", slug: "microsoft-365" },
         // { label: "Dynamics 365", sub: "Business applications", slug: "dynamics-365" },
         // { label: "Power Platform", sub: "Automate & analyze", slug: "power-platform" },
@@ -299,50 +297,101 @@ export const menuData = [
             {
                 heading: "Industry Solutions",
                 items: [
-                    "Healthcare",
-                    "Legal",
-                    "Professional Services",
-                    "Financial Services",
-                    "Manufacturing",
-                    "Nonprofits & Associations",
-                    "Education",
-                    "Construction & Field Services",
-                    "Small & Mid-Market Enterprises"
+
+                    { label: "Healthcare", path: "/industries/healthcare" },
+                    { label: "Legal", path: "/industries/legal" },
+                    { label: "Professional Services", path: "/industries/professional-services" },
+                    { label: "Financial Services", path: "/industries/financial-services" },
+                    { label: "Manufacturing", path: "/industries/manufacturing" },
+                    { label: "Nonprofits & Associations", path: "/industries/nonprofits-associations" },
+                    { label: "Education", path: "/industries/education" },
+                    { label: "Construction & Field Services", path: "/industries/construction-field-services" },
+                    { label: "Small & Mid-Market Enterprises", path: "/industries/small-mid-market-enterprises" }
                 ]
             },
             {
                 heading: "Services",
                 items: [
-                    "ERP, Finance & Operations",
-                    "CRM, Customer Service & Sales Operations",
-                    "AI Readiness & Copilot Enablement",
-                    "Modern Workplace",
-                    "Intranet Portals & Document Management",
-                    "Security, Identity & Compliance",
-                    "Data, Business Intelligence & Reporting",
-                    "Endpoint & Device Management",
-                    "Business Process Automation",
-                    "Teams Calling & Business Voice",
-                    "Cloud, Virtual Desktop & Infrastructure",
-                    "Enterprise System Integration",
-                    "Microsoft Licensing & Optimization"
+                    { label: "ERP, Finance & Operations", path: "/services/microsoft-erp" },
+                    { label: "CRM, Customer Service & Sales Operations", path: "/services/microsoft-crm" },
+                    { label: "AI Readiness & Copilot Enablement", path: "/services/ai-copilot" },
+                    { label: "Modern Workplace", path: "/services/modern-workplace" },
+                    { label: "Intranet Portals & Document Management", path: "/services/sharepoint" },
+                    { label: "Security, Identity & Compliance", path: "/services/security-identity-compliance" },
+                    { label: "Data, Business Intelligence & Reporting", path: "/services/data-bi-reporting" },
+                    { label: "Endpoint & Device Management", path: "/services/endpoint-device-management" },
+                    { label: "Business Process Automation", path: "/services/business-process-automation" },
+                    { label: "Teams Calling & Business Voice", path: "/services/teams-calling-business-voice" },
+                    { label: "Cloud, Virtual Desktop & Infrastructure", path: "/services/cloud-virtual-desktop-infrastructure" },
+                    { label: "Enterprise System Integration", path: "/services/enterprise-system-integration" },
+                    { label: "Microsoft Licensing & Optimization", path: "/services/microsoft-licensing-optimization" },
+                    { label: "dynamics365SalesData", path: "/services/dynamics-365-SalesData" }
                 ]
             },
             {
                 heading: "Platforms",
+
                 items: [
-                    "Microsoft 365",
-                    "SharePoint",
-                    "Microsoft Security",
-                    "Microsoft Teams",
-                    "Microsoft Defender",
-                    "Threat Protection",
-                    "Microsoft Entra ID",
-                    "Microsoft Intune",
-                    "Microsoft Fabric & Power BI",
-                    "Power Platform",
-                    "Power Apps",
-                    "Power Virtual Agent"
+                    {
+                        label: "Dynamics 365 Business Central",
+                        path: "/platforms/dynamics-365-business-central"
+                    },
+                    {
+                        label: "Dynamics 365 Sales",
+                        path: "/platforms/dynamics-365-sales"
+                    },
+                    {
+                        label: "Dynamics 365 Customer Insights",
+                        path: "/platforms/dynamics-365-customer-insights"
+                    },
+                    {
+                        label: "Dynamics 365 Customer Service",
+                        path: "/platforms/dynamics-365-customer-service"
+                    },
+                    {
+                        label: "Dynamics 365 Finance Service",
+                        path: "/platforms/dynamics-365-customer-service"
+                    },
+                    {
+                        label: "Dynamics 365 Field Service",
+                        path: "/platforms/dynamics-365-field-service"
+                    },
+                    {
+                        label: "Microsoft 365",
+                        path: "/platforms/microsoft-365"
+                    },
+                    {
+                        label: "Microsoft Copilot",
+                        path: "/platforms/microsoft-copilot"
+                    },
+                    {
+                        label: "Microsoft Purview",
+                        path: "/platforms/microsoft-purview"
+                    },
+                    {
+                        label: "Microsoft Fabric",
+                        path: "/platforms/microsoft-fabric"
+                    },
+                    {
+                        label: "Microsoft Intune",
+                        path: "/platforms/microsoft-intune"
+                    },
+                    {
+                        label: "Microsoft Defender",
+                        path: "/platforms/microsoft-defender"
+                    },
+                    {
+                        label: "Microsoft Power Platform",
+                        path: "/platforms/microsoft-power-platform"
+                    },
+                    {
+                        label: "Microsoft Azure Cloud",
+                        path: "/platforms/microsoft-azure-cloud"
+                    },
+                    {
+                        label: "Microsoft Azure Virtual Desktop",
+                        path: "/platforms/microsoft-azure-virtual-desktop"
+                    }
                 ]
             },
 
@@ -354,6 +403,7 @@ export const menuData = [
     },
     {
         title: "Why Us",
+        path: "/About",
         hasDropdown: false,
         groups: [
             {
@@ -392,6 +442,7 @@ export const menuData = [
     {
         title: "Resources",
         hasDropdown: false,
+        path: "/Resources",
         groups: [
             {
                 heading: "Insights",
@@ -428,7 +479,9 @@ export const menuData = [
     },
     {
         title: "Contact Us",
-        hasDropdown: false
+        hasDropdown: false,
+        path: "/Contact",
+
     }
 ];
 
@@ -670,51 +723,81 @@ import {
     Users,
     Bot,
     MonitorSmartphone,
+    FolderKanban,
     ShieldCheck,
     BarChart3,
+    Laptop,
     Workflow,
+    PhoneCall,
     Cloud,
+    PlugZap,
+    BadgeDollarSign,
 } from "lucide-react";
 
 export const businessServices = [
     {
         icon: <Building2 />,
         title: "ERP, Finance & Operations",
-        desc: "Streamline financial processes, planning and enterprise operations."
+        desc: "Streamline finance, supply chain, procurement, and operational processes."
     },
     {
         icon: <Users />,
-        title: "CRM & Sales Operations",
-        desc: "Improve customer engagement and sales productivity."
+        title: "CRM, Customer Service & Sales Operations",
+        desc: "Enhance customer engagement, sales performance, and service delivery."
     },
     {
         icon: <Bot />,
-        title: "AI Readiness & Copilot",
-        desc: "Prepare your organization for AI-powered transformation."
+        title: "AI Readiness & Copilot Enablement",
+        desc: "Prepare your organization for AI adoption and Microsoft Copilot."
     },
     {
         icon: <MonitorSmartphone />,
         title: "Modern Workplace",
-        desc: "Enable collaboration, communication and hybrid work."
+        desc: "Empower hybrid work with collaboration, productivity, and communication tools."
+    },
+    {
+        icon: <FolderKanban />,
+        title: "Intranet Portals & Document Management",
+        desc: "Create intelligent intranets and manage business content efficiently."
     },
     {
         icon: <ShieldCheck />,
-        title: "Security & Compliance",
-        desc: "Protect identities, devices and business data."
+        title: "Security, Identity & Compliance",
+        desc: "Protect users, devices, applications, and sensitive business data."
     },
     {
         icon: <BarChart3 />,
-        title: "Business Intelligence",
-        desc: "Transform data into actionable business insights."
+        title: "Data, Business Intelligence & Reporting",
+        desc: "Turn data into actionable insights with analytics and reporting solutions."
+    },
+    {
+        icon: <Laptop />,
+        title: "Endpoint & Device Management",
+        desc: "Manage and secure desktops, laptops, mobile devices, and applications."
     },
     {
         icon: <Workflow />,
-        title: "Process Automation",
-        desc: "Automate repetitive workflows and reduce manual effort."
+        title: "Business Process Automation",
+        desc: "Automate workflows, approvals, and repetitive business operations."
+    },
+    {
+        icon: <PhoneCall />,
+        title: "Teams Calling & Business Voice",
+        desc: "Enable enterprise-grade calling, voice solutions, and communication."
     },
     {
         icon: <Cloud />,
-        title: "Cloud Infrastructure",
-        desc: "Build scalable and secure cloud environments."
-    }
+        title: "Cloud, Virtual Desktop & Infrastructure",
+        desc: "Modernize infrastructure with Azure, cloud services, and virtual desktops."
+    },
+    {
+        icon: <PlugZap />,
+        title: "Enterprise System Integration",
+        desc: "Connect business applications, data sources, and enterprise platforms."
+    },
+    // {
+    //     icon: <BadgeDollarSign />,
+    //     title: "Microsoft Licensing & Optimization",
+    //     desc: "Optimize Microsoft licensing, costs, compliance, and software investments."
+    // }
 ];

@@ -150,9 +150,7 @@
 }
 
 /* Prevent body scroll when dropdown is open */
-.nav-item:hover .mega-dropdown~* {
-    /* This is handled by the scroll event in React */
-}
+
 
 .dropdown-links-grid {
     flex: 2;
@@ -438,6 +436,7 @@
     .mobile-submenu.open {
         max-height: 500px;
         margin-top: 0.5rem;
+        overflow: auto;
     }
 
     .mobile-sub-title {
@@ -452,7 +451,7 @@
     .mobile-submenu a {
         color: var(--text-muted);
         text-decoration: none;
-        font-size: 0.95rem;
+        font-size: 0.8rem;
         padding: 0.4rem 0;
         display: block;
         transition: color 0.2s, padding-left 0.2s;
@@ -508,8 +507,8 @@
 
 .mega-dropdown {
     position: fixed;
-    top: 70px;
-    left: 50%;
+    top: 72px;
+    left: 20%;
     transform: translateX(-50%) translateY(15px);
     width: min(95vw, 1000px);
     max-height: 50vh;
@@ -674,6 +673,36 @@
 .panel-grid-link:hover {
     color: var(--primary);
     transform: translateX(4px);
+}
+
+/* ─── ADD THESE TO YOUR EXISTING navbar.css ─────────────────────────────── */
+
+/* 1. Sidebar needs overflow visible so the nub (-6px left) is not clipped */
+.dropdown-sidebar {
+    overflow: visible;
+}
+
+/* 2. mega-dropdown default state — motion handles show/hide now,
+      so we keep the base styles but remove the CSS hover trigger */
+.mega-dropdown {
+    /* Keep all your existing rules (position, width, border, etc.)
+       Just ensure these are set: */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    /* motion will override opacity/visibility inline */
+}
+
+/* Remove the CSS-only hover trigger — motion's AnimatePresence handles it */
+.nav-item:hover .mega-dropdown {
+    /* intentionally empty — do NOT add opacity/visibility here anymore */
+}
+
+/* 3. Nub tweak — the ::before arrow on mega-dropdown can be removed
+      since we now have the animated motion nub on the sidebar edge.
+      Add this to suppress it: */
+.mega-dropdown::before {
+    display: none;
 }
 
 
@@ -1001,7 +1030,7 @@
 /* services start  */
 
 .services-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-white);
 }
 
@@ -1471,7 +1500,7 @@
 /* LeadershipTeam start  */
 
 .leadership-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-section);
 }
 
@@ -1565,7 +1594,7 @@
 /* testimonials start  */
 
 .testimonials-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-white);
 }
 
@@ -1770,7 +1799,7 @@
 /* DeliveryProcess start */
 
 .approach-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-white);
 }
 
@@ -2001,7 +2030,7 @@
 /* Case Studies start */
 
 .case-studies-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-section);
 }
 
@@ -2153,7 +2182,7 @@
 
 /* Solution Areas start  */
 .solutions-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-white);
 }
 
@@ -2254,7 +2283,7 @@
 /* Challenges start  */
 
 .challenges-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-section);
 }
 
@@ -2406,7 +2435,7 @@
 /* Industries start  */
 
 .industries-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-white);
 }
 
@@ -2544,7 +2573,7 @@
 /* resources start  */
 
 .resources-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-white);
 }
 
@@ -2701,7 +2730,7 @@
 
 
 .business-services-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: #f8fafc;
 }
 
@@ -2712,17 +2741,8 @@
     margin-top: 60px;
 }
 
-.business-service-card {
-    background: #fff;
-    padding: 28px;
-    border-radius: 20px;
-    border: 1px solid #e5e7eb;
-    transition: .3s ease;
-}
-
-
 .business-service-card span {
-    color: rgb(26, 139, 205); 
+    color: rgb(26, 139, 205);
     font-size: 22px;
     width: 64px;
     height: 64px;
@@ -2734,26 +2754,32 @@
 
 }
 
-.business-service-card:hover {
-    transform: translateY(-8px);
-    border-color: #2563eb;
+
+.business-service-card {
+    background: #fff;
+    padding: 28px;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    transition: all .6s ease;
+
 }
 
-/* .service-number {
-    font-size: 14px;
-    color: #2563eb;
-    font-weight: 700;
-} */
+
+
+.business-service-card:hover {
+    transform: translateY(-8px) !important;
+    /* box-shadow: 2px 2px 3px rgb(168, 166, 166); */
+
+
+}
+
+
 
 .business-service-card h3 {
     margin: 14px 0;
-    /* font-size: 20px; */
+
 }
 
-/* .business-service-card p {
-    color: #64748b;
-    line-height: 1.7;
-} */
 
 @media (max-width:1024px) {
     .business-services-grid {
@@ -2763,6 +2789,6 @@
 
 @media (max-width:768px) {
     .business-services-grid {
-        grid-template-columns: 1fr ;
+        grid-template-columns: 1fr;
     }
 }

@@ -1,160 +1,286 @@
 import { motion } from "framer-motion";
-import { ArrowBigDown } from "lucide-react";
+import { Icons } from "../utils/data";
+
+import { useLayoutEffect, useRef } from "react";
+import gsap from "gsap";
+import SplitType from "split-type";
+
+import '../pages/ServicePage.css'
+import { useSplitText } from "../hooks/useSplitText";
 
 function ServiceHero({ d }) {
+    // console.log(d)
+
+    const heroRef = useRef(null);
+    const breadcrumbRef = useRef(null);
+    const tagRef = useRef(null);
+    const titleRef = useRef(null);
+
+    useSplitText(titleRef);
+    const descRef = useRef(null);
+    const subDescRef = useRef(null);
+    const actionsRef = useRef(null);
+    const badgesRef = useRef(null);
+    const imageRef = useRef(null);
+
+    useLayoutEffect(() => {
+        if (!heroRef.current) return;
+
+        const ctx = gsap.context(() => {
+
+            const tl = gsap.timeline({
+                defaults: { ease: "power4.out" },
+            });
+
+            breadcrumbRef.current &&
+                tl.from(breadcrumbRef.current, {
+                    y: -30,
+                    opacity: 0,
+                    duration: 0.5,
+                });
+
+            tagRef.current &&
+                tl.from(
+                    tagRef.current,
+                    {
+                        y: 30,
+                        opacity: 0,
+                        duration: 0.5,
+                    },
+                    "-=0.2"
+                );
+
+            titleRef.current &&
+                tl.from(
+                    titleRef.current,
+                    {
+                        y: 40,
+                        opacity: 0,
+                        duration: 0.7,
+                    },
+                    "-=0.1"
+                );
+
+            descRef.current &&
+                tl.from(
+                    descRef.current,
+                    {
+                        y: 30,
+                        opacity: 0,
+                        duration: 0.5,
+                    },
+                    "-=0.3"
+                );
+
+            subDescRef.current &&
+                tl.from(
+                    subDescRef.current,
+                    {
+                        y: 30,
+                        opacity: 0,
+                        duration: 0.5,
+                    },
+                    "-=0.35"
+                );
+
+            actionsRef.current &&
+                tl.from(
+                    actionsRef.current,
+                    {
+                        y: 30,
+                        opacity: 0,
+                        stagger: 0.12,
+                        duration: 0.5,
+                    },
+                    "-=0.3"
+                );
+
+            badgesRef.current &&
+                tl.from(
+                    badgesRef.current.children,
+                    {
+                        y: 20,
+                        opacity: 0,
+                        stagger: 0.08,
+                        duration: 0.45,
+                    },
+                    "-=0.25"
+                );
+
+            imageRef.current &&
+                tl.from(
+                    imageRef.current,
+                    {
+                        y: -120,
+                        opacity: 0,
+                        scale: 0.9,
+                        duration: 1.2,
+                    },
+                    "-=0.8"
+                );
+
+            const floatIcons =
+                heroRef.current?.querySelectorAll(".service-float-icon") || [];
+
+            if (floatIcons.length) {
+                gsap.from(floatIcons, {
+                    scale: 0,
+                    opacity: 0,
+                    stagger: 0.12,
+                    ease: "back.out(1.7)",
+                    duration: 0.8,
+                    delay: 1,
+                });
+
+                gsap.to(floatIcons, {
+                    y: -15,
+                    repeat: -1,
+                    yoyo: true,
+                    stagger: 0.2,
+                    ease: "sine.inOut",
+                    duration: 2,
+                });
+            }
+
+            let moveY;
+
+            if (imageRef.current) {
+                moveY = gsap.quickTo(imageRef.current, "y", {
+                    duration: 1,
+                    ease: "power2.out",
+                });
+            }
+
+            const moveImage = (e) => {
+                if (!moveY) return;
+                moveY((e.clientY - window.innerHeight / 2) * 0.02);
+            };
+
+            window.addEventListener("mousemove", moveImage);
+
+            return () => {
+                window.removeEventListener("mousemove", moveImage);
+                tl.kill();
+            };
+        }, heroRef);
+
+        return () => {
+            ctx.revert();
+        };
+    }, []);
+
+    const CheckCircle = (color) => (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <motion.circle
+                cx="8" cy="8" r="7"
+                stroke={color} strokeWidth="1.4" fill="none"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+            />
+            <motion.path
+                d="M5 8l2 2 4-4"
+                stroke={color} strokeWidth="1.6"
+                strokeLinecap="round" strokeLinejoin="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+            />
+        </svg>
+    );
+
     return (
-        <section className="service-hero">
+        <section ref={heroRef} className="service-hero">
+
             {/* Breadcrumb */}
             <div className="container-hero breadcrumb-bar">
-                <motion.div
-                    className="breadcrumb"
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    {d.breadcrumb.map((item, i) => (
+                <div ref={breadcrumbRef} className="breadcrumb">
+                    {d?.breadcrumb?.map((item, i) => (
                         <span key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             {i > 0 && <span className="breadcrumb-sep">/</span>}
-                            <span className={i === d.breadcrumb.length - 1 ? "breadcrumb-current" : "breadcrumb-link"}>
+                            <span className={i === d?.breadcrumb?.length - 1 ? "breadcrumb-current" : "breadcrumb-link"}>
                                 {item}
                             </span>
                         </span>
                     ))}
-                </motion.div>
+                </div>
             </div>
 
             {/* Text content grid */}
             <div className="container-hero service-hero-grid">
                 <div>
-                    <motion.div
-                        className="service-hero-tag"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        {d.badge}
-                    </motion.div>
+                    <div ref={tagRef} className="service-hero-tag">
+                        {d?.badge}
+                    </div>
 
-                    <motion.h1
-                        className="service-hero-title"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        {d.title}
-                    </motion.h1>
+                    <h1 ref={titleRef} className="service-hero-title">
+                        {d?.title}
+                    </h1>
 
-                    <motion.p
-                        className="service-hero-desc"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        {d.description}
-                    </motion.p>
+                    <p ref={descRef} className="service-hero-desc">
+                        {d?.description}
+                    </p>
 
-                    <motion.p
-                        className="service-hero-desc"
-                        style={{ marginBottom: 0 }}
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                        {d.subDescription}
-                    </motion.p>
+                    <p ref={subDescRef} className="service-hero-desc" style={{ marginBottom: 0 }}>
+                        {d?.subDescription}
+                    </p>
 
-                    <motion.div
-                        className="service-hero-actions"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.7, delay: 0.36, ease: [0.22, 1, 0.36, 1] }}
-                    >
+                    <div className="service-hero-actions" ref={actionsRef}>
+                        {/* FIX: whileTap only works on motion.button, not plain <button> */}
                         <motion.button
                             className="service-btn-primary"
-                            whileHover={{ scale: 1.05, boxShadow: "0 12px 30px rgba(0,0,0,0.3)" }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            Schedule a Consultation <ArrowBigDown />
+                            Schedule a Consultation <Icons.Arrow />
                         </motion.button>
                         <motion.button
                             className="service-btn-secondary"
-                            whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
                             whileTap={{ scale: 0.95 }}
                         >
-                            {d.exploreLabel || "Explore Our Services"}
+                            {d?.exploreLabel || "Explore Our Services"}
                         </motion.button>
-                    </motion.div>
+                    </div>
 
-                    <motion.div
-                        className="service-hero-badges"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.7, delay: 0.5 }}
-                    >
-                        {d.heroBadges.map((b, i) => (
-                            <motion.div
-                                key={i}
-                                className="service-hero-badge"
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: 0.6 + i * 0.08 }}
-                            >
-                                {/* {CheckCircle("rgba(255,255,255,0.85)")} {b} */}
-                            </motion.div>
+                    <div ref={badgesRef} className="service-hero-badges">
+                        {d?.heroBadges?.map((b, i) => (
+                            <div key={i} className="service-hero-badge">
+                                {CheckCircle("rgba(255,255,255,0.85)")} {b}
+                            </div>
                         ))}
-                    </motion.div>
+                    </div>
                 </div>
 
-                {/* Right column intentionally empty — image is now positioned absolutely below */}
+                {/* Right column — image positioned absolutely */}
                 <div />
             </div>
 
-            {/* Background image — absolute, covers right side of whole section */}
+            {/* Background image */}
             <div className="service-hero-image-wrap">
-                <motion.div
-                    className="service-hero-image"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                >
-                    {d.heroImage ? (
-                        <motion.img
-                            src={d.heroImage}
-                            alt={d.title}
-                            initial={{ scale: 1.1 }}
-                            animate={{ scale: 1 }}
-                            transition={{ duration: 0.8 }}
-                        />
-                    ) : (
-                        <div style={{ color: "rgba(255,255,255,0.5)" }}>
-                            <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-                                <rect x="8" y="14" width="48" height="32" rx="3" stroke="currentColor" strokeWidth="2" fill="none" />
-                                <path d="M24 50h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                            </svg>
-                        </div>
-                    )}
-                </motion.div>
-
-                {(d.floatingIcons || []).map((f, i) => (
-                    <motion.div
-                        key={i}
-                        className="service-float-icon"
-                        style={f.position}
-                        initial={{ opacity: 0, y: -20, scale: 0.8 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        transition={{ duration: 0.6, delay: 0.5 + i * 0.12, type: "spring", stiffness: 200 }}
-                        whileHover={{ y: -8, scale: 1.12, rotate: 5 }}
-                    >
-                        <motion.img
-                            src={f.icon}
-                            alt={f.label}
-                            animate={{ rotate: [0, 360] }}
-                            transition={{ duration: 30 + i * 5, repeat: Infinity, ease: "linear" }}
-                        />
-                        {f.label && <span className="service-float-label">{f.label}</span>}
-                    </motion.div>
-                ))}
+                <div ref={imageRef} className="service-hero-image">
+                    {d?.heroImage && <img src={d?.heroImage} alt={d?.title} />}
+                </div>
             </div>
+
+            <svg className="hero-svg-defs" aria-hidden="true">
+                <defs>
+                    <clipPath id="heroCurveMask" clipPathUnits="objectBoundingBox">
+                        <path d="M0.32,0 C0.10,0.22 0.08,0.78 0.20,1 L1,1 L1,0 Z" />
+                    </clipPath>
+                </defs>
+            </svg>
+
+            {/* Float icons — uncomment when ready */}
+            {/* {(d?.floatingIcons || []).map((f, i) => (
+                <div
+                    key={i}
+                    className="service-float-icon"
+                    style={f.position}
+                >
+                    <img src={f.icon} alt={f.label} />
+                    {f.label && <span className="service-float-label">{f.label}</span>}
+                </div>
+            ))} */}
+
         </section>
     );
 }

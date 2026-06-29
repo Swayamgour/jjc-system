@@ -7,13 +7,14 @@ function BusinessServices() {
 
     const ref = useRef(null);
     const titleRef = useRef(null);
+    useSplitText(titleRef);
 
     const inView = useInView(ref, {
         once: true,
         amount: 0.2
     });
 
-    useSplitText(titleRef);
+
 
     const fadeUp = {
         hidden: {
@@ -51,9 +52,9 @@ function BusinessServices() {
                         Services That Drive Business Growth
                     </h2>
 
-                    <p className="section-description">
+                    {/* <p className="section-description">
                         Transform operations, improve efficiency and unlock innovation with Microsoft-powered solutions.
-                    </p>
+                    </p> */}
                 </motion.div>
 
                 <div className="business-services-grid">

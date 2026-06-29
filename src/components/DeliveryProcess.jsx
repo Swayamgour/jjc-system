@@ -63,7 +63,7 @@ function DeliveryProcess() {
                         </div> */}
 
                         <h2 ref={textRef} className="approach-title">
-                            A Proven Approach to Deliver Value.
+                            A Proven Approach to Deliver.
                         </h2>
                     </motion.div>
 

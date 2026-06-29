@@ -1,18 +1,17 @@
-
 import { useParams, Link } from "react-router-dom";
 import ServicePage from "./ServicePage";
-import { allServices } from "../utils/servicesData";
+import { getIndustryData } from "../utils/IndustryData";
 
-export default function ServiceRoute() {
+export default function Industries() {
     const { slug } = useParams();
-    const data = allServices[slug];
+    const data = getIndustryData(slug);
 
-    // console.log(slug , data)
+    console.log(data , slug)
 
     if (!data) {
         return (
             <div style={{ padding: 120, textAlign: "center" }}>
-                <h2>Service not found</h2>
+                <h2>Industry not found</h2>
                 <Link to="/">Back to home</Link>
             </div>
         );
@@ -20,4 +19,3 @@ export default function ServiceRoute() {
 
     return <ServicePage data={data} />;
 }
-

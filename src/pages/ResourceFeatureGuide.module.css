@@ -1,0 +1,57 @@
+import BreadHero from "../components/BreadHero";
+import ResourceFeatureGuid from "./ResourceFeatureGuid";
+import styles from "./ResourceSearchFilter.module.css";
+import { Search } from "lucide-react";
+import { resourcesPageData } from "../utils/ResourcePageData";
+
+const ResourceSearchFilter = ({
+  activeTab,
+  onTabChange,
+  onSearch,
+}) => {
+
+  const {
+    hero,
+    searchFilter,
+    featuredGuide,
+  } = resourcesPageData;
+
+  return (
+    <>
+      <BreadHero {...hero} />
+
+      <section className={styles.filterSection}>
+        <div className={styles.container}>
+
+          <div className={styles.searchBox}>
+            <Search size={18} />
+            <input
+              type="text"
+              placeholder="Search resources..."
+              onChange={(e) => onSearch?.(e.target.value)}
+            />
+          </div>
+
+          <div className={styles.tabs}>
+            {searchFilter.tabs.map((tab) => (
+              <button
+                key={tab}
+                className={`${styles.tab} ${
+                  activeTab === tab ? styles.active : ""
+                }`}
+                onClick={() => onTabChange?.(tab)}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      <ResourceFeatureGuid {...featuredGuide} />
+    </>
+  );
+};
+
+export default ResourceSearchFilter;

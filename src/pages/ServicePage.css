@@ -61,7 +61,8 @@
 }
 
 .breadcrumb-link {
-    color: var(--accent);
+    color: var(--svc-accent-light, #3b82f6);
+
     cursor: pointer;
     transition: 0.25s;
     text-decoration: none;
@@ -83,14 +84,20 @@
 /* =========  SERVICE HERO  ========= */
 
 
+/* ═══════════════════════════════════════════════
+   SERVICE HERO
+═══════════════════════════════════════════════ */
+
 .service-hero {
     position: relative;
     overflow: hidden;
-    padding: 40px 0 64px;
-    min-height: 560px;
-    background: linear-gradient(135deg, var(--svc-hero-start, var(--hero-start)) 0%, var(--svc-hero-end, var(--hero-end)) 100%);
+    background: linear-gradient(135deg,
+            var(--svc-hero-start, var(--hero-start)) 0%,
+            var(--svc-hero-end, var(--hero-end)) 100%);
+    padding: 40px 0 15px;
 }
 
+/* Dot grid texture */
 .service-hero::before {
     content: "";
     position: absolute;
@@ -101,7 +108,18 @@
     z-index: 0;
 }
 
+/* Hidden SVG clip definitions */
+.hero-svg-defs {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
 
+
+/* ───────────────────────────────────────────────
+   BREADCRUMB
+─────────────────────────────────────────────── */
 
 .breadcrumb-bar {
     position: relative;
@@ -117,11 +135,6 @@
     color: rgba(255, 255, 255, 0.7);
 }
 
-.breadcrumb-link {
-    color: #93c5fd;
-    cursor: pointer;
-}
-
 .breadcrumb-current {
     color: rgba(255, 255, 255, 0.9);
 }
@@ -130,7 +143,11 @@
     color: rgba(255, 255, 255, 0.4);
 }
 
-/* Text grid sits above the image */
+
+/* ───────────────────────────────────────────────
+   TEXT CONTENT
+─────────────────────────────────────────────── */
+
 .service-hero-grid {
     position: relative;
     z-index: 2;
@@ -139,6 +156,12 @@
     gap: 40px;
     align-items: center;
     padding-top: 28px;
+    padding-bottom: 64px;
+}
+
+/* Empty right column on desktop — image is absolute */
+.service-hero-grid>div:last-child {
+    display: block;
 }
 
 .service-hero-tag {
@@ -156,6 +179,8 @@
     font-size: 44px;
     font-weight: 800;
     line-height: 1.15;
+
+    
 }
 
 .service-hero-desc {
@@ -165,6 +190,11 @@
     font-size: 16px;
     line-height: 1.7;
 }
+
+
+/* ───────────────────────────────────────────────
+   BUTTONS
+─────────────────────────────────────────────── */
 
 .service-hero-actions {
     display: flex;
@@ -184,7 +214,7 @@
     font-weight: 700;
     font-size: 14px;
     cursor: pointer;
-    transition: 0.25s ease;
+    transition: all 0.25s ease;
 }
 
 .service-btn-primary {
@@ -207,6 +237,11 @@
     background: rgba(255, 255, 255, 0.1);
 }
 
+
+/* ───────────────────────────────────────────────
+   BADGES
+─────────────────────────────────────────────── */
+
 .service-hero-badges {
     display: flex;
     flex-wrap: wrap;
@@ -223,15 +258,18 @@
     font-weight: 500;
 }
 
-/* ===== Right-side background image ===== */
+
+/* ───────────────────────────────────────────────
+   IMAGE — DESKTOP (absolute, right half)
+─────────────────────────────────────────────── */
 
 .service-hero-image-wrap {
     position: absolute;
     top: 0;
     right: 0;
-    bottom: 0;
-    width: 58%;
+    width: 60%;
     height: 100%;
+    overflow: hidden;
     z-index: 1;
     pointer-events: none;
 }
@@ -240,17 +278,15 @@
     position: absolute;
     inset: 0;
     overflow: hidden;
-    
+    clip-path: url(#heroCurveMask);
+    -webkit-clip-path: url(#heroCurveMask);
+}
 
-    /* A smooth, responsive curve sweeping from the left up to the right */
-    clip-path: polygon(1% 45%,
-            15% 37%,
-            35% 29%,
-            55% 23%,
-            75% 19%,
-            100% 17%,
-            100% 100%,
-            0% 100%);
+.service-hero-image::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 27, 78, 0.08);
 }
 
 .service-hero-image img {
@@ -259,6 +295,11 @@
     object-fit: cover;
     display: block;
 }
+
+
+/* ───────────────────────────────────────────────
+   FLOAT ICONS
+─────────────────────────────────────────────── */
 
 .service-float-icon {
     position: absolute;
@@ -293,22 +334,111 @@
     white-space: nowrap;
 }
 
-/* Responsive: stack on small screens, image goes back to flow */
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — TABLET  ≤ 900px
+   Layout: content top, image bottom (in flow)
+═══════════════════════════════════════════════ */
+
 @media (max-width: 900px) {
-    .service-hero-grid {
-        grid-template-columns: 1fr;
+
+    /* Section becomes a flex column so image naturally sits below */
+    .service-hero {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 0;
     }
 
+    /* Breadcrumb needs a little top breathing room */
+    .breadcrumb-bar {
+        padding-top: 32px;
+    }
+
+    /* Single-column text, no min-height placeholder needed */
+    .service-hero-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+        padding-bottom: 36px;
+    }
+
+    /* Hide the empty spacer column */
+    .service-hero-grid>div:last-child {
+        display: none;
+    }
+
+    /* Font scale down a bit */
+    .service-hero-title {
+        font-size: 32px;
+    }
+
+    /* Image: pull out of absolute, sit in normal flow at the bottom */
     .service-hero-image-wrap {
         position: relative;
+        top: auto;
+        right: auto;
         width: 100%;
         height: 280px;
-        margin-top: 24px;
+        overflow: hidden;
+        pointer-events: auto;
+        /* slight top gap from content */
+        margin-top: 0;
     }
 
     .service-hero-image {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: 100%;
         clip-path: none;
-        border-radius: 16px;
+        -webkit-clip-path: none;
+        border-radius: 10px;
+        padding: 10px;
+        /* full bleed on tablet */
+    }
+
+    /* Float icons hidden on mobile — they overlap badly */
+    .service-float-icon {
+        display: none;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE — MOBILE  ≤ 480px
+═══════════════════════════════════════════════ */
+
+@media (max-width: 480px) {
+
+    .service-hero-title {
+        font-size: 26px;
+    }
+
+    .service-hero-desc {
+        font-size: 14px;
+    }
+
+    .service-hero-actions {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .service-btn-primary,
+    .service-btn-secondary {
+        width: 100%;
+        justify-content: center;
+        height: 48px;
+    }
+
+    .service-hero-badges {
+        gap: 16px;
+    }
+
+    .service-hero-image-wrap {
+        height: 220px;
+    }
+
+    .service-hero-image img {
+        border-radius: 10px;
     }
 }
 
@@ -318,7 +448,7 @@
 /* =========  OVERVIEW (What is X) ========= */
 
 .overview-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-white);
 }
 
@@ -420,7 +550,7 @@
 /* =========  MODULES / CAPABILITIES GRID (generic N-col card grid) ========= */
 
 .grid-section {
-    padding: 100px 0;
+    padding: 60px 0;
 }
 
 .grid-section.bg-section {
@@ -486,6 +616,7 @@
     border-radius: 14px;
     background: var(--accent-soft);
     font-size: 24px;
+    color: var(--accent);
 }
 
 .grid-card.align-left .grid-card-icon,
@@ -589,7 +720,7 @@
 /* =========  PROCESS TIMELINE (horizontal) ========= */
 
 .process-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-white);
 }
 
@@ -647,7 +778,7 @@
 /* =========  BENEFITS ========= */
 
 .benefits-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-section);
 }
 
@@ -798,7 +929,7 @@
 /* =========  CASE STUDIES ========= */
 
 .case-studies-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-section);
 }
 
@@ -884,7 +1015,7 @@
 /* =========  FAQ ACCORDION ========= */
 
 .faq-section {
-    padding: 100px 0;
+    padding: 60px 0;
     background: var(--bg-white);
 }
 
@@ -1051,7 +1182,7 @@
 
     .service-hero-image-wrap {
         height: 280px;
-        order: -1;
+        /* order: -1; */
     }
 
     .split-panel-visual {
@@ -1077,7 +1208,7 @@
     }
 
     .container-hero {
-        margin: 0px auto;
+        margin: 0px 0;
         padding: 10px;
     }
 }
@@ -1160,6 +1291,11 @@
         width: 100%;
         justify-content: center;
     }
+
+    .service-hero {
+        padding: 0;
+
+    }
 }
 
 /* Add to ServicePage.css */
@@ -1167,13 +1303,7 @@
 /* ========= ENHANCED ANIMATIONS ========= */
 
 /* Hero gradient animation */
-.service-hero {
-    position: relative;
-    overflow: hidden;
-    padding: 40px 0 64px;
-    background: linear-gradient(135deg, var(--svc-hero-start, var(--hero-start)) 0%, var(--svc-hero-end, var(--hero-end)) 100%);
-    animation: heroGradient 15s ease-in-out infinite alternate;
-}
+
 
 @keyframes heroGradient {
     0% {

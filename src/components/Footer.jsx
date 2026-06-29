@@ -3,6 +3,7 @@ import { cols, Icons } from '../utils/data';
 import { useInView, motion } from 'framer-motion';
 import { LiaLinkedin } from 'react-icons/lia';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import logo from '../assets/logo.png'
 
 
 function Footer() {
@@ -29,7 +30,7 @@ function Footer() {
                             </div> */}
 
                             <div>
-                                <img src='https://jjcsystems.com/wp-content/uploads/2024/07/jjc-systems-logo-mobile.png' alt='logo' />
+                                <img src={logo} alt='logo' />
                             </div>
 
                         </div>

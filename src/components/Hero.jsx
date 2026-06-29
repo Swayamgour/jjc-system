@@ -5,7 +5,7 @@ import gsap from "gsap";
 // import SplitText from "gsap/SplitText";
 import SplitType from "split-type";
 import { motion } from "framer-motion";
-import image from "../assets/1-01.png";
+
 import { Icons, stats, floatingCards } from "../utils/data";
 
 // gsap.registerPlugin(SplitText);
@@ -28,7 +28,16 @@ const fadeRight = {
     }
 };
 
-export default function Hero() {
+export default function Hero({
+    tag,
+    title,
+    description,
+    primaryButton,
+    secondaryButton,
+    partners,
+    image,
+    floatingCards
+}) {
 
     // const titleRef = useRef(null);
     const heroRef = useRef(null);
@@ -172,65 +181,50 @@ export default function Hero() {
                     animate="show"
                 >
                     <span ref={tagRef} className="hero-tag">
-                        SMART SOLUTIONS. REAL IMPACT.
+                        {/* SMART SOLUTIONS. REAL IMPACT. */}
+                        {tag}
                     </span>
 
 
 
                     <h1 ref={titleRef} className="hero-title">
-                        Microsoft Consulting
+                        {title}
+                        {/* Microsoft Consulting
                         <br />
                         Services for
                         <span className="highlight"> Modern</span>
                         <br />
-                        Business Operations
+                        Business Operations */}
                     </h1>
 
                     <p ref={descRef} className="hero-description">
-                        JJC Partners helps enterprises unlock the full potential
+                        {/* JJC Partners helps enterprises unlock the full potential
                         of Microsoft technologies to drive efficiency,
-                        agility, and growth.
+                        agility, and growth. */}
+
+                        {description}
                     </p>
 
                     <div ref={actionsRef} className="hero-actions">
 
                         <button className="btn-primary">
-                            Schedule a Consultation
+                            {primaryButton.text}
                             <Icons.Arrow />
                         </button>
 
                         <button className="btn-secondary">
-                            Explore Microsoft Solutions
+                            {secondaryButton.text}
                         </button>
 
                     </div>
 
                     <div ref={partnersRef} className="hero-partners">
-
-                        <div className="partner-item">
-                            <Icons.M365 />
-                            <div className="partner-services-span">
-
-                                <span>Microsoft </span>
-                                <span style={{ fontSize: '10px' }}>Microsoft </span>
+                        {partners.map((item, index) => (
+                            <div className="partner-item" key={index}>
+                                {item.icon}
+                                <span>{item.title}</span>
                             </div>
-                        </div>
-
-                        <div className="partner-item">
-                            <Icons.M365 />
-                            <span>Microsoft 365</span>
-                        </div>
-
-                        <div className="partner-item">
-                            <Icons.Azure />
-                            <span>Azure</span>
-                        </div>
-
-                        <div className="partner-item">
-                            <Icons.Dynamics />
-                            <span>Dynamics 365</span>
-                        </div>
-
+                        ))}
                     </div>
                 </motion.div>
 

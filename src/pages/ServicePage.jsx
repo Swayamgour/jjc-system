@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import "./ServicePage.css";
 import ServiceHero from "../components/ServiceHero";
+import { useSplitText } from "../hooks/useSplitText";
 
 // ============================================================
 // ENHANCED ANIMATION VARIANTS
@@ -196,9 +197,11 @@ function FaqItem({ q, a, isOpen, onClick, index }) {
 // ============================================================
 
 function GridSection({ s, accent }) {
-  const cols = s.columns || 4;
+  const cols = s?.columns || 4;
+  const titleRef = useRef(null);
+  useSplitText(titleRef);
   return (
-    <section className={`grid-section ${s.bg === "section" ? "bg-section" : "bg-white"}`}>
+    <section className={`grid-section ${s?.bg === "section" ? "bg-section" : "bg-white"}`}>
       <div className="container">
         <Reveal className="section-header-center">
           <motion.div
@@ -207,17 +210,17 @@ function GridSection({ s, accent }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
           >
-            {s.tag}
+            {s?.tag}
           </motion.div>
-          <h2 className="section-title">{s.title}</h2>
-          {s.subtitle && <p className="section-subtitle">{s.subtitle}</p>}
+          <h2 ref={titleRef} className="section-title">{s?.title}</h2>
+          {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
         </Reveal>
         <Reveal stagger className={`grid-cards grid-cols-${cols}`}>
-          {s.items.map((item, i) => (
+          {s?.items?.map((item, i) => (
             <motion.div
               key={i}
               variants={fadeUp}
-              className={`grid-card ${s.alignLeft ? "align-left" : ""}`}
+              className={`grid-card ${s?.alignLeft ? "align-left" : ""}`}
               whileHover={{
                 y: -8,
                 scale: 1.02,
@@ -238,7 +241,7 @@ function GridSection({ s, accent }) {
             </motion.div>
           ))}
         </Reveal>
-        {s.footerLink && (
+        {s?.footerLink && (
           <Reveal>
             <div className="grid-footer">
               <motion.button
@@ -246,7 +249,7 @@ function GridSection({ s, accent }) {
                 whileHover={{ scale: 1.05, boxShadow: "0 8px 25px rgba(0,0,0,0.15)" }}
                 whileTap={{ scale: 0.95 }}
               >
-                {s.footerLink} <Arrow />
+                {s?.footerLink} <Arrow />
               </motion.button>
             </div>
           </Reveal>
@@ -257,7 +260,9 @@ function GridSection({ s, accent }) {
 }
 
 function IconStripSection({ s, accent }) {
-  const cols = s.columns || 6;
+  const cols = s?.columns || 6;
+  const titleRef = useRef(null);
+  useSplitText(titleRef);
   return (
     <section className="grid-section bg-white">
       <div className="container">
@@ -268,13 +273,13 @@ function IconStripSection({ s, accent }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
           >
-            {s.tag}
+            {s?.tag}
           </motion.div>
-          <h2 className="section-title">{s.title}</h2>
-          {s.subtitle && <p className="section-subtitle">{s.subtitle}</p>}
+          <h2 ref={titleRef} className="section-title">{s?.title}</h2>
+          {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
         </Reveal>
         <Reveal stagger className="icon-strip-grid" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
-          {s.items.map((item, i) => (
+          {s?.items?.map((item, i) => (
             <motion.div
               key={i}
               variants={fadeUp}
@@ -294,7 +299,7 @@ function IconStripSection({ s, accent }) {
             </motion.div>
           ))}
         </Reveal>
-        {s.footerLink && (
+        {s?.footerLink && (
           <Reveal>
             <div className="grid-footer">
               <motion.button
@@ -302,7 +307,7 @@ function IconStripSection({ s, accent }) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                {s.footerLink} <Arrow />
+                {s?.footerLink} <Arrow />
               </motion.button>
             </div>
           </Reveal>
@@ -313,19 +318,22 @@ function IconStripSection({ s, accent }) {
 }
 
 function OverviewSection({ s }) {
+  const titleRef = useRef(null);
+  useSplitText(titleRef);
+
   return (
     <section className="overview-section">
       <div className="container overview-grid">
         <Reveal variants={slideLeft}>
-          {s.image ? (
+          {s?.image ? (
             <motion.div
               className="overview-visual"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.4 }}
             >
               <motion.img
-                src={s.image}
-                alt={s.brandLabel || s.title}
+                src={s?.image}
+                alt={s?.brandLabel || s?.title}
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -351,10 +359,10 @@ function OverviewSection({ s }) {
                   animate={{ rotate: [0, 360] }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                 >
-                  {s.coreIcon || "🧩"}
+                  {s?.coreIcon || "🧩"}
                 </motion.span>
               </motion.div>
-              {(s.orbitIcons || []).map((icon, i) => {
+              {(s?.orbitIcons || []).map((icon, i) => {
                 const pos = [{ top: 36, left: 46 }, { top: 36, right: 46 }, { bottom: 70, left: 46 }, { bottom: 70, right: 46 }][i] || {};
                 return (
                   <motion.div
@@ -374,14 +382,14 @@ function OverviewSection({ s }) {
                   </motion.div>
                 );
               })}
-              {s.brandLabel && (
+              {s?.brandLabel && (
                 <motion.div
                   className="overview-brand-label"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6 }}
                 >
-                  {s.brandLabel}
+                  {s?.brandLabel}
                 </motion.div>
               )}
             </div>
@@ -394,9 +402,9 @@ function OverviewSection({ s }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            {s.title}
+            {s?.title}
           </motion.h2>
-          {s.paragraphs.map((p, i) => (
+          {s?.paragraphs?.map((p, i) => (
             <motion.p
               key={i}
               className="overview-paragraph"
@@ -408,7 +416,7 @@ function OverviewSection({ s }) {
             </motion.p>
           ))}
           <div className="overview-checklist">
-            {s.checklist.map((item, i) => (
+            {s?.checklist.map((item, i) => (
               <motion.div
                 key={i}
                 className="overview-check-item"
@@ -428,7 +436,9 @@ function OverviewSection({ s }) {
 }
 
 function ProcessSection({ s }) {
-  const cols = s.steps.length;
+  const cols = s?.steps?.length;
+  const titleRef = useRef(null);
+  useSplitText(titleRef);
   return (
     <section className="process-section">
       <div className="container">
@@ -439,10 +449,10 @@ function ProcessSection({ s }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
           >
-            {s.tag}
+            {s?.tag}
           </motion.div>
-          <h2 className="section-title">{s.title}</h2>
-          {s.subtitle && <p className="section-subtitle">{s.subtitle}</p>}
+          <h2 ref={titleRef} className="section-title">{s?.title}</h2>
+          {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
         </Reveal>
         <Reveal stagger className="process-track" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
           <motion.div
@@ -451,7 +461,7 @@ function ProcessSection({ s }) {
             animate={{ scaleX: 1 }}
             transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
           />
-          {s.steps.map((step, i) => (
+          {s?.steps?.map((step, i) => (
             <motion.div key={i} variants={fadeUp} className="process-step">
               <motion.div
                 className="process-number"
@@ -488,6 +498,8 @@ function ProcessSection({ s }) {
 }
 
 function BenefitsSection({ s }) {
+  const titleRef = useRef(null);
+  useSplitText(titleRef);
   return (
     <section className="benefits-section">
       <div className="container">
@@ -498,13 +510,13 @@ function BenefitsSection({ s }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
           >
-            {s.tag}
+            {s?.tag}
           </motion.div>
-          <h2 className="section-title">{s.title}</h2>
-          {s.subtitle && <p className="section-subtitle">{s.subtitle}</p>}
+          <h2 ref={titleRef} className="section-title">{s?.title}</h2>
+          {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
         </Reveal>
         <Reveal stagger className="benefits-grid">
-          {s.items.map((item, i) => (
+          {s?.items?.map((item, i) => (
             <motion.div
               key={i}
               variants={fadeUp}
@@ -550,11 +562,11 @@ function SplitPanelSection({ s }) {
                 whileHover={{ scale: 1.1, rotate: 10 }}
                 transition={{ duration: 0.4 }}
               >
-                {s.visualIcon || "☁️"}
+                {s?.visualIcon || "☁️"}
               </motion.div>
-              {s.miniIcons && (
+              {s?.miniIcons && (
                 <div className="split-panel-mini-icons">
-                  {s.miniIcons.map((icon, i) => (
+                  {s?.miniIcons?.map((icon, i) => (
                     <motion.div
                       key={i}
                       className="split-mini-icon"
@@ -577,12 +589,12 @@ function SplitPanelSection({ s }) {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              {s.tag}
+              {s?.tag}
             </motion.div>
-            <h2 className="split-panel-title">{s.title}</h2>
-            <p className="split-panel-desc">{s.desc}</p>
+            <h2 className="split-panel-title">{s?.title}</h2>
+            <p className="split-panel-desc">{s?.desc}</p>
             <div className="split-panel-list">
-              {s.list.map((item, i) => (
+              {s?.list.map((item, i) => (
                 <motion.div
                   key={i}
                   className="split-panel-list-item"
@@ -600,7 +612,7 @@ function SplitPanelSection({ s }) {
               whileHover={{ scale: 1.05, boxShadow: "0 12px 30px rgba(0,0,0,0.2)" }}
               whileTap={{ scale: 0.95 }}
             >
-              {s.buttonLabel} <Arrow />
+              {s?.buttonLabel} <Arrow />
             </motion.button>
           </Reveal>
         </motion.div>
@@ -620,13 +632,13 @@ function CaseStudiesSection({ s }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
           >
-            {s.tag}
+            {s?.tag}
           </motion.div>
-          <h2 className="section-title">{s.title}</h2>
-          {s.subtitle && <p className="section-subtitle">{s.subtitle}</p>}
+          <h2 className="section-title">{s?.title}</h2>
+          {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
         </Reveal>
         <Reveal stagger className="case-studies-grid">
-          {s.items.map((c, i) => (
+          {s?.items?.map((c, i) => (
             <motion.div
               key={i}
               variants={fadeUp}
@@ -697,12 +709,12 @@ function FaqSection({ s }) {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.4 }}
           >
-            {s.tag}
+            {s?.tag}
           </motion.div>
-          <h2 className="section-title">{s.title}</h2>
+          <h2 className="section-title">{s?.title}</h2>
         </Reveal>
         <Reveal stagger className="faq-grid">
-          {s.items.map((item, i) => (
+          {s?.items?.map((item, i) => (
             <motion.div key={i} variants={fadeUp}>
               <FaqItem
                 q={item.q}
@@ -735,7 +747,7 @@ function CtaSection({ s }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            {s.title}
+            {s?.title}
           </motion.h2>
           <motion.p
             className="cta-description"
@@ -743,7 +755,7 @@ function CtaSection({ s }) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            {s.description}
+            {s?.description}
           </motion.p>
         </Reveal>
         <Reveal variants={slideRight} className="cta-actions">
@@ -752,17 +764,226 @@ function CtaSection({ s }) {
             whileHover={{ scale: 1.05, boxShadow: "0 12px 30px rgba(0,0,0,0.3)" }}
             whileTap={{ scale: 0.95 }}
           >
-            {s.primaryLabel || "Schedule a Consultation"} <Arrow />
+            {s?.primaryLabel || "Schedule a Consultation"} <Arrow />
           </motion.button>
           <motion.button
             className="cta-btn-secondary"
             whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
             whileTap={{ scale: 0.95 }}
           >
-            {s.secondaryLabel || "Request an Assessment"}
+            {s?.secondaryLabel || "Request an Assessment"}
           </motion.button>
         </Reveal>
       </motion.div>
+    </section>
+  );
+}
+
+function ContactFormSection({ s }) {
+  const titleRef = useRef(null);
+  useSplitText(titleRef);
+
+  return (
+    <section className="split-panel-section">
+      <div className="container">
+
+        <Reveal className="section-header-center">
+          {s?.tag && <div className="section-tag">{s?.tag}</div>}
+          <h2 ref={titleRef} className="section-title">
+            {s?.title}
+          </h2>
+          {s?.subtitle && (
+            <p className="section-subtitle">{s?.subtitle}</p>
+          )}
+        </Reveal>
+
+        <div className="split-panel">
+
+          <Reveal variants={slideLeft}>
+            <div className="contact-form-card">
+
+              <h3 className="split-panel-title">
+                {s?.form?.title}
+              </h3>
+
+              <form className="contact-form">
+
+                <div className="form-grid">
+
+                  <div className="form-group">
+                    <label>{s?.form?.fields?.fullName.label}</label>
+                    <input
+                      type="text"
+                      placeholder={s?.form?.fields?.fullName.placeholder}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>{s?.form?.fields?.companyName.label}</label>
+                    <input
+                      type="text"
+                      placeholder={s?.form?.fields?.companyName.placeholder}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>{s?.form?.fields?.email.label}</label>
+                    <input
+                      type="email"
+                      placeholder={s?.form?.fields?.email.placeholder}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>{s?.form?.fields?.phone.label}</label>
+                    <input
+                      type="text"
+                      placeholder={s?.form?.fields?.phone.placeholder}
+                    />
+                  </div>
+
+                  <div className="form-group full">
+                    <label>{s?.form?.fields?.service.label}</label>
+
+                    <select>
+                      <option>
+                        {s?.form?.fields?.service.placeholder}
+                      </option>
+
+                      {s?.form?.fields?.service.options?.map((item, i) => (
+                        <option key={i}>{item}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="form-group full">
+                    <label>{s?.form?.fields?.message.label}</label>
+
+                    <textarea
+                      rows={6}
+                      placeholder={s?.form?.fields?.message.placeholder}
+                    />
+                  </div>
+
+                </div>
+
+                <button className="split-panel-btn">
+                  {s?.form?.buttonText}
+                  <Arrow />
+                </button>
+
+              </form>
+
+            </div>
+          </Reveal>
+
+          <Reveal variants={slideRight}>
+            <div className="contact-side-image">
+
+              <img
+                src={s?.image}
+                alt={s?.title}
+              />
+
+            </div>
+          </Reveal>
+
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ContactInfoSection({ s }) {
+  const titleRef = useRef(null);
+  useSplitText(titleRef);
+
+  return (
+    <section className="benefits-section">
+
+      <div className="container">
+
+        <Reveal className="section-header-center">
+
+          {s?.tag && (
+            <div className="section-tag">
+              {s?.tag}
+            </div>
+          )}
+
+          <h2 ref={titleRef} className="section-title">
+            {s?.title}
+          </h2>
+
+          {s?.subtitle && (
+            <p className="section-subtitle">
+              {s?.subtitle}
+            </p>
+          )}
+
+        </Reveal>
+
+        <Reveal stagger className="benefits-grid">
+
+          <motion.div variants={fadeUp} className="benefit-item">
+            <div className="benefit-icon">
+              {s?.icons?.phone}
+            </div>
+
+            <div className="benefit-title">
+              Phone
+            </div>
+
+            <div className="benefit-desc">
+              {s?.contact?.phone}
+            </div>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="benefit-item">
+            <div className="benefit-icon">
+              {s?.icons?.email}
+            </div>
+
+            <div className="benefit-title">
+              Email
+            </div>
+
+            <div className="benefit-desc">
+              {s?.contact?.email}
+            </div>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="benefit-item">
+            <div className="benefit-icon">
+              {s?.icons?.location}
+            </div>
+
+            <div className="benefit-title">
+              Address
+            </div>
+
+            <div className="benefit-desc">
+              {s?.contact?.address}
+            </div>
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="benefit-item">
+            <div className="benefit-icon">
+              {s?.icons?.clock}
+            </div>
+
+            <div className="benefit-title">
+              Business Hours
+            </div>
+
+            <div className="benefit-desc">
+              {s?.contact?.hours}
+            </div>
+          </motion.div>
+
+        </Reveal>
+
+      </div>
     </section>
   );
 }
@@ -776,6 +997,11 @@ const SECTION_MAP = {
   splitPanel: SplitPanelSection,
   caseStudies: CaseStudiesSection,
   faq: FaqSection,
+
+  // contactForm: ContactFormSection,
+  // contactInfo: ContactInfoSection,
+
+
   cta: CtaSection,
 };
 
@@ -784,6 +1010,8 @@ const SECTION_MAP = {
 // ============================================================
 export default function ServicePage({ data }) {
   const d = data;
+
+  // console.log(d)
 
   const themeVars = {
     "--svc-accent": d.theme.accent,
@@ -795,16 +1023,18 @@ export default function ServicePage({ data }) {
     "--accent-rgb": d.theme.accentRgb || "37, 99, 235",
   };
 
+  console.log(d)
+
   return (
     <div className="service-page" style={themeVars}>
       {/* HERO */}
 
       <ServiceHero d={d} />
-     
+
 
       {/* DYNAMIC SECTION STACK */}
-      {d.sections.map((s, i) => {
-        const Renderer = SECTION_MAP[s.type];
+      {d?.sections?.map((s, i) => {
+        const Renderer = SECTION_MAP[s?.type];
         if (!Renderer) return null;
         return <Renderer key={i} s={s} />;
       })}
