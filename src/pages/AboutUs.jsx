@@ -1,24 +1,17 @@
+import { Link } from "react-router-dom";
+// import BasePage from "./BasePage";
+import { aboutPageData } from "../utils/servicesData";
+import BasePage from "../components/BasePage";
 
-import { useParams, Link } from "react-router-dom";
-import ServicePage from "./ServicePage";
-import { aboutPageData, allServices, contactUsData } from "../utils/servicesData";
-
-
-export default function ServiceRoute() {
-
-
-  // console.log(slug , data)
-
-
+export default function AboutUs() {
   if (!aboutPageData) {
     return (
       <div style={{ padding: 120, textAlign: "center" }}>
-        <h2>Service not found</h2>
+        <h2>Page not found</h2>
         <Link to="/">Back to home</Link>
       </div>
     );
   }
 
-  return <ServicePage data={aboutPageData} />;
+  return <BasePage data={aboutPageData} pageType="about" />;
 }
-

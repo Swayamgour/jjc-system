@@ -1,12 +1,10 @@
 import { useParams, Link } from "react-router-dom";
-import ServicePage from "./ServicePage";
+import BasePage from "../components/BasePage";
 import { getIndustryData } from "../utils/IndustryData";
 
 export default function Industries() {
     const { slug } = useParams();
     const data = getIndustryData(slug);
-
-    console.log(data , slug)
 
     if (!data) {
         return (
@@ -17,5 +15,5 @@ export default function Industries() {
         );
     }
 
-    return <ServicePage data={data} />;
+    return <BasePage data={data} pageType="industry" />;
 }

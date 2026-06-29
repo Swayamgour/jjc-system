@@ -1,13 +1,11 @@
-
 import { useParams, Link } from "react-router-dom";
-import ServicePage from "./ServicePage";
+// import BasePage from "./BasePage";
 import { allServices } from "../utils/servicesData";
+import BasePage from "../components/BasePage";
 
 export default function ServiceRoute() {
     const { slug } = useParams();
     const data = allServices[slug];
-
-    // console.log(slug , data)
 
     if (!data) {
         return (
@@ -18,6 +16,5 @@ export default function ServiceRoute() {
         );
     }
 
-    return <ServicePage data={data} />;
+    return <BasePage data={data} pageType="service" />;
 }
-

@@ -1,0 +1,42 @@
+/* components/contact/ContactFormSection.module.css */
+
+.section {
+  padding: 72px 0 80px;
+  background: var(--gray-50);
+  /* Pull up slightly so the hero curve blends into the section */
+  margin-top: -56px;
+  position: relative;
+  z-index: 3;
+}
+
+.inner {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+.formCol { min-width: 0; }
+.infoCol { min-width: 0; }
+
+@media (max-width: 960px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+  /* On mobile, info card goes BELOW the form */
+  .infoCol {
+    order: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .inner {
+    padding: 0 20px;
+  }
+  .section {
+    padding: 56px 0 60px;
+  }
+}

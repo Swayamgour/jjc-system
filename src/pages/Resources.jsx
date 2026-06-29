@@ -1,31 +1,16 @@
-import React from 'react'
-import { useParams, Link } from "react-router-dom";
-import ServicePage from "./ServicePage";
-import { aboutPageData, allServices, contactUsData , resourcesData } from "../utils/servicesData";
+import { Link } from "react-router-dom";
+import BasePage from "../components/BasePage";
+import { resourcesData } from "../utils/servicesData";
 
-
-function Resources() {
-
-    // console.log(slug , data)
-
-
+export default function Resources() {
     if (!resourcesData) {
         return (
             <div style={{ padding: 120, textAlign: "center" }}>
-                <h2>Service not found</h2>
+                <h2>Page not found</h2>
                 <Link to="/">Back to home</Link>
             </div>
         );
     }
 
-    return <ServicePage data={resourcesData} />;
+    return <BasePage data={resourcesData} pageType="resources" />;
 }
-
-export default Resources
-
-
-
-
-
-
-

@@ -9,17 +9,19 @@ import { Route, Routes } from "react-router";
 import ServicePage from "./pages/ServicePage";
 import ServiceRoute from "./pages/ServiceRoute";
 import AboutUs from "./pages/AboutUs";
+// import ContactUs from "./pages/ContactUs/ContactUs";
 import ContactUs from "./pages/ContactUs";
 import Resources from "./pages/Resources";
 import Platforms from "./pages/Platforms";
 import Industries from "./pages/Industries";
+// import index from "./pages/ContactUs/ContactUs";
 
 
 
 
 export default function App() {
   return (
-    <div style={{ fontFamily: "Inter, -apple-system, sans-serif" }}>
+    <div style={{ fontFamily: "Inter, -apple-system, sans-serif" , overflow:'auto' }}>
 
       <Header />
       <main >
