@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
-import { Icons, megaMenus } from "./utils/data";
+import { Icons } from "./utils/data";
 import Header from "./components/Header";
 import './App.css'
 import Footer from "./components/Footer";
@@ -21,7 +21,7 @@ import Industries from "./pages/Industries";
 
 export default function App() {
   return (
-    <div style={{ fontFamily: "Inter, -apple-system, sans-serif" , overflow:'auto' }}>
+    <div >
 
       <Header />
       <main >

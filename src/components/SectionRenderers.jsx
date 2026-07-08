@@ -4,6 +4,7 @@ import { useSplitText } from "../hooks/useSplitText";
 
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import contact from '../assets/contact.png'
+import * as Icons from "lucide-react";
 
 // ============================================================
 // ANIMATION VARIANTS
@@ -97,6 +98,7 @@ export function GridSection({ s }) {
     const titleRef = useRef(null);
     useSplitText(titleRef);
 
+
     return (
         <section className={`grid-section ${s?.bg === "section" ? "bg-section" : "bg-white"}`}>
             <div className="container">
@@ -113,30 +115,38 @@ export function GridSection({ s }) {
                     {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
                 </Reveal>
                 <Reveal stagger className={`grid-cards grid-cols-${cols}`}>
-                    {s?.items?.map((item, i) => (
-                        <motion.div
-                            key={i}
-                            variants={fadeUp}
-                            className={`grid-card ${s?.alignLeft ? "align-left" : ""}`}
-                            whileHover={{
-                                y: -8,
-                                scale: 1.02,
-                                boxShadow: "0 20px 60px rgba(0,0,0,0.12)",
-                                transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
-                            }}
-                            whileTap={{ scale: 0.98 }}
-                        >
+                    {s?.items?.map((item, i) => {
+                        const Icon = Icons[item.icon];
+                        return (
+
+
                             <motion.div
-                                className="grid-card-icon"
-                                whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                                transition={{ duration: 0.5 }}
+                                key={i}
+                                variants={fadeUp}
+                                className={`grid-card ${s?.alignLeft ? "align-left" : ""}`}
+                                whileHover={{
+                                    y: -8,
+                                    scale: 1.02,
+                                    boxShadow: "0 20px 60px rgba(0,0,0,0.12)",
+                                    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
+                                }}
+                                whileTap={{ scale: 0.98 }}
                             >
-                                {item.icon}
+                                <motion.div
+                                    className="grid-card-icon"
+                                    whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    {Icon && <Icon size={32} />}
+                                </motion.div>
+                                <div className="grid-card-title">{item.title}</div>
+                                <div className="grid-card-desc">{item.desc}</div>
                             </motion.div>
-                            <div className="grid-card-title">{item.title}</div>
-                            <div className="grid-card-desc">{item.desc}</div>
-                        </motion.div>
-                    ))}
+                        )
+
+                    }
+
+                    )}
                 </Reveal>
                 {s?.footerLink && (
                     <Reveal>
@@ -176,26 +186,57 @@ export function IconStripSection({ s }) {
                     <h2 ref={titleRef} className="section-title">{s?.title}</h2>
                     {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
                 </Reveal>
-                <Reveal stagger className="icon-strip-grid" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
-                    {s?.items?.map((item, i) => (
-                        <motion.div
-                            key={i}
-                            variants={fadeUp}
-                            whileHover={{ scale: 1.08, y: -4 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="icon-strip-card"
-                        >
+                {/* import * as Icons from "lucide-react"; */}
+
+
+                <Reveal
+                    stagger
+                    className="icon-strip-grid"
+                    style={{
+                        gridTemplateColumns: `repeat(${cols}, 1fr)`,
+                    }}
+                >
+                    {s?.items?.map((item, i) => {
+                        const Icon = Icons[item.icon] || Icons.CircleCheck;
+
+                        return (
                             <motion.div
-                                className="icon-strip-icon"
-                                whileHover={{ rotate: [0, -15, 15, 0], scale: 1.15 }}
-                                transition={{ duration: 0.6 }}
+                                key={i}
+                                variants={fadeUp}
+                                whileHover={{
+                                    scale: 1.08,
+                                    y: -4,
+                                }}
+                                whileTap={{
+                                    scale: 0.95,
+                                }}
+                                className="icon-strip-card"
                             >
-                                {item.icon}
+                                <motion.div
+                                    className="icon-strip-icon"
+                                    whileHover={{
+                                        rotate: [0, -15, 15, 0],
+                                        scale: 1.15,
+                                    }}
+                                    transition={{
+                                        duration: 0.6,
+                                    }}
+                                >
+                                    <Icon size={32} />
+                                </motion.div>
+
+                                <div className="icon-strip-label">
+                                    {item.label || item.title}
+                                </div>
+
+                                {(item.description || item.desc) && (
+                                    <div className="icon-strip-desc">
+                                        {item.description || item.desc}
+                                    </div>
+                                )}
                             </motion.div>
-                            <div className="icon-strip-label">{item.label}</div>
-                            {item.desc && <div className="icon-strip-desc">{item.desc}</div>}
-                        </motion.div>
-                    ))}
+                        );
+                    })}
                 </Reveal>
                 {s?.footerLink && (
                     <Reveal>
@@ -216,88 +257,24 @@ export function IconStripSection({ s }) {
 }
 
 export function OverviewSection({ s }) {
+    // console.log(s)
     const titleRef = useRef(null);
     useSplitText(titleRef);
 
     return (
         <section className="overview-section">
-            <div className="container overview-grid">
-                <Reveal variants={slideLeft}>
-                    {s?.image ? (
-                        <motion.div
-                            className="overview-visual"
-                            whileHover={{ scale: 1.02 }}
-                            transition={{ duration: 0.4 }}
-                        >
-                            <motion.img
-                                src={s?.image}
-                                alt={s?.brandLabel || s?.title}
-                                initial={{ scale: 0.8, opacity: 0 }}
-                                animate={{ scale: 1, opacity: 1 }}
-                                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                            />
-                        </motion.div>
-                    ) : (
-                        <div className="overview-visual">
-                            <motion.div
-                                className="overview-visual-core"
-                                animate={{
-                                    rotate: [0, 8, -8, 0],
-                                    scale: [1, 1.05, 1]
-                                }}
-                                transition={{
-                                    duration: 4,
-                                    repeat: Infinity,
-                                    ease: "easeInOut"
-                                }}
-                                whileHover={{ scale: 1.15, rotate: 0 }}
-                            >
-                                <motion.span
-                                    style={{ fontSize: 36 }}
-                                    animate={{ rotate: [0, 360] }}
-                                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                                >
-                                    {s?.coreIcon || "🧩"}
-                                </motion.span>
-                            </motion.div>
-                            {(s?.orbitIcons || []).map((icon, i) => {
-                                const pos = [{ top: 36, left: 46 }, { top: 36, right: 46 }, { bottom: 70, left: 46 }, { bottom: 70, right: 46 }][i] || {};
-                                return (
-                                    <motion.div
-                                        key={i}
-                                        className="overview-orbit-icon"
-                                        style={pos}
-                                        initial={{ opacity: 0, scale: 0.7, y: 20 }}
-                                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                                        transition={{ duration: 0.4, delay: 0.2 + i * 0.1 }}
-                                        whileHover={{ scale: 1.15, rotate: 10 }}
-                                    >
-                                        {icon}
-                                    </motion.div>
-                                );
-                            })}
-                            {s?.brandLabel && (
-                                <motion.div
-                                    className="overview-brand-label"
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.6 }}
-                                >
-                                    {s?.brandLabel}
-                                </motion.div>
-                            )}
-                        </div>
-                    )}
-                </Reveal>
-                <Reveal variants={slideRight}>
-                    <motion.h2
-                        className="overview-content-title"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
+            <div className="container">
+
+                <Reveal className="section-header-center">
+                    <motion.div
+                        className="section-tag"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.4 }}
                     >
-                        {s?.title}
-                    </motion.h2>
+                        {s?.tag}
+                    </motion.div>
+                    <h2 ref={titleRef} className="section-title">{s?.title}</h2>
                     {s?.paragraphs?.map((p, i) => (
                         <motion.p
                             key={i}
@@ -309,22 +286,50 @@ export function OverviewSection({ s }) {
                             {p}
                         </motion.p>
                     ))}
-                    <div className="overview-checklist">
-                        {s?.checklist.map((item, i) => (
-                            <motion.div
-                                key={i}
-                                className="overview-check-item"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
-                                whileHover={{ x: 5 }}
-                            >
-                                {CheckSm("var(--accent)")} {item}
-                            </motion.div>
-                        ))}
-                    </div>
+
+                    {/* {s?.subtitle && <p className="section-subtitle">{s?.paragraphs}</p>} */}
                 </Reveal>
+
+
+
+
+                <div className=" overview-grid">
+                    <Reveal variants={slideLeft}>
+                        <motion.div
+                            className="overview-visual"
+                            whileHover={{ scale: 1.02 }}
+                            transition={{ duration: 0.4 }}
+                        >
+                            <motion.img
+                                src={s?.image?.url || "https://res.cloudinary.com/sakshichak1/image/upload/v1783428245/jjc-systems/svmexbexebg6ny70okcm.png"}
+                                alt={s?.brandLabel || s?.title}
+                                initial={{ scale: 0.8, opacity: 0 }}
+                                animate={{ scale: 1, opacity: 1 }}
+                                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                            />
+                        </motion.div>
+
+                    </Reveal>
+                    <Reveal variants={slideRight}>
+
+                        <div className="overview-checklist">
+                            {s?.checklist?.map((item, i) => (
+                                <motion.div
+                                    key={i}
+                                    className="overview-check-item"
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ duration: 0.4, delay: 0.4 + i * 0.08 }}
+                                    whileHover={{ x: 5 }}
+                                >
+                                    {CheckSm("var(--accent)")} {item}
+                                </motion.div>
+                            ))}
+                        </div>
+                    </Reveal>
+                </div>
             </div>
+
         </section>
     );
 }
@@ -366,7 +371,7 @@ export function ProcessSection({ s }) {
                                 animate={{ scale: 1 }}
                                 transition={{ delay: i * 0.1, type: "spring", stiffness: 200 }}
                             >
-                                {step.num}
+                                {step.step}
                             </motion.div>
                             <motion.div
                                 className="process-step-title"
@@ -411,26 +416,50 @@ export function BenefitsSection({ s }) {
                     <h2 ref={titleRef} className="section-title">{s?.title}</h2>
                     {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
                 </Reveal>
+
+
+
                 <Reveal stagger className="benefits-grid">
-                    {s?.items?.map((item, i) => (
-                        <motion.div
-                            key={i}
-                            variants={fadeUp}
-                            whileHover={{ scale: 1.06, y: -6 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="benefit-item"
-                        >
+                    {s?.items?.map((item, i) => {
+                        // const Icon = Icons[item.icon];
+                        const Icon = Icons[item.icon] || Icons.CircleCheck;
+
+                        return (
                             <motion.div
-                                className="benefit-icon"
-                                whileHover={{ rotate: [0, -20, 20, 0], scale: 1.15 }}
-                                transition={{ duration: 0.6 }}
+                                key={i}
+                                variants={fadeUp}
+                                whileHover={{
+                                    scale: 1.06,
+                                    y: -6,
+                                }}
+                                whileTap={{
+                                    scale: 0.95,
+                                }}
+                                className="benefit-item"
                             >
-                                {item.icon}
+                                <motion.div
+                                    className="benefit-icon"
+                                    whileHover={{
+                                        rotate: [0, -20, 20, 0],
+                                        scale: 1.15,
+                                    }}
+                                    transition={{
+                                        duration: 0.6,
+                                    }}
+                                >
+                                    {Icon && <Icon size={32} />}
+                                </motion.div>
+
+                                <div className="benefit-title">
+                                    {item.title}
+                                </div>
+
+                                <div className="benefit-desc">
+                                    {item.description || item.desc}
+                                </div>
                             </motion.div>
-                            <div className="benefit-title">{item.title}</div>
-                            <div className="benefit-desc">{item.desc}</div>
-                        </motion.div>
-                    ))}
+                        );
+                    })}
                 </Reveal>
             </div>
         </section>
@@ -518,6 +547,7 @@ export function SplitPanelSection({ s }) {
 }
 
 export function CaseStudiesSection({ s }) {
+    console.log(s)
     return (
         <section className="case-studies-section">
             <div className="container">
@@ -534,6 +564,7 @@ export function CaseStudiesSection({ s }) {
                     {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
                 </Reveal>
                 <Reveal stagger className="case-studies-grid">
+                    {/* {console.log(s)} */}
                     {s?.items?.map((c, i) => (
                         <motion.div
                             key={i}
@@ -541,7 +572,7 @@ export function CaseStudiesSection({ s }) {
                             whileHover={{ scale: 1.03, y: -8 }}
                             whileTap={{ scale: 0.97 }}
                             className="case-study-card"
-                            style={{ background: c.color }}
+                            style={{ background: s.themeVars?.["--svc-accent"] }}
                         >
                             <div className="case-study-overlay" />
                             <div className="case-study-content">
@@ -650,8 +681,8 @@ export function FaqSection({ s }) {
                     {s?.items?.map((item, i) => (
                         <motion.div key={i} variants={fadeUp}>
                             <FaqItem
-                                q={item.q}
-                                a={item.a}
+                                q={item.question}
+                                a={item.answer}
                                 isOpen={openFaq === i}
                                 onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
                                 index={i}
@@ -969,6 +1000,57 @@ export function ContactInfoSection({ s }) {
                     </Reveal>
 
                 )} */}
+
+            </div>
+        </section>
+    );
+}
+
+export function OfficeLocationsSection({ s }) {
+    const titleRef = useRef(null);
+    useSplitText(titleRef);
+
+    return (
+        <section className="grid-section bg-white">
+            <div className="container">
+
+                <Reveal className="section-header-center">
+                    <h2 ref={titleRef} className="section-title">
+                        {s?.title}
+                    </h2>
+                </Reveal>
+
+                <Reveal stagger className="benefits-grid">
+
+                    {s?.items?.map((office, index) => (
+
+                        <motion.div
+                            key={index}
+                            variants={fadeUp}
+                            className="benefit-item"
+                            whileHover={{
+                                y: -8,
+                                scale: 1.02,
+                            }}
+                        >
+
+                            <div className="benefit-title">
+                                {office.city}, {office.country}
+                            </div>
+
+                            <div className="benefit-desc">
+                                <p>{office.address}</p>
+
+                                <p>{office.phone}</p>
+
+                                <p>{office.email}</p>
+                            </div>
+
+                        </motion.div>
+
+                    ))}
+
+                </Reveal>
 
             </div>
         </section>

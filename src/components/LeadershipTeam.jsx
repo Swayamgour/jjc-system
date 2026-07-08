@@ -1,75 +1,61 @@
-import React, { useRef } from 'react'
-import { Icons, team } from '../utils/data';
-import { useInView , motion } from 'framer-motion';
-
+import React, { useRef } from "react";
+import { Icons, team } from "../utils/data";
+import { useSectionAnimation } from "../hooks/useSectionAnimation";
 
 function LeadershipTeam() {
-    //    team
+    const colors = [
+        "#2563EB",
+        "#0F3D91",
+        "#4F8CFF",
+        "#1D4ED8",
+        "#3B82F6",
+    ];
 
-    const colors = ["#2563EB", "#0F3D91", "#4F8CFF", "#1D4ED8", "#3B82F6"];
+    const sectionRef = useRef(null);
+    const tagRef = useRef(null);
+    const cardsRef = useRef(null);
 
-    const ref = useRef(null);
-     const inView = useInView(ref, { once: true, amount: 0.2 });
-
-     const fadeUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    };
-
-    const stagger = {
-        visible: { transition: { staggerChildren: 0.1 } },
-    };
-
-    // Icons
+    useSectionAnimation({
+        sectionRef,
+        tagRef,
+        listRef: cardsRef,
+    });
 
     return (
         <section
-            ref={ref}
+            ref={sectionRef}
             className="leadership-section"
         >
             <div className="container">
 
-                <motion.div
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate={
-                        inView
-                            ? "visible"
-                            : "hidden"
-                    }
-                    className="leadership-header"
-                >
-                    <div className="section-tag">
+                <div className="leadership-header">
+
+                    <div
+                        ref={tagRef}
+                        className="section-tag"
+                    >
                         OUR LEADERSHIP TEAM
                     </div>
-                </motion.div>
 
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate={
-                        inView
-                            ? "visible"
-                            : "hidden"
-                    }
+                </div>
+
+                <div
+                    ref={cardsRef}
                     className="leadership-grid"
                 >
                     {team.map((member, i) => (
-                        <motion.div
+                        <div
                             key={i}
-                            variants={fadeUp}
-                            whileHover={{ y: -6 }}
                             className="leader-card"
                         >
-
                             <div
                                 className="leader-image"
                                 style={{
                                     background: `linear-gradient(
-                160deg,
-                ${colors[i]},
-                ${colors[(i + 2) % 5]}
-              )`,
+                                        160deg,
+                                        ${colors[i]},
+                                        ${colors[(i + 2) % colors.length]}
+                                    )`,
                                 }}
                             >
                                 <svg
@@ -100,22 +86,16 @@ function LeadershipTeam() {
                                 {member.title}
                             </div>
 
-                            <motion.div
-                                whileHover={{
-                                    scale: 1.2,
-                                }}
-                                className="linkedin-btn"
-                            >
+                            <div className="linkedin-btn">
                                 <Icons.LinkedIn />
-                            </motion.div>
-
-                        </motion.div>
+                            </div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
 
             </div>
         </section>
     );
 }
 
-export default LeadershipTeam
+export default LeadershipTeam;

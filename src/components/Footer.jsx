@@ -114,12 +114,12 @@ function Footer() {
                             </div>
                         ))}
 
-                        <motion.button
+                        <button
                             whileHover={{ scale: 1.04 }}
                             className="footer-btn"
                         >
                             Schedule Consultation
-                        </motion.button>
+                        </button>
 
                     </div>
 

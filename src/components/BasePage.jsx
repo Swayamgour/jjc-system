@@ -1,63 +1,166 @@
-import { useState, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
 import "../pages/ServicePage.css";
 import ServiceHero from "../components/ServiceHero";
-import { useSplitText } from "../hooks/useSplitText";
+
 import {
     GridSection,
     IconStripSection,
     OverviewSection,
     ProcessSection,
     BenefitsSection,
-    SplitPanelSection,
     CaseStudiesSection,
     FaqSection,
     CtaSection,
     ContactFormSection,
     ContactInfoSection,
+    OfficeLocationsSection,
 } from "../components/SectionRenderers";
 
-// ============================================================
-// MAIN COMPONENT
-// ============================================================
 export default function BasePage({ data, pageType = "service" }) {
+
     const d = data;
 
-    console.log(d)
-
     const themeVars = {
-        "--svc-accent": d.theme.accent,
-        "--svc-accent-dark": d.theme.accentDark,
-        "--svc-accent-light": d.theme.accentLight,
-        "--svc-accent-soft": d.theme.accentSoft,
-        "--svc-hero-start": d.theme.heroStart,
-        "--svc-hero-end": d.theme.heroEnd,
-        "--accent-rgb": d.theme.accentRgb || "37, 99, 235",
+        "--svc-accent": d?.theme?.accent,
+        "--svc-accent-dark": d?.theme?.accentDark,
+        "--svc-accent-light": d?.theme?.accentLight,
+        "--svc-accent-soft": d?.theme?.accentSoft,
+        "--svc-hero-start": d?.theme?.heroStart,
+        "--svc-hero-end": d?.theme?.heroEnd,
+        "--accent-rgb": d?.theme?.accentRgb || "37,99,235",
     };
 
+    const sections = [
+
+        // --------------------
+        // COMMON
+        // --------------------
+
+        d?.overview && {
+            type: "overview",
+            ...d.overview,
+        },
+
+        // --------------------
+        // SERVICE / ABOUT
+        // --------------------
+
+        (d?.capabilities || d?.whyChooseUs) && {
+            type: "grid",
+            ...(d.capabilities || d.whyChooseUs),
+        },
+
+        (d?.benefits || d?.stats) && {
+            type: "benefits",
+            ...(d.benefits || d.stats),
+        },
+
+        (d?.implementationProcess || d?.process) && {
+            type: "process",
+            ...(d.implementationProcess || d.process),
+        },
+
+        d?.industries && {
+            type: "iconStrip",
+            ...d.industries,
+        },
+
+        d?.caseStudies && {
+            type: "caseStudies",
+            ...d.caseStudies,
+            themeVars,
+        },
+
+        // --------------------
+        // CONTACT PAGE
+        // --------------------
+
+        d?.contactForm && {
+            type: "contactForm",
+            ...d.contactForm,
+        },
+
+        d?.contactInfo && {
+            type: "contactInfo",
+            ...d.contactInfo,
+        },
+
+        d?.officeLocations && {
+            type: "officeLocations",
+            ...d.officeLocations,
+        },
+
+        // --------------------
+        // COMMON
+        // --------------------
+
+        d?.faqs && {
+            type: "faq",
+            ...d.faqs,
+        },
+
+        d?.cta && {
+            type: "cta",
+            ...d.cta,
+        },
+
+    ].filter(Boolean);
+
     const SECTION_MAP = {
-        grid: GridSection,
-        iconStrip: IconStripSection,
+
         overview: OverviewSection,
-        process: ProcessSection,
+
+        grid: GridSection,
+
         benefits: BenefitsSection,
-        splitPanel: SplitPanelSection,
+
+        process: ProcessSection,
+
+        iconStrip: IconStripSection,
+
         caseStudies: CaseStudiesSection,
-        faq: FaqSection,
+
         contactForm: ContactFormSection,
+
         contactInfo: ContactInfoSection,
+
+        officeLocations: OfficeLocationsSection,
+
+        faq: FaqSection,
+
         cta: CtaSection,
+
     };
 
     return (
-        <div className="service-page" style={themeVars}>
-            <ServiceHero d={d} pageType={pageType} />
 
-            {d?.sections?.map((s, i) => {
-                const Renderer = SECTION_MAP[s?.type];
+        <div
+            className="service-page"
+            style={themeVars}
+        >
+
+            <ServiceHero
+                d={d}
+                pageType={pageType}
+            />
+
+            {sections.map((section, index) => {
+
+                const Renderer = SECTION_MAP[section.type];
+
                 if (!Renderer) return null;
-                return <Renderer key={i} s={s} />;
+
+                return (
+                    <Renderer
+                        key={index}
+                        s={section}
+                        themeVars={themeVars}
+                    />
+                );
+
             })}
+
         </div>
+
     );
+
 }

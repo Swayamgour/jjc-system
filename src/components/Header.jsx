@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronDown, Menu, X, ArrowRight } from 'lucide-react';
-// import { , motion } from 'motion/react';
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
-import { menuData } from '../utils/data';
 import logo from '../assets/logo.png';
 import { useNavigate } from 'react-router';
+import { useGetCategoryQuery } from '../redux/api';
 
-// ─── Animated Nub ───────────────────────────────────────────────────────────
+// MUI imports for mobile drawer
+import Drawer from '@mui/material/Drawer';
+import Box from '@mui/material/Box';
+
+// ─── Animated Nub (desktop mega-dropdown) ────────────────────────────────────
 const DropdownNub = ({ activeTab }) => {
     const [left, setLeft] = useState(0);
 
@@ -19,7 +22,6 @@ const DropdownNub = ({ activeTab }) => {
         const tabRect = tab.getBoundingClientRect();
         const panelRect = panel.getBoundingClientRect();
 
-        // Center of tab relative to the panel's left edge
         const center = tabRect.top + tabRect.height / 2 - panelRect.top;
         setLeft(center);
     }, [activeTab]);
@@ -44,14 +46,13 @@ const DropdownNub = ({ activeTab }) => {
     );
 };
 
-// ─── Dropdown Content with directional slide ─────────────────────────────────
+// ─── Dropdown Content with directional slide (desktop mega-dropdown) ────────
 const MegaDropdownContent = ({ menu, activeTab, setActiveTab, prevTab, handlePanelLinkClick }) => {
-    const dir = prevTab < activeTab ? 1 : -1; // 1 = coming from top, -1 = coming from bottom
+    const dir = prevTab < activeTab ? 1 : -1;
 
     return (
         <div className="tabbed-dropdown-container" id="dropdown-panel" style={{ position: 'relative' }}>
 
-            {/* LEFT SIDEBAR */}
             <div className="dropdown-sidebar" style={{ position: 'relative' }}>
                 <DropdownNub activeTab={activeTab} />
                 {menu.groups.map((group, gIdx) => (
@@ -72,7 +73,6 @@ const MegaDropdownContent = ({ menu, activeTab, setActiveTab, prevTab, handlePan
                 ))}
             </div>
 
-            {/* RIGHT PANEL — directional slide */}
             <div className="dropdown-content-panel" style={{ overflow: 'hidden' }}>
                 <AnimatePresence mode="wait" custom={dir}>
                     <motion.div
@@ -119,6 +119,51 @@ const Navbar = () => {
 
     const navigate = useNavigate();
 
+    const { data } = useGetCategoryQuery();
+
+    const menuData = [
+        {
+            title: "Home",
+            path: "/",
+            hasDropdown: false
+        },
+        {
+            title: "What We Do",
+            hasDropdown: true,
+            groups:
+                data?.data?.map((category) => ({
+                    heading: category.name,
+                    items:
+                        category.items?.map((item) => ({
+                            label: item.label,
+                            path:
+                                category.slug === "industry-solutions"
+                                    ? `/industries/${item.slug}`
+                                    : category.slug === "services"
+                                        ? `/services/${item.slug}`
+                                        : category.slug === "platforms"
+                                            ? `/platforms/${item.slug}`
+                                            : `/${item.slug}`
+                        }))
+                })) || []
+        },
+        {
+            title: "Why Us",
+            path: "/About",
+            hasDropdown: false
+        },
+        {
+            title: "Resources",
+            path: "/Resources",
+            hasDropdown: false
+        },
+        {
+            title: "Contact Us",
+            path: "/Contact",
+            hasDropdown: false
+        }
+    ];
+
     const closeDropdown = () => setActiveDropdown(null);
 
     const handleNavItemClick = (menu) => {
@@ -146,7 +191,6 @@ const Navbar = () => {
         setIsMobileMenuOpen(false);
     };
 
-    // Tab change — track previous for direction
     const handleTabChange = (gIdx) => {
         setPrevTab(activeTab);
         setActiveTab(gIdx);
@@ -191,6 +235,22 @@ const Navbar = () => {
         setActiveMobileSubmenu(activeMobileSubmenu === index ? null : index);
     };
 
+    const closeMobileMenu = () => {
+        setIsMobileMenuOpen(false);
+        setActiveMobileSubmenu(null);
+    };
+
+    // Stagger animation variants for mobile menu items
+    const mobileListVariants = {
+        open: { transition: { staggerChildren: 0.06, delayChildren: 0.1 } },
+        closed: {}
+    };
+
+    const mobileItemVariants = {
+        open: { opacity: 1, x: 0 },
+        closed: { opacity: 0, x: 24 }
+    };
+
     return (
         <nav className="navbar-container" ref={navbarRef}>
             <div className="navbar">
@@ -213,14 +273,6 @@ const Navbar = () => {
                         >
                             <span
                                 className="nav-links"
-                                // onClick={(e) => {
-                                //     if (!menu.hasDropdown) {
-                                //         handleNavItemClick(menu, e, path);
-                                //     }
-
-
-                                // }}
-
                                 onClick={() => handleNavItemClick(menu)}
                             >
                                 {menu.title}
@@ -237,7 +289,6 @@ const Navbar = () => {
                                 {menu.hasDropdown && <span className="nav-indicator"></span>}
                             </span>
 
-                            {/* Mega Dropdown */}
                             {menu.hasDropdown && (
                                 <AnimatePresence>
                                     {activeDropdown === idx && (
@@ -249,10 +300,8 @@ const Navbar = () => {
                                             transition={{ duration: 0.22, ease: 'easeOut' }}
                                             onMouseEnter={handleDropdownStay}
                                             onMouseLeave={handleDropdownLeave}
-                                            // Override the CSS-driven show/hide — motion handles it now
                                             style={{ opacity: 1, visibility: 'visible', pointerEvents: 'auto' }}
                                         >
-                                            {/* Bridge gap so mouse doesn't lose hover */}
                                             <div style={{
                                                 position: 'absolute',
                                                 top: -24,
@@ -289,64 +338,139 @@ const Navbar = () => {
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         aria-label="Toggle Menu"
                     >
-                        {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                        {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
                     </button>
                 </div>
             </div>
 
-            {/* Mobile Menu — unchanged */}
-            <div className={`mobile-menu-overlay ${isMobileMenuOpen ? 'open' : ''}`}>
-                {menuData.map((menu, idx) => (
-                    <div key={idx} className="mobile-nav-item">
-                        {menu.hasDropdown ? (
-                            <>
-                                <button className="mobile-nav-link" onClick={() => toggleMobileSubmenu(idx)}>
-                                    {menu.title}
-                                    <ChevronDown
-                                        size={20}
-                                        style={{
-                                            transform: activeMobileSubmenu === idx ? 'rotate(180deg)' : 'rotate(0deg)',
-                                            transition: 'transform 0.2s'
-                                        }}
-                                    />
-                                </button>
-                                <div className={`mobile-submenu ${activeMobileSubmenu === idx ? 'open' : ''}`}>
-                                    {menu.groups.map((group, gIdx) => (
+            {/* ─────────────── Mobile Menu — App-style drawer ─────────────── */}
+            <Drawer
+                anchor="right"
+                open={isMobileMenuOpen}
+                onClose={closeMobileMenu}
+                ModalProps={{ keepMounted: true }}
+                PaperProps={{
+                    sx: {
+                        width: {
+                            xs: "85vw",
+                            sm: "350px"
+                        },
+                        maxWidth: "350px",
+                        height: "100vh",
+                        background: "#fff",
+                        boxShadow: "none",
 
-                                        <div key={gIdx}>
-                                            {console.log(group)}
-                                            <div className="mobile-sub-title">{group.heading}</div>
-                                            {group.items.map((item, iIdx) => (
-                                                <a
-                                                    key={iIdx}
-                                                    href={`/${item?.label}`}
-                                                    onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item?.path); }}
-                                                >
-                                                    {item?.label}
-                                                </a>
-                                            ))}
-                                        </div>
-                                    ))}
-                                </div>
-                            </>
-                        ) : (
-                            <a
-                                href={`/${menu.title.toLowerCase()}`}
-                                className="mobile-nav-link"
-                                onClick={(e) => { e.preventDefault(); handleNavItemClick(menu, e); }}
-                            >
-                                {menu.title}
-                            </a>
-                        )}
+                        "&.MuiDrawer-paper": {
+                            width: {
+                                xs: "85vw",
+                                sm: "350px"
+                            },
+                            maxWidth: "350px",
+                        }
+                    },
+                }}
+            >
+                <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }} role="presentation">
+
+                    {/* Header */}
+                    <div className="mobile-menu-header">
+                        <img src={logo} alt="logo" />
+                        <button
+                            className="mobile-menu-close"
+                            onClick={closeMobileMenu}
+                            aria-label="Close menu"
+                        >
+                            <X size={20} />
+                        </button>
                     </div>
-                ))}
-                <button
-                    className="mobile-cta"
-                    onClick={() => { navigate('/contact'); setIsMobileMenuOpen(false); closeDropdown(); }}
-                >
-                    Contact Us
-                </button>
-            </div>
+
+                    {/* Scrollable nav list */}
+                    <motion.div
+                        className="mobile-menu-body"
+                        initial="closed"
+                        animate={isMobileMenuOpen ? "open" : "closed"}
+                        variants={mobileListVariants}
+                    >
+                        {menuData.map((menu, idx) => (
+                            <motion.div
+                                key={idx}
+                                className="mobile-nav-item"
+                                variants={mobileItemVariants}
+                                transition={{ duration: 0.3, ease: 'easeOut' }}
+                            >
+                                {menu.hasDropdown ? (
+                                    <>
+                                        <button
+                                            className="mobile-nav-link"
+                                            onClick={() => toggleMobileSubmenu(idx)}
+                                        >
+                                            <span className="mobile-nav-icon-wrap">
+                                                <Menu size={18} />
+                                            </span>
+                                            <span className="mobile-nav-link-text">{menu.title}</span>
+                                            <ChevronDown
+                                                size={20}
+                                                className="chevron-icon"
+                                                style={{
+                                                    transform: activeMobileSubmenu === idx ? 'rotate(180deg)' : 'rotate(0deg)',
+                                                }}
+                                            />
+                                        </button>
+                                        <AnimatePresence initial={false}>
+                                            {activeMobileSubmenu === idx && (
+                                                <motion.div
+                                                    className="mobile-submenu"
+                                                    initial={{ height: 0, opacity: 0 }}
+                                                    animate={{ height: 'auto', opacity: 1 }}
+                                                    exit={{ height: 0, opacity: 0 }}
+                                                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                                                >
+                                                    {menu.groups.map((group, gIdx) => (
+                                                        <div key={gIdx}>
+                                                            <div className="mobile-sub-title">{group.heading}</div>
+                                                            {group.items.map((item, iIdx) => (
+                                                                <a
+                                                                    key={iIdx}
+                                                                    href={`/${item?.label}`}
+                                                                    onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item?.path); }}
+                                                                >
+                                                                    {item?.label}
+                                                                    <ArrowRight size={14} />
+                                                                </a>
+                                                            ))}
+                                                        </div>
+                                                    ))}
+                                                </motion.div>
+                                            )}
+                                        </AnimatePresence>
+                                    </>
+                                ) : (
+                                    <a
+                                        href={`/${menu.title.toLowerCase()}`}
+                                        className="mobile-nav-link"
+                                        onClick={(e) => { e.preventDefault(); handleNavItemClick(menu, e); }}
+                                    >
+                                        <span className="mobile-nav-icon-wrap">
+                                            <ArrowRight size={18} />
+                                        </span>
+                                        <span className="mobile-nav-link-text">{menu.title}</span>
+                                    </a>
+                                )}
+                            </motion.div>
+                        ))}
+                    </motion.div>
+
+                    {/* Sticky footer CTA */}
+                    <div className="mobile-menu-footer">
+                        <button
+                            className="mobile-cta"
+                            onClick={() => { navigate('/contact'); closeMobileMenu(); }}
+                        >
+                            Contact Us <ArrowRight size={18} />
+                        </button>
+                    </div>
+                </Box>
+            </Drawer>
         </nav>
     );
 };

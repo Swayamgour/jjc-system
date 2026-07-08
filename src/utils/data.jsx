@@ -241,249 +241,7 @@ export const Icons = {
     ),
 };
 
-// ============================================================
-// MEGA MENU DATA
-// ============================================================
-export const megaMenus = {
-    "What We Do": [
 
-        // { label: "Microsoft 365", sub: "Empower your workforce", slug: "microsoft-365" },
-        // { label: "Dynamics 365", sub: "Business applications", slug: "dynamics-365" },
-        // { label: "Power Platform", sub: "Automate & analyze", slug: "power-platform" },
-        // { label: "Power Bi", sub: "Automate & analyze", slug: "power-bi" },
-        // { label: "SharePoint", sub: "Collaboration intranet", slug: "sharepoint" },
-        // { label: "Azure", sub: "Cloud infrastructure", slug: "" },
-        // { label: "Security", sub: "Protect your environment", slug: "" },
-        // { label: "Teams", sub: "Communication hub", slug: "" },
-        // { label: "Copilot", sub: "AI-powered productivity", slug: "" },
-    ],
-
-
-
-    Solutions: [
-        { label: "Modern Work", sub: "Hybrid workforce solutions" },
-        { label: "Security", sub: "Zero-trust framework" },
-        { label: "Infrastructure", sub: "Cloud-first architecture" },
-        { label: "Data & AI", sub: "Intelligent insights" },
-        { label: "Cloud Migration", sub: "Seamless transition" },
-        { label: "Workflow Automation", sub: "Process efficiency" },
-        { label: "Managed Services", sub: "24/7 support" },
-    ],
-    Industries: [
-        { label: "Manufacturing", sub: "Smart factory solutions" },
-        { label: "Healthcare", sub: "HIPAA-compliant systems" },
-        { label: "Construction", sub: "Project management" },
-        { label: "Professional Services", sub: "Client-centric delivery" },
-        { label: "Financial Services", sub: "Compliance & security" },
-        { label: "Nonprofit", sub: "Mission-driven tech" },
-        { label: "Energy", sub: "Operations optimization" },
-        { label: "Logistics", sub: "Supply chain visibility" },
-        { label: "Education", sub: "Modern learning tools" },
-    ],
-    Company: [
-        { label: "About Us", sub: "Our story & mission" },
-        { label: "Microsoft Expertise", sub: "Partner certifications" },
-        { label: "Delivery Approach", sub: "How we work" },
-        { label: "Careers", sub: "Join our team" },
-        { label: "Contact", sub: "Get in touch" },
-    ],
-};
-
-export const menuData = [
-    {
-        title: "What We Do",
-        hasDropdown: true,
-        groups: [
-            {
-                heading: "Industry Solutions",
-                items: [
-
-                    { label: "Healthcare", path: "/industries/healthcare" },
-                    { label: "Legal", path: "/industries/legal" },
-                    { label: "Professional Services", path: "/industries/professional-services" },
-                    { label: "Financial Services", path: "/industries/financial-services" },
-                    { label: "Manufacturing", path: "/industries/manufacturing" },
-                    { label: "Nonprofits & Associations", path: "/industries/nonprofits-associations" },
-                    { label: "Education", path: "/industries/education" },
-                    { label: "Construction & Field Services", path: "/industries/construction-field-services" },
-                    { label: "Small & Mid-Market Enterprises", path: "/industries/small-mid-market-enterprises" }
-                ]
-            },
-            {
-                heading: "Services",
-                items: [
-                    { label: "ERP, Finance & Operations", path: "/services/microsoft-erp" },
-                    { label: "CRM, Customer Service & Sales Operations", path: "/services/microsoft-crm" },
-                    { label: "AI Readiness & Copilot Enablement", path: "/services/ai-copilot" },
-                    { label: "Modern Workplace", path: "/services/modern-workplace" },
-                    { label: "Intranet Portals & Document Management", path: "/services/sharepoint" },
-                    { label: "Security, Identity & Compliance", path: "/services/security-identity-compliance" },
-                    { label: "Data, Business Intelligence & Reporting", path: "/services/data-bi-reporting" },
-                    { label: "Endpoint & Device Management", path: "/services/endpoint-device-management" },
-                    { label: "Business Process Automation", path: "/services/business-process-automation" },
-                    { label: "Teams Calling & Business Voice", path: "/services/teams-calling-business-voice" },
-                    { label: "Cloud, Virtual Desktop & Infrastructure", path: "/services/cloud-virtual-desktop-infrastructure" },
-                    { label: "Enterprise System Integration", path: "/services/enterprise-system-integration" },
-                    { label: "Microsoft Licensing & Optimization", path: "/services/microsoft-licensing-optimization" },
-                    { label: "dynamics365SalesData", path: "/services/dynamics-365-SalesData" }
-                ]
-            },
-            {
-                heading: "Platforms",
-
-                items: [
-                    {
-                        label: "Dynamics 365 Business Central",
-                        path: "/platforms/dynamics-365-business-central"
-                    },
-                    {
-                        label: "Dynamics 365 Sales",
-                        path: "/platforms/dynamics-365-sales"
-                    },
-                    {
-                        label: "Dynamics 365 Customer Insights",
-                        path: "/platforms/dynamics-365-customer-insights"
-                    },
-                    {
-                        label: "Dynamics 365 Customer Service",
-                        path: "/platforms/dynamics-365-customer-service"
-                    },
-                    {
-                        label: "Dynamics 365 Finance Service",
-                        path: "/platforms/dynamics-365-customer-service"
-                    },
-                    {
-                        label: "Dynamics 365 Field Service",
-                        path: "/platforms/dynamics-365-field-service"
-                    },
-                    {
-                        label: "Microsoft 365",
-                        path: "/platforms/microsoft-365"
-                    },
-                    {
-                        label: "Microsoft Copilot",
-                        path: "/platforms/microsoft-copilot"
-                    },
-                    {
-                        label: "Microsoft Purview",
-                        path: "/platforms/microsoft-purview"
-                    },
-                    {
-                        label: "Microsoft Fabric",
-                        path: "/platforms/microsoft-fabric"
-                    },
-                    {
-                        label: "Microsoft Intune",
-                        path: "/platforms/microsoft-intune"
-                    },
-                    {
-                        label: "Microsoft Defender",
-                        path: "/platforms/microsoft-defender"
-                    },
-                    {
-                        label: "Microsoft Power Platform",
-                        path: "/platforms/microsoft-power-platform"
-                    },
-                    {
-                        label: "Microsoft Azure Cloud",
-                        path: "/platforms/microsoft-azure-cloud"
-                    },
-                    {
-                        label: "Microsoft Azure Virtual Desktop",
-                        path: "/platforms/microsoft-azure-virtual-desktop"
-                    }
-                ]
-            },
-
-        ],
-        featured: {
-            title: "Transform Your Business with Microsoft Cloud & AI Solutions",
-            tag: "Featured Solution"
-        }
-    },
-    {
-        title: "Why Us",
-        path: "/About",
-        hasDropdown: false,
-        groups: [
-            {
-                heading: "About Us",
-                items: [
-                    "Company Overview",
-                    "Leadership Team",
-                    "Our Methodology",
-                    "Microsoft Partnerships"
-                ]
-            },
-            {
-                heading: "Success Stories",
-                items: [
-                    "Case Studies",
-                    "Client Testimonials",
-                    "Customer Success Stories",
-                    "Industry Experience"
-                ]
-            },
-            {
-                heading: "Our Advantages",
-                items: [
-                    "Certified Experts",
-                    "24/7 Support",
-                    "Security First Approach",
-                    "Proven Delivery Framework"
-                ]
-            }
-        ],
-        featured: {
-            title: "Trusted Microsoft Partner for Digital Transformation",
-            tag: "Why Organizations Choose Us"
-        }
-    },
-    {
-        title: "Resources",
-        hasDropdown: false,
-        path: "/Resources",
-        groups: [
-            {
-                heading: "Insights",
-                items: [
-                    "Blog",
-                    "Articles",
-                    "Whitepapers",
-                    "Industry Reports"
-                ]
-            },
-            {
-                heading: "Learning Center",
-                items: [
-                    "Microsoft 365 Guides",
-                    "Azure Resources",
-                    "Security Best Practices",
-                    "Power Platform Tutorials"
-                ]
-            },
-            {
-                heading: "Downloads",
-                items: [
-                    "eBooks",
-                    "Case Studies",
-                    "Solution Briefs",
-                    "Webinars"
-                ]
-            }
-        ],
-        featured: {
-            title: "Latest Microsoft Technology Insights & Best Practices",
-            tag: "Knowledge Hub"
-        }
-    },
-    {
-        title: "Contact Us",
-        hasDropdown: false,
-        path: "/Contact",
-
-    }
-];
 
 export const stats = [
     { value: "100+", label: "Certifications" },
@@ -587,15 +345,15 @@ export const cases = [
 ];
 
 export const industries = [
-    { icon: <Icons.Factory />, label: "Manufacturing" },
     { icon: <Icons.Heart />, label: "Healthcare" },
-    { icon: <Icons.Building />, label: "Construction" },
+    { icon: <Icons.Dollar />, label: "Financial" },
+    { icon: <Icons.Factory />, label: "Manufacturing" },
+    { icon: <Icons.Building />, label: "Retail" },
     { icon: <Icons.Briefcase />, label: "Professional Services" },
-    { icon: <Icons.Dollar />, label: "Financial Services" },
-    { icon: <Icons.People />, label: "Nonprofit" },
-    { icon: <Icons.Leaf />, label: "Energy" },
-    { icon: <Icons.Truck />, label: "Logistics" },
-    { icon: <Icons.GraduationCap />, label: "Education" },
+    { icon: <Icons.People />, label: "Education" },
+    { icon: <Icons.Leaf />, label: "Technology companies" },
+    // { icon: <Icons.Truck />, label: "Logistics" },
+    // { icon: <Icons.GraduationCap />, label: "Education" },
 ];
 
 
@@ -801,3 +559,350 @@ export const businessServices = [
     //     desc: "Optimize Microsoft licensing, costs, compliance, and software investments."
     // }
 ];
+
+
+// utils/platformData.js
+
+export const platformServices = [
+    {
+        title: "Dynamics 365 Business Central",
+        subtitle: "Streamline Finance and Operations with Business Central",
+        intro: "Microsoft Dynamics 365 Business Central is an all-in-one business management solution that helps organizations connect financials, operations, sales, and customer service. Our Business Central consulting services include:",
+        bullets: [
+            "Financial management and accounting",
+            "Inventory and warehouse management",
+            "Supply chain optimization",
+            "Project management and job costing",
+            "Sales order processing",
+            "Purchasing and vendor management",
+            "Business intelligence and reporting",
+            "Integration with Microsoft 365 and Power Platform",
+        ],
+        outro: "With Dynamics 365 Business Central, organizations can automate processes, improve financial visibility, and make data-driven decisions to drive business growth.",
+    },
+    {
+        title: "Dynamics 365 Sales",
+        subtitle: "Empower Your Sales Team with Intelligent CRM",
+        intro: "Dynamics 365 Sales helps sales teams build strong customer relationships and close deals faster. Our implementation services include:",
+        bullets: [
+            "Lead and opportunity management",
+            "Sales pipeline tracking",
+            "Customer relationship management",
+            "Sales forecasting and analytics",
+            "Integration with LinkedIn Sales Navigator",
+            "Mobile sales capabilities",
+            "AI-driven insights and recommendations",
+            "Quote and order management",
+        ],
+        outro: "By implementing Dynamics 365 Sales, organizations can improve sales productivity, increase win rates, and deliver exceptional customer experiences.",
+    },
+    {
+        title: "Dynamics 365 Customer Insights",
+        subtitle: "Unify Customer Data and Deliver Personalized Experiences",
+        intro: "Dynamics 365 Customer Insights helps organizations create a complete view of their customers by unifying data from multiple sources. Our services include:",
+        bullets: [
+            "Customer data unification",
+            "360-degree customer view",
+            "Segmentation and audience targeting",
+            "Personalization at scale",
+            "Predictive analytics and insights",
+            "Customer journey mapping",
+            "Real-time data updates",
+            "Privacy and compliance management",
+        ],
+        outro: "With Customer Insights, businesses can understand customer behavior, predict needs, and deliver personalized experiences that drive loyalty and revenue.",
+    },
+    {
+        title: "Dynamics 365 Customer Service",
+        subtitle: "Deliver Exceptional Customer Support Experiences",
+        intro: "Dynamics 365 Customer Service enables organizations to provide fast, personalized support across all channels. Our consulting services include:",
+        bullets: [
+            "Omnichannel customer support",
+            "Case management and routing",
+            "Knowledge base management",
+            "Service level agreement management",
+            "Self-service portals",
+            "Integration with Microsoft Teams",
+            "AI-driven recommendations",
+            "Customer satisfaction analytics",
+        ],
+        outro: "With Dynamics 365 Customer Service, organizations can reduce resolution times, improve customer satisfaction, and build lasting customer relationships.",
+    },
+    {
+        title: "Dynamics 365 Finance",
+        subtitle: "Transform Financial Operations and Decision-Making",
+        intro: "Dynamics 365 Finance helps organizations gain greater control over financial operations and make smarter decisions. Our services include:",
+        bullets: [
+            "General ledger and financial reporting",
+            "Accounts payable and receivable",
+            "Budgeting and forecasting",
+            "Asset management",
+            "Cost accounting",
+            "Regulatory compliance and reporting",
+            "Financial analytics",
+            "Integration with business applications",
+        ],
+        outro: "With Dynamics 365 Finance, organizations can streamline financial processes, reduce complexity, and gain real-time visibility into financial performance.",
+    },
+    {
+        title: "Dynamics 365 Field Service",
+        subtitle: "Optimize Field Operations and Improve Customer Satisfaction",
+        intro: "Dynamics 365 Field Service helps organizations manage field operations, resources, and customer appointments effectively. Our services include:",
+        bullets: [
+            "Work order management",
+            "Resource scheduling and optimization",
+            "Inventory management",
+            "Mobile field service capabilities",
+            "IoT device integration",
+            "Customer asset management",
+            "Service agreement management",
+            "Performance analytics",
+        ],
+        outro: "With Dynamics 365 Field Service, organizations can improve first-time fix rates, reduce operational costs, and deliver exceptional field service experiences.",
+    },
+    {
+        title: "Microsoft 365",
+        subtitle: "Empower Modern Work and Collaboration",
+        intro: "Microsoft 365 provides a comprehensive suite of productivity and collaboration tools for modern workplaces. Our consulting services include:",
+        bullets: [
+            "Microsoft Teams implementation",
+            "SharePoint document management",
+            "Exchange email solutions",
+            "OneDrive for Business",
+            "Office productivity applications",
+            "User adoption and change management",
+            "Security and compliance configuration",
+            "Governance and lifecycle management",
+        ],
+        outro: "With Microsoft 365, organizations can improve collaboration, enhance productivity, and create a connected digital workplace that drives business success.",
+    },
+    {
+        title: "Microsoft Copilot",
+        subtitle: "Transform Productivity with AI-Powered Assistance",
+        intro: "Microsoft Copilot brings the power of AI to Microsoft 365 applications, helping users accomplish more with less effort. Our services include:",
+        bullets: [
+            "Copilot implementation and setup",
+            "AI readiness assessment",
+            "Use case identification",
+            "Integration with Microsoft 365 apps",
+            "User training and adoption",
+            "Security and compliance configuration",
+            "Custom Copilot development",
+            "Performance optimization",
+        ],
+        outro: "With Microsoft Copilot, organizations can boost productivity, unlock creativity, and transform how teams work across the organization.",
+    },
+    {
+        title: "Microsoft Purview",
+        subtitle: "Manage Data Governance and Compliance with Confidence",
+        intro: "Microsoft Purview provides unified data governance and compliance solutions. Our services include:",
+        bullets: [
+            "Data classification and labeling",
+            "Data loss prevention",
+            "Information protection",
+            "Records management",
+            "eDiscovery and legal hold",
+            "Audit and compliance reporting",
+            "Insider risk management",
+            "Multi-cloud data governance",
+        ],
+        outro: "With Microsoft Purview, organizations can protect sensitive information, maintain compliance, and gain better visibility into their data landscape.",
+    },
+    {
+        title: "Microsoft Fabric",
+        subtitle: "Unify Your Data Analytics and Business Intelligence",
+        intro: "Microsoft Fabric is an end-to-end analytics platform that unifies data integration, engineering, warehouse, and business intelligence. Our services include:",
+        bullets: [
+            "Data lakehouse implementation",
+            "Data integration and ETL pipelines",
+            "Data warehouse modernization",
+            "Real-time analytics",
+            "Data orchestration",
+            "Business intelligence dashboards",
+            "Data governance and security",
+            "Performance optimization",
+        ],
+        outro: "With Microsoft Fabric, organizations can break down data silos, accelerate analytics, and gain deeper insights to drive business decisions.",
+    },
+    {
+        title: "Microsoft Intune",
+        subtitle: "Simplify Endpoint Management and Security",
+        intro: "Microsoft Intune helps organizations manage and secure devices, apps, and data across the organization. Our services include:",
+        bullets: [
+            "Mobile device management",
+            "Mobile application management",
+            "Endpoint security policies",
+            "Conditional access policies",
+            "Application deployment",
+            "Device compliance monitoring",
+            "Integration with Microsoft Entra",
+            "Zero-trust security framework",
+        ],
+        outro: "With Microsoft Intune, organizations can protect corporate data, simplify device management, and ensure secure access to resources from anywhere.",
+    },
+    {
+        title: "Microsoft Defender",
+        subtitle: "Strengthen Your Security Posture with Advanced Threat Protection",
+        intro: "Microsoft Defender provides comprehensive security solutions to protect against cyber threats. Our security services include:",
+        bullets: [
+            "Endpoint protection and security",
+            "Threat and vulnerability management",
+            "Identity protection",
+            "Email and collaboration security",
+            "Cloud security posture management",
+            "Security information and event management",
+            "Extended detection and response",
+            "Security operations and response",
+        ],
+        outro: "With Microsoft Defender, organizations can detect threats faster, respond to incidents effectively, and strengthen their overall security posture.",
+    },
+    {
+        title: "Microsoft Power Platform",
+        subtitle: "Automate Workflows and Build Intelligent Business Applications",
+        intro: "Microsoft Power Platform empowers organizations to create custom solutions, automate processes, and analyze data. Our services include:",
+        bullets: [
+            "Power Apps development",
+            "Power Automate workflow automation",
+            "Power BI analytics and dashboards",
+            "Power Pages portals",
+            "Power Virtual Agents chatbots",
+            "Low-code/no-code development",
+            "Integration with Dynamics 365",
+            "Custom business applications",
+        ],
+        outro: "With Microsoft Power Platform, organizations can accelerate digital transformation, empower citizen developers, and create solutions that drive business growth.",
+    },
+    {
+        title: "Microsoft Azure Cloud",
+        subtitle: "Build, Deploy, and Scale Applications with Confidence",
+        intro: "Microsoft Azure provides a comprehensive cloud platform for building, deploying, and managing applications. Our Azure consulting services include:",
+        bullets: [
+            "Cloud migration and modernization",
+            "Infrastructure as a Service",
+            "Platform as a Service",
+            "Application development and deployment",
+            "Cloud security and compliance",
+            "Disaster recovery and business continuity",
+            "Hybrid cloud solutions",
+            "Cost optimization and management",
+        ],
+        outro: "With Microsoft Azure, organizations can innovate faster, reduce operational costs, and scale applications with enterprise-grade security and reliability.",
+    },
+    {
+        title: "Microsoft Azure Virtual Desktop",
+        subtitle: "Enable Secure Remote Work with Virtual Desktop Solutions",
+        intro: "Microsoft Azure Virtual Desktop provides a secure, scalable virtual desktop experience from the cloud. Our services include:",
+        bullets: [
+            "Virtual desktop infrastructure setup",
+            "Application virtualization",
+            "User profile management",
+            "Security and access controls",
+            "Performance optimization",
+            "Cost management",
+            "Integration with Microsoft 365",
+            "Migration from legacy VDI solutions",
+        ],
+        outro: "With Azure Virtual Desktop, organizations can enable secure remote work, reduce infrastructure costs, and deliver a consistent user experience across devices.",
+    },
+];
+
+export default platformServices;
+
+
+export const ChallengesData = [
+    {
+        icon: <Icons.Disconnect />,
+        title: "Inefficient Business Processes",
+        sub: "Slow and manual workflows can reduce productivity. We implement Microsoft automation solutions that simplify tasks and improve operational efficiency."
+    },
+    {
+        icon: <Icons.Chart />,
+        title: "Limited Data Visibility",
+        sub: "Businesses need accurate information to make better decisions. Our Power BI consulting services convert complex data into interactive dashboards and actionable insights."
+    },
+    {
+        icon: <Icons.Productivity />,
+        title: "Collaboration Problems",
+        sub: "Disconnected teams can impact performance. Microsoft 365 and SharePoint solutions help employees collaborate securely from anywhere."
+    },
+    {
+        icon: <Icons.Rocket />,
+        title: "Cloud Adoption Challenges",
+        sub: "Moving to the cloud requires proper planning. Our Microsoft Azure consulting services support secure cloud migration, infrastructure optimization, and digital transformation."
+    },
+    {
+        icon: <Icons.Lock />,
+        title: "Security and Compliance Risks",
+        sub: "Cyber threats continue to increase. We provide Microsoft security solutions that protect identities, applications, and business data."
+    },
+];
+
+export const solutions = [
+    { icon: <Icons.People />, title: "Modern Work", desc: "Enable collaboration, communication & productivity." },
+    { icon: <Icons.Shield />, title: "Security", desc: "Strengthen your security posture and ensure compliance." },
+    { icon: <Icons.Cloud />, title: "Infrastructure", desc: "Build a scalable, secure and resilient IT infrastructure." },
+    { icon: <Icons.Database />, title: "Data & AI", desc: "Turn your data into intelligent insights with AI." },
+    { icon: <Icons.Briefcase />, title: "Business Applications", desc: "Streamline operations with Microsoft business applications." },
+    { icon: <Icons.Azure />, title: "Cloud Migration", desc: "Migrate to Microsoft Cloud with confidence and minimal risk." },
+    { icon: <Icons.Rocket />, title: "Workflow Automation", desc: "Automate repetitive tasks and improve efficiency." },
+    { icon: <Icons.Chart />, title: "Power BI Reporting", desc: "Visualize data and make smarter, faster decisions." },
+    { icon: <Icons.Grid />, title: "SharePoint Intranet", desc: "Build powerful intranets and manage documents securely." },
+    { icon: <Icons.Check />, title: "Managed Services", desc: "Proactive support and management for your environment." },
+];
+
+export const steps = [
+    { num: "01", title: "Assess", desc: "We evaluate your current environment and business goals." },
+    { num: "02", title: "Design", desc: "We design the right solution architecture tailored to your needs." },
+    { num: "03", title: "Implement", desc: "Our experts implement with best practices and quality." },
+    { num: "04", title: "Optimize", desc: "We validate data and make smarter, faster decisions." },
+    { num: "05", title: "Manage", desc: "We provide ongoing support to drive user adoption." },
+];
+
+
+import {
+    // FaCheck,
+    // FaShieldAlt,
+    FaUsers,
+    FaCloud,
+    FaDollarSign,
+    FaBolt,
+    FaLock,
+    FaChartLine,
+    FaServer,
+} from "react-icons/fa";
+
+export const benefits = [
+    {
+        icon: <FaUsers />,
+        text: "Improved workplace productivity",
+    },
+    {
+        icon: <FaUsers />,
+        text: "Better collaboration",
+    },
+    {
+        icon: <FaCloud />,
+        text: "Secure cloud adoption",
+    },
+    {
+        icon: <FaDollarSign />,
+        text: "Reduced operational costs",
+    },
+    {
+        icon: <FaBolt />,
+        text: "Automated workflows",
+    },
+    {
+        icon: <FaLock />,
+        text: "Stronger cybersecurity",
+    },
+    {
+        icon: <FaChartLine />,
+        text: "Faster business decisions",
+    },
+    {
+        icon: <FaServer />,
+        text: "Scalable technology infrastructure",
+    },
+];
+

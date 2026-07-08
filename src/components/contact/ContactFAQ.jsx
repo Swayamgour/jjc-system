@@ -1,99 +1,165 @@
 // components/contact/ContactFAQ.jsx
-// ─────────────────────────────────────────────────────────────────────────────
-// FAQ accordion:
-//   • Single open item at a time (or all collapsed)
-//   • Animated expand/collapse via framer-motion
-//   • Keyboard accessible (Enter/Space toggles, role="button")
-// ─────────────────────────────────────────────────────────────────────────────
-
-import { useState, useRef } from 'react';
-import { motion, AnimatePresence, useInView } from 'framer-motion';
+import { useState, useRef, useLayoutEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
-import { FAQ_ITEMS } from '../../utils/contactData';
+import gsap from 'gsap';
+import SplitType from 'split-type';
 import styles from './ContactFAQ.module.css';
 
 // ── Single FAQ item ──────────────────────────────────────────────────────────
+const FAQItem = ({ item, isOpen, onToggle, index }) => {
+  const contentRef = useRef(null);
 
-const FAQItem = ({ item, isOpen, onToggle }) => (
-  <div className={`${styles.item} ${isOpen ? styles.itemOpen : ''}`}>
-    <button
-      className={styles.question}
-      aria-expanded={isOpen}
-      aria-controls={`faq-answer-${item.id}`}
-      id={`faq-btn-${item.id}`}
-      onClick={onToggle}
-    >
-      <span className={styles.questionText}>{item.question}</span>
-      <span className={styles.icon} aria-hidden="true">
-        {isOpen ? <Minus size={18} /> : <Plus size={18} />}
-      </span>
-    </button>
+  useLayoutEffect(() => {
+    if (isOpen) {
+      gsap.fromTo(contentRef.current,
+        { height: 0, opacity: 0 },
+        { height: 'auto', opacity: 1, duration: 0.4, ease: 'power3.out' }
+      );
+    } else {
+      gsap.to(contentRef.current, {
+        height: 0,
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power3.inOut'
+      });
+    }
+  }, [isOpen]);
 
-    <AnimatePresence initial={false}>
-      {isOpen && (
-        <motion.div
-          id={`faq-answer-${item.id}`}
-          role="region"
-          aria-labelledby={`faq-btn-${item.id}`}
-          key="answer"
-          initial={{ height: 0, opacity: 0 }}
-          animate={{ height: 'auto', opacity: 1 }}
-          exit={{ height: 0, opacity: 0 }}
-          transition={{ duration: 0.28, ease: 'easeInOut' }}
-          className={styles.answerWrapper}
-        >
-          <p className={styles.answer}>{item.answer}</p>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  </div>
-);
+  return (
+    <div className={`${styles.item} ${isOpen ? styles.itemOpen : ''}`}>
+      <button
+        className={styles.question}
+        aria-expanded={isOpen}
+        aria-controls={`faq-answer-${item.id}`}
+        id={`faq-btn-${item.id}`}
+        onClick={onToggle}
+      >
+        <span className={styles.questionText}>{item.q}</span>
+        <span className={styles.icon} aria-hidden="true">
+          {isOpen ? <Minus size={18} /> : <Plus size={18} />}
+        </span>
+      </button>
+
+      <div
+        ref={contentRef}
+        className={styles.answerWrapper}
+        style={{ overflow: 'hidden', height: 0, opacity: 0 }}
+      >
+        <p className={styles.answer}>{item.a}</p>
+      </div>
+    </div>
+  );
+};
 
 // ── Main Component ────────────────────────────────────────────────────────────
-
-const ContactFAQ = () => {
-  const [openId, setOpenId] = useState(FAQ_ITEMS[0].id); // first open by default
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.15 });
+const ContactFAQ = ({ faqs }) => {
+  const [openId, setOpenId] = useState(1);
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const eyebrowRef = useRef(null);
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
+  const accordionRef = useRef(null);
 
   const toggle = (id) => setOpenId((prev) => (prev === id ? null : id));
 
+  useLayoutEffect(() => {
+    const ctx = gsap.context(() => {
+      // Split text for title
+      const split = new SplitType(titleRef.current, {
+        types: 'chars'
+      });
+
+      const tl = gsap.timeline({
+        defaults: { ease: 'power4.out' },
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      // Animate eyebrow
+      tl.from(eyebrowRef.current, {
+        y: 40,
+        opacity: 0,
+        duration: 0.6
+      })
+        // Animate title characters
+        .from(split.chars, {
+          x: 150,
+          opacity: 0,
+          duration: 0.7,
+          stagger: 0.04,
+          ease: 'power4.out'
+        }, '-=0.2')
+        // Animate description
+        .from(descRef.current, {
+          y: 30,
+          opacity: 0,
+          duration: 0.6
+        }, '-=0.3')
+        // Animate accordion items
+        .from(accordionRef.current.children, {
+          x: 40,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.6,
+          ease: 'power4.out'
+        }, '-=0.3');
+
+      // Hover animations for questions
+      const questions = accordionRef.current.querySelectorAll(`.${styles.question}`);
+      questions.forEach((q) => {
+        q.addEventListener('mouseenter', () => {
+          gsap.to(q, {
+            scale: 1.02,
+            duration: 0.2,
+            ease: 'power2.out'
+          });
+        });
+        q.addEventListener('mouseleave', () => {
+          gsap.to(q, {
+            scale: 1,
+            duration: 0.2,
+            ease: 'power2.out'
+          });
+        });
+      });
+
+      return () => split.revert();
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className={styles.section} aria-labelledby="faq-heading" ref={ref}>
+    <section ref={sectionRef} className={styles.section} aria-labelledby="faq-heading">
       <div className={styles.inner}>
         {/* Left: heading */}
-        <motion.div
-          className={styles.headingCol}
-          initial={{ opacity: 0, x: -24 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          <span className={styles.eyebrow}>FAQ</span>
-          <h2 id="faq-heading" className={styles.heading}>
+        <div className={styles.headingCol}>
+          <span ref={eyebrowRef} className={styles.eyebrow}>FAQ</span>
+          <h2 ref={titleRef} id="faq-heading" className={styles.heading}>
             Frequently Asked Questions
           </h2>
-          <p className={styles.description}>
+          <p ref={descRef} className={styles.description}>
             Can't find what you're looking for? Send us a message through the
             form above and we'll get back to you.
           </p>
-        </motion.div>
+        </div>
 
         {/* Right: accordion */}
-        <motion.div
-          className={styles.accordionCol}
-          initial={{ opacity: 0, x: 24 }}
-          animate={inView ? { opacity: 1, x: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.08 }}
-        >
-          {FAQ_ITEMS.map((item) => (
+        <div ref={accordionRef} className={styles.accordionCol}>
+          {faqs.map((item, index) => (
             <FAQItem
               key={item.id}
               item={item}
+              index={index}
               isOpen={openId === item.id}
               onToggle={() => toggle(item.id)}
             />
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );

@@ -1,70 +1,55 @@
-import React, { useRef } from 'react'
-import { Icons, reviews } from '../utils/data';
-import { useInView , motion } from 'framer-motion';
+import React, { useRef } from "react";
 import { FaQuoteLeft } from "react-icons/fa6";
-
-
+import { Icons, reviews } from "../utils/data";
+import { useSectionAnimation } from "../hooks/useSectionAnimation";
 
 function Testimonials() {
-    //    reviews
+    const sectionRef = useRef(null);
+    const tagRef = useRef(null);
+    const titleRef = useRef(null);
+    const cardsRef = useRef(null);
 
-    const ref = useRef(null);
-     const inView = useInView(ref, { once: true, amount: 0.2 });
-
-     const fadeUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    };
-
-    const stagger = {
-        visible: { transition: { staggerChildren: 0.1 } },
-    };
-    // Icons
+    useSectionAnimation({
+        sectionRef,
+        tagRef,
+        titleRef,
+        listRef: cardsRef,
+    });
 
     return (
         <section
-            ref={ref}
+            ref={sectionRef}
             className="testimonials-section"
         >
             <div className="container">
 
-                <motion.div
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate={
-                        inView
-                            ? "visible"
-                            : "hidden"
-                    }
-                    className="testimonials-header"
-                >
-                    <div className="section-tag">
+                <div className="testimonials-header">
+
+                    <div
+                        ref={tagRef}
+                        className="section-tag"
+                    >
                         WHAT OUR CLIENTS SAY
                     </div>
-                </motion.div>
 
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate={
-                        inView
-                            ? "visible"
-                            : "hidden"
-                    }
+                    <h2
+                        ref={titleRef}
+                        className="resources-title"
+                    >
+                        Testimonials
+                    </h2>
+
+                </div>
+
+                <div
+                    ref={cardsRef}
                     className="testimonials-grid"
                 >
                     {reviews.map((review, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            variants={fadeUp}
-                            whileHover={{
-                                y: -4,
-                                boxShadow:
-                                    "0 16px 40px rgba(0,0,0,0.08)"
-                            }}
                             className="testimonial-card"
                         >
-
                             <div className="testimonial-quote">
                                 <FaQuoteLeft />
                             </div>
@@ -90,27 +75,25 @@ function Testimonials() {
                                     </div>
 
                                     <div className="testimonial-stars">
-                                        {[...Array(5)].map(
-                                            (_, i) => (
-                                                <Icons.Star
-                                                    key={i}
-                                                    filled
-                                                />
-                                            )
-                                        )}
+                                        {[...Array(5)].map((_, i) => (
+                                            <Icons.Star
+                                                key={i}
+                                                filled
+                                            />
+                                        ))}
                                     </div>
 
                                 </div>
 
                             </div>
 
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
 
             </div>
         </section>
     );
 }
 
-export default Testimonials
+export default Testimonials;

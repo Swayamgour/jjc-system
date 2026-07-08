@@ -1,203 +1,169 @@
-import { useInView, motion } from 'framer-motion';
-import React, { useRef } from 'react'
-import { Icons } from '../utils/data';
-import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
-import { useSplitText } from '../hooks/useSplitText';
+import React, { useRef } from "react";
+import { Icons } from "../utils/data";
+import { useSectionAnimation } from "../hooks/useSectionAnimation";
 
-
+const steps = [
+    {
+        num: "01",
+        title: "Business Assessment",
+        desc: "First, we analyze your current technology environment, business objectives, and operational challenges.",
+    },
+    {
+        num: "02",
+        title: "Solution Planning",
+        desc: "Next, our Microsoft consultants create a strategy aligned with your business goals.",
+    },
+    {
+        num: "03",
+        title: "Implementation",
+        desc: "Then, we deploy Microsoft solutions using proven methodologies and best practices.",
+    },
+    {
+        num: "04",
+        title: "Optimization & Support",
+        desc: "Finally, we continuously improve your Microsoft environment to ensure long-term success.",
+    },
+];
 
 function DeliveryProcess() {
-    const steps = [
-        { num: "01", title: "Assess", desc: "We evaluate your current environment and business goals." },
-        { num: "02", title: "Design", desc: "We design the right solution architecture tailored to your needs." },
-        { num: "03", title: "Implement", desc: "Our experts implement with best practices and quality." },
-        { num: "04", title: "Optimize", desc: "We validate data and make smarter, faster decisions." },
-        { num: "05", title: "Manage", desc: "We provide ongoing support to drive user adoption." },
-    ];
+    const sectionRef = useRef(null);
+    const titleRef = useRef(null);
+    const timelineRef = useRef(null);
+    const cardRef = useRef(null);
+    const tagRef = useRef(null);
+    const descRef = useRef(null);
 
-    const ref = useRef(null);
-     const inView = useInView(ref, { once: true, amount: 0.2 });
-
-    const fadeUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    };
-    const stagger = {
-        visible: { transition: { staggerChildren: 0.1 } },
-    };
-
-    const slideRight = {
-        hidden: { opacity: 0, x: 40 },
-        visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    };
-
-    const textRef = useRef(null)
-
-    useSplitText(textRef)
-
-
-
+    useSectionAnimation({
+        sectionRef,
+        tagRef,
+        descRef ,
+        titleRef,
+        listRef: timelineRef,
+        outroRef: cardRef,
+    });
 
     return (
-        <section
-            ref={ref}
-            className="approach-section"
-        >
+        <section ref={sectionRef} className="approach-section">
+
+
+            <div className="industries-header">
+
+                <div
+                    ref={tagRef}
+                    className="section-tag"
+                >
+                    INDUSTRIES WE SERVE
+                </div>
+
+                <h2
+                    ref={titleRef}
+                    className="industries-title"
+                >
+                    Microsoft Consulting Process
+                   
+                </h2>
+
+                <p
+                    ref={descRef}
+                    className="industries-desc"
+                >
+                    We follow a structured process to deliver reliable
+                    Microsoft solutions.
+                </p>
+
+            </div>
+
+
             <div className="container approach-container">
 
-                {/* Left */}
+                {/* LEFT */}
+
+
 
                 <div className="approach-content">
 
-                    <motion.div
-                        variants={fadeUp}
-                        initial="hidden"
-                        animate={
-                            inView
-                                ? "visible"
-                                : "hidden"
-                        }
-                    >
-                        {/* <div style={{textAlign:'start'}} className="section-tag">
-                            <GoArrowLeft style={{ fontSize: '16px' }} />  OUR APPROACH <GoArrowRight style={{ fontSize: '16px' }} />
-                        </div> */}
+                    {/* <div className="section-tag">
+                        MICROSOFT CONSULTING PROCESS
+                    </div> */}
 
-                        <h2 ref={textRef} className="approach-title">
-                            A Proven Approach to Deliver.
-                        </h2>
-                    </motion.div>
+
 
                     <div className="approach-timeline">
 
                         <div className="timeline-line" />
 
-                        <motion.div
-                            variants={stagger}
-                            initial="hidden"
-                            animate={
-                                inView
-                                    ? "visible"
-                                    : "hidden"
-                            }
-                        >
-                            {steps.map((step, index) => (
-                                <motion.div
-                                    key={index}
-                                    variants={fadeUp}
+                        <div ref={timelineRef}>
+
+                            {steps.map((step) => (
+                                <div
+                                    key={step.num}
                                     className="timeline-item"
                                 >
-
                                     <div className="timeline-number">
                                         {step.num}
                                     </div>
 
                                     <div className="timeline-content">
 
-                                        <div className="timeline-title">
+                                        <h3 className="timeline-title">
                                             {step.title}
-                                        </div>
+                                        </h3>
 
-                                        <div className="timeline-description">
+                                        <p className="timeline-description">
                                             {step.desc}
-                                        </div>
+                                        </p>
 
                                     </div>
-
-                                </motion.div>
+                                </div>
                             ))}
-                        </motion.div>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-                {/* Right */}
+                {/* RIGHT */}
 
-                <motion.div
-                    variants={slideRight}
-                    initial="hidden"
-                    animate={
-                        inView
-                            ? "visible"
-                            : "hidden"
-                    }
+                <div
+                    ref={cardRef}
                     className="expertise-card"
                 >
 
                     <div className="expertise-tag">
-                        MICROSOFT EXPERTISE
+                        WHY JJC SYSTEMS
                     </div>
 
                     <h3 className="expertise-title">
-                        Backed By Microsoft.
-                        Built For Impact.
+                        Why JJC Systems is Your Microsoft Consulting Partner
                     </h3>
 
                     <p className="expertise-description">
-                        Our team holds deep expertise across Microsoft technologies
-                        and stays ahead with continuous training and certifications.
+                        JJC Systems combines Microsoft technology expertise
+                        with business-focused consulting to help organizations
+                        achieve digital transformation.
                     </p>
 
-                    <div className="expertise-stats">
+                    <p className="expertise-description">
+                        Our team understands that every business requires a
+                        unique technology approach. Therefore, we deliver
+                        customized Microsoft solutions that improve efficiency,
+                        security, and scalability.
+                    </p>
 
-                        {[
-                            {
-                                value: "100+",
-                                label: "Microsoft Certifications",
-                            },
-                            {
-                                value: "150+",
-                                label: "Successful Projects",
-                            },
-                            {
-                                value: "98%",
-                                label: "Client Satisfaction",
-                            },
-                            {
-                                value: "10+",
-                                label: "Years of Experience",
-                            },
-                        ].map((item, index) => (
-                            <div
-                                key={index}
-                                className="expertise-stat"
-                            >
+                    <p className="expertise-description">
+                        With expertise across Microsoft 365, Azure, Dynamics
+                        365, Power Platform, Business Central, SharePoint,
+                        Power BI, and Microsoft Security solutions, we help
+                        businesses maximize their technology investments.
+                    </p>
 
-                                <div className="expertise-icon">
-                                    🏆
-                                </div>
 
-                                <div>
-
-                                    <div className="expertise-value">
-                                        {item.value}
-                                    </div>
-
-                                    <div className="expertise-label">
-                                        {item.label}
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        ))}
-
-                    </div>
-
-                    <motion.button
-                        whileHover={{ scale: 1.04 }}
-                        whileTap={{ scale: 0.97 }}
-                        className="expertise-btn"
-                    >
-                        Our Microsoft Expertise
-                        <Icons.Arrow />
-                    </motion.button>
-
-                </motion.div>
+                </div>
 
             </div>
         </section>
     );
 }
 
-export default DeliveryProcess
+export default DeliveryProcess;

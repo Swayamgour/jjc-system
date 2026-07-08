@@ -1,64 +1,66 @@
-import { useInView, motion } from 'framer-motion';
-import React, { useRef } from 'react'
-import { Icons, industries } from '../utils/data';
-import { useSplitText } from '../hooks/useSplitText';
-
-
+import React, { useRef } from "react";
+import { Icons, industries } from "../utils/data";
+import { useSectionAnimation } from "../hooks/useSectionAnimation";
 
 function Industries() {
-    //    industries
+    const sectionRef = useRef(null);
+    const tagRef = useRef(null);
+    const titleRef = useRef(null);
+    const descRef = useRef(null);
+    const cardsRef = useRef(null);
+    const buttonRef = useRef(null);
 
-    const ref = useRef(null);
-     const inView = useInView(ref, { once: true, amount: 0.2 });
-
-    const fadeUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    };
-
-    const stagger = {
-        visible: { transition: { staggerChildren: 0.1 } },
-    };
-
-
-    const textRef = useRef(null)
-
-
-    useSplitText(textRef)
+    useSectionAnimation({
+        sectionRef,
+        tagRef,
+        titleRef,
+        descRef,
+        listRef: cardsRef,
+        outroRef: buttonRef,
+    });
 
     return (
         <section
-            ref={ref}
+            ref={sectionRef}
             className="industries-section"
         >
             <div className="container">
 
-                <motion.div
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
-                    className="industries-header"
-                >
-                    <div className="section-tag">
+                <div className="industries-header">
+
+                    <div
+                        ref={tagRef}
+                        className="section-tag"
+                    >
                         INDUSTRIES WE SERVE
                     </div>
 
-                    <h2 ref={textRef} className="industries-title">
+                    <h2
+                        ref={titleRef}
+                        className="industries-title"
+                    >
                         Industry Expertise. Real Impact.
                     </h2>
-                </motion.div>
 
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
+                    <p
+                        ref={descRef}
+                        className="industries-desc"
+                    >
+                        JJC Systems supports organizations across different
+                        industries by delivering customized Microsoft technology
+                        solutions that match specific business goals,
+                        compliance needs, and operational challenges.
+                    </p>
+
+                </div>
+
+                <div
+                    ref={cardsRef}
                     className="industries-grid"
                 >
                     {industries.map((industry, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            variants={fadeUp}
-                            whileHover={{ scale: 1.08 }}
                             className="industry-card"
                         >
                             <div className="industry-icon">
@@ -68,24 +70,22 @@ function Industries() {
                             <div className="service-card-title">
                                 {industry.label}
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
 
-                <motion.div
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
+                {/* <div
+                    ref={buttonRef}
                     className="industries-footer"
                 >
                     <button className="industries-btn">
-                        View All Industries  <Icons.Arrow />
+                        View All Industries <Icons.Arrow />
                     </button>
-                </motion.div>
+                </div> */}
 
             </div>
         </section>
     );
 }
 
-export default Industries
+export default Industries;

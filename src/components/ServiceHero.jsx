@@ -9,7 +9,7 @@ import '../pages/ServicePage.css'
 import { useSplitText } from "../hooks/useSplitText";
 
 function ServiceHero({ d }) {
-    // console.log(d)
+    console.log(d)
 
     const heroRef = useRef(null);
     const breadcrumbRef = useRef(null);
@@ -218,12 +218,15 @@ function ServiceHero({ d }) {
                     </h1>
 
                     <p ref={descRef} className="service-hero-desc">
-                        {d?.description}
+                        {d?.hero?.description}
+                    </p>
+                    <p ref={descRef} className="service-hero-desc">
+                        {d?.hero?.subDescription}
                     </p>
 
-                    <p ref={subDescRef} className="service-hero-desc" style={{ marginBottom: 0 }}>
+                    {/* <p ref={subDescRef} className="service-hero-desc" style={{ marginBottom: 0 }}>
                         {d?.subDescription}
-                    </p>
+                    </p> */}
 
                     <div className="service-hero-actions" ref={actionsRef}>
                         {/* FIX: whileTap only works on motion.button, not plain <button> */}
@@ -242,7 +245,7 @@ function ServiceHero({ d }) {
                     </div>
 
                     <div ref={badgesRef} className="service-hero-badges">
-                        {d?.heroBadges?.map((b, i) => (
+                        {d?.hero?.badges?.map((b, i) => (
                             <div key={i} className="service-hero-badge">
                                 {CheckCircle("rgba(255,255,255,0.85)")} {b}
                             </div>
@@ -257,7 +260,7 @@ function ServiceHero({ d }) {
             {/* Background image */}
             <div className="service-hero-image-wrap">
                 <div ref={imageRef} className="service-hero-image">
-                    {d?.heroImage && <img src={d?.heroImage} alt={d?.title} />}
+                    <img src={d?.hero?.image?.url || "https://res.cloudinary.com/sakshichak1/image/upload/v1783428245/jjc-systems/fbxeeyjucyvcxmm2srjt.jpg"} alt={d?.title} />
                 </div>
             </div>
 

@@ -1,71 +1,66 @@
-import { useInView, motion } from 'framer-motion';
-import React, { useRef } from 'react'
-import { Icons } from '../utils/data';
-import { useSplitText } from '../hooks/useSplitText';
-
-
-
+import React, { useRef } from "react";
+import { ChallengesData } from "../utils/data";
+import { useSectionAnimation } from "../hooks/useSectionAnimation";
 
 function Challenges() {
-    const items = [
-        { icon: <Icons.Disconnect />, title: "Disconnected Systems", sub: "and data silos" },
-        { icon: <Icons.Productivity />, title: "Low Productivity", sub: "and manual processes" },
-        { icon: <Icons.Lock />, title: "Security Risks", sub: "and compliance gaps" },
-        { icon: <Icons.Dollar />, title: "High IT Costs", sub: "and inflated infrastructure" },
-        { icon: <Icons.Chart />, title: "Lack of Insights", sub: "for better decisions" },
-        { icon: <Icons.Rocket />, title: "Slow Pace", sub: "of digital transformation" },
-    ];
+    const sectionRef = useRef(null);
+    const tagRef = useRef(null);
+    const titleRef = useRef(null);
+    const descRef = useRef(null);
+    const cardsRef = useRef(null);
 
-    const ref = useRef(null);
-     const inView = useInView(ref, { once: true, amount: 0.2 });
-
-    const fadeUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    };
-
-    const stagger = {
-        visible: { transition: { staggerChildren: 0.1 } },
-    };
-
-    const titleRef = useRef(null)
-
-    useSplitText(titleRef)
+    useSectionAnimation({
+        sectionRef,
+        tagRef,
+        titleRef,
+        descRef,
+        listRef: cardsRef,
+    });
 
     return (
         <section
-            ref={ref}
+            ref={sectionRef}
             className="challenges-section"
         >
             <div className="container">
 
-                <motion.div
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
-                    className="challenges-header"
-                >
-                    <div className="section-tag">
+                <div className="challenges-header">
+
+                    <div
+                        ref={tagRef}
+                        className="section-tag"
+                    >
                         BUSINESS CHALLENGES WE SOLVE
                     </div>
 
-                    <h2 ref={titleRef} className="challenges-title">
-                        Helping You Overcome What's Holding You Back
+                    <h2
+                        ref={titleRef}
+                        className="challenges-title"
+                    >
+                        Turning Technology Challenges into Business Opportunities
                     </h2>
-                </motion.div>
 
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
+                    <p
+                        ref={descRef}
+                        className="challenges-desc"
+                    >
+                        Every organization faces technology challenges while growing.
+                        However, the right Microsoft solutions can simplify operations,
+                        improve productivity, and create better business outcomes.
+                    </p>
+
+                </div>
+
+                <div
+                    ref={cardsRef}
                     className="challenges-grid"
                 >
-                    {items.map((item, index) => (
-                        <motion.div
+                    {ChallengesData.map((item, index) => (
+                        <div
                             key={index}
-                            variants={fadeUp}
-                            whileHover={{ scale: 1.04 }}
-                            className={`challenge-card ${index !== items.length - 1 ? "with-divider" : ""
+                            className={`challenge-card ${index !== ChallengesData.length - 1
+                                    ? "with-divider"
+                                    : ""
                                 }`}
                         >
                             <div className="challenge-icon">
@@ -79,13 +74,13 @@ function Challenges() {
                             <div className="service-card-desc">
                                 {item.sub}
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
 
             </div>
         </section>
     );
 }
 
-export default Challenges
+export default Challenges;

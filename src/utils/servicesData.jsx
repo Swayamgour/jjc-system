@@ -5,16 +5,7 @@ import contactHeroImg from '../assets/bread-contact.webp'
 import AboutImage from '../assets/2-01.png'
 import resourcesHero from '../assets/resources.jpg'
 
-// import {
-//   BarChart2, Heart, Landmark, Megaphone, Settings, Wrench, Link2,
-//   Shield, AlertTriangle, Users, Plane, Layers, TrendingUp, Coins,
-//   Scale, Cloud, Search, ClipboardList, Palette, Box, FlaskConical,
-//   Rocket, Factory, HeartPulse, ShoppingBag, Briefcase, HardHat,
-//   GraduationCap, Handshake, Smartphone, RefreshCw, Bot, Database,
-//   LineChart, Plug, Calculator, FileText, Lightbulb, Building2,
-//   Globe, File, RotateCcw, Puzzle, Package, Headphones, Monitor, Phone,
-//   Banknote
-// } from 'lucide-react';
+
 
 import {
   BarChart3,
@@ -2262,660 +2253,528 @@ export const licensingOptimizationData = {
 
 
 export const contactUsData = {
-  breadcrumb: ["Home", "Contact Us"],
-
-  badge: "LET'S CONNECT",
-
-  title: (
-    <>
-      Talk to Our Microsoft
-      Consulting Experts
-    </>
-  ),
-
-  description:
-    "Have questions about Microsoft 365, Dynamics 365, Azure, Security, or Digital Transformation? Our experts are ready to help.",
-
-  subDescription:
-    "Fill out the form below and one of our consultants will get back to you within 24 business hours.",
-
-  heroBadges: [
-    "Free Consultation",
-    "Microsoft Certified Experts",
-    "24-Hour Response",
-    "Trusted Microsoft Partner",
-  ],
-
-  heroImage: contactHeroImg,
-
-  floatingIcons: [
-    { icon: I.phone, position: { top: -10, left: "12%" } },
-    { icon: I.mail, position: { top: -20, left: "55%" } },
-    { icon: I.users, position: { top: 40, left: "88%" } },
-    { icon: I.support, position: { top: 100, left: "92%" } },
-  ],
-
-  theme: {
-    accent: "#2563EB",
-    accentDark: "#1D4ED8",
-    accentLight: "#60A5FA",
-    accentSoft: "rgba(37,99,235,0.08)",
-    heroStart: "#021B4E",
-    heroEnd: "#0B5ED7",
+  "hero": {
+    "heading": "Talk to Our Microsoft Consulting Experts",
+    "highlightedHeading": "Let's Connect",
+    "description": "Have questions about Microsoft 365, Dynamics 365, Azure, Security, or Digital Transformation? Our experts are ready to help.",
+    "subDescription": "Fill out the form below and one of our consultants will get back to you within 24 business hours.",
+    "badges": [
+      "Free Consultation",
+      "Microsoft Certified Experts",
+      "24-Hour Response",
+      "Trusted Microsoft Partner"
+    ]
   },
-
-  sections: [
-    {
-      type: "contactForm",
-
-      title: "Send Us A Message",
-
-      buttonText: "Send Message",
-
-      fields: {
-        fullName: {
-          label: "Full Name",
-          placeholder: "John Doe",
-        },
-
-        companyName: {
-          label: "Company Name",
-          placeholder: "ABC Technologies",
-        },
-
-        email: {
-          label: "Work Email",
-          placeholder: "john@company.com",
-        },
-
-        phone: {
-          label: "Phone Number",
-          placeholder: "+91 9876543210",
-        },
-
-        service: {
-          label: "Service You're Interested In",
-
-          placeholder: "Select a Service",
-
-          options: [
-            "Microsoft 365 Consulting",
-            "Dynamics 365 Consulting",
-            "Azure Consulting",
-            "Power Platform",
-            "SharePoint",
-            "Security & Compliance",
-            "Microsoft Licensing",
-            "AI & Copilot",
-            "Other",
-          ],
-        },
-
-        message: {
-          label: "Your Message",
-          placeholder:
-            "Tell us about your project requirements...",
-        },
+  "contactForm": {
+    "title": "Send Us A Message",
+    "buttonText": "Send Message",
+    "fields": {
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "John Doe"
       },
-    },
-
-    {
-      type: "contactInfo",
-
-      title: "Contact Information",
-
-      phone: "+91 98765 43210",
-
-      email: "info@yourcompany.com",
-
-      hours: "Monday – Friday | 9:00 AM – 6:00 PM",
-
-      address: "Noida, Uttar Pradesh, India",
-
-      responseTitle: "We Respond Fast!",
-
-      responseText:
-        "Our Microsoft consultants typically respond within 24 business hours.",
-    },
-
-    {
-      type: "officeLocations",
-
-      title: "Our Offices",
-
-      items: [
-        {
-          city: "Noida",
-          country: "India",
-          address: "Sector 62, Noida",
-          phone: "+91 9876543210",
-          email: "noida@company.com",
-        },
-        {
-          city: "Dubai",
-          country: "UAE",
-          address: "Business Bay, Dubai",
-          phone: "+971 50 123 4567",
-          email: "dubai@company.com",
-        },
-      ],
-    },
-
-    {
-      type: "faq",
-
-      tag: "GOT QUESTIONS",
-
-      title: "Frequently Asked Questions",
-
-      items: [
-        {
-          q: "How quickly do you respond?",
-          a: "Most enquiries receive a response within one business day.",
-        },
-        {
-          q: "Do you offer free consultations?",
-          a: "Yes. We provide an initial consultation to understand your business needs.",
-        },
-        {
-          q: "Which Microsoft solutions do you support?",
-          a: "Microsoft 365, Azure, Dynamics 365, Power Platform, Security, Copilot and more.",
-        },
-        {
-          q: "Can you support global organizations?",
-          a: "Yes. We work with clients across multiple regions.",
-        },
-      ],
-    },
-
-    {
-      type: "cta",
-
-      title: "Ready to Start Your Microsoft Transformation?",
-
-      description:
-        "Let's discuss your goals and build the right Microsoft solution for your business.",
-    },
+      "companyName": {
+        "label": "Company Name",
+        "placeholder": "ABC Technologies"
+      },
+      "email": {
+        "label": "Work Email",
+        "placeholder": "john@company.com"
+      },
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": "+91 9876543210"
+      },
+      "service": {
+        "label": "Service You're Interested In",
+        "placeholder": "Select a Service",
+        "options": [
+          "Microsoft 365 Consulting",
+          "Dynamics 365 Consulting",
+          "Azure Consulting",
+          "Power Platform",
+          "SharePoint",
+          "Security & Compliance",
+          "Microsoft Licensing",
+          "AI & Copilot",
+          "Other"
+        ]
+      },
+      "message": {
+        "label": "Your Message",
+        "placeholder": "Tell us about your project requirements..."
+      }
+    }
+  },
+  "contactInfo": {
+    "title": "Contact Information",
+    "phone": "+91 98765 43210",
+    "email": "info@yourcompany.com",
+    "hours": "Monday – Friday | 9:00 AM – 6:00 PM",
+    "address": "Noida, Uttar Pradesh, India",
+    "responseTitle": "We Respond Fast!",
+    "responseText": "Our Microsoft consultants typically respond within 24 business hours."
+  },
+  "officeLocations": {
+    "title": "Our Offices",
+    "items": [
+      {
+        "city": "Noida",
+        "country": "India",
+        "address": "Sector 62, Noida",
+        "phone": "+91 9876543210",
+        "email": "noida@company.com"
+      },
+      {
+        "city": "Dubai",
+        "country": "UAE",
+        "address": "Business Bay, Dubai",
+        "phone": "+971 50 123 4567",
+        "email": "dubai@company.com"
+      }
+    ]
+  },
+  "faqs": {
+    "tag": "GOT QUESTIONS",
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "How quickly do you respond?",
+        "answer": "Most enquiries receive a response within one business day."
+      },
+      {
+        "question": "Do you offer free consultations?",
+        "answer": "Yes. We provide an initial consultation to understand your business needs."
+      },
+      {
+        "question": "Which Microsoft solutions do you support?",
+        "answer": "Microsoft 365, Azure, Dynamics 365, Power Platform, Security, Copilot and more."
+      },
+      {
+        "question": "Can you support global organizations?",
+        "answer": "Yes. We work with clients across multiple regions."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to Start Your Microsoft Transformation?",
+    "description": "Let's discuss your goals and build the right Microsoft solution for your business.",
+    "primaryLabel": "Schedule a Consultation",
+    "secondaryLabel": "Call Us Now"
+  },
+  "theme": {
+    "accent": "#2563EB",
+    "accentDark": "#1D4ED8",
+    "accentLight": "#60A5FA",
+    "accentSoft": "rgba(37,99,235,0.08)",
+    "heroStart": "#021B4E",
+    "heroEnd": "#0B5ED7",
+    "accentRgb": "37,99,235"
+  },
+  "seo": {
+    "keywords": [
+      "Contact Microsoft Experts",
+      "Microsoft Consulting",
+      "Talk to Experts",
+      "Microsoft 365 Consultation",
+      "Dynamics 365 Support",
+      "Azure Consulting Services",
+      "Digital Transformation",
+      "Microsoft Partner"
+    ]
+  },
+  "_id": "contact-1",
+  "title": "Talk to Our Microsoft Consulting Experts",
+  "slug": "contact-us",
+  "urlPath": "/contact-us",
+  "shortDescription": "Have questions about Microsoft 365, Dynamics 365, Azure, Security, or Digital Transformation? Our experts are ready to help.",
+  "badge": "LET'S CONNECT",
+  "breadcrumb": [
+    "Home",
+    "Contact Us"
   ],
-};
+  "isPublished": true,
+  "order": 1,
+  "createdAt": "2026-07-08T00:00:00.000Z",
+  "updatedAt": "2026-07-08T00:00:00.000Z",
+  "__v": 0
+}
+
 
 
 export const aboutPageData = {
-  breadcrumb: ["Home", "About Us"],
-
-  badge: "ABOUT JJC SYSTEMS",
-
-  title: (
-    <>
-      Why We Exist.
-      Where You Succeed.
-    </>
-  ),
-
-  description:
-    "We deliver Microsoft-powered solutions that empower businesses to innovate, grow and lead in their industries.",
-
-  subDescription:
-    "Our team combines Microsoft expertise with industry knowledge to help organizations achieve measurable business outcomes.",
-
-  heroBadges: [
-    "Microsoft Solutions Partner",
-    "Certified Experts",
-    "Business Focused",
-    "End-to-End Support",
-  ],
-
-  heroImage: AboutImage,
-
-  floatingIcons: [
-    { icon: I.building, position: { top: -10, left: "12%" } },
-    { icon: I.users, position: { top: -18, left: "52%" } },
-    { icon: I.shield, position: { top: 40, left: "88%" } },
-    { icon: I.target, position: { top: 110, left: "92%" } },
-  ],
-
-  theme: {
-    accent: "#2563EB",
-    accentDark: "#1D4ED8",
-    accentLight: "#60A5FA",
-    accentSoft: "rgba(37,99,235,.08)",
-    heroStart: "#021B4E",
-    heroEnd: "#0B5ED7",
+  "hero": {
+    "heading": "Why We Exist. Where You Succeed.",
+    "highlightedHeading": "JJC Systems",
+    "description": "We deliver Microsoft-powered solutions that empower businesses to innovate, grow and lead in their industries.",
+    "subDescription": "Our team combines Microsoft expertise with industry knowledge to help organizations achieve measurable business outcomes.",
+    "badges": [
+      "Microsoft Solutions Partner",
+      "Certified Experts",
+      "Business Focused",
+      "End-to-End Support"
+    ]
   },
-
-  sections: [
-    {
-      type: "overview",
-
-      title: "Who We Are",
-
-      brandLabel: "JJC Systems",
-
-      image: AboutImage,
-
-      coreIcon: "🏢",
-
-      orbitIcons: ["💼", "🤝", "🚀", "⭐"],
-
-      paragraphs: [
-        "JJC Systems is a Microsoft Solutions Partner helping organizations transform the way they work with Microsoft technologies.",
-        "We combine business consulting, cloud expertise, and modern workplace solutions to deliver measurable business outcomes.",
-      ],
-
-      checklist: [
-        "Microsoft Solutions Partner",
-        "Certified Experts",
-        "Customer First",
-        "End-to-End Delivery",
-      ],
-    },
-
-    {
-      type: "grid",
-
-      tag: "WHY CLIENTS CHOOSE US",
-
-      title: "Committed To Your Success",
-
-      subtitle:
-        "Our approach combines technology expertise with business strategy.",
-
-      columns: 4,
-
-      items: [
-        {
-          icon: <BadgeCheck />,
-          title: "Microsoft Expertise",
-          desc: "Certified professionals across Microsoft technologies.",
-        },
-        {
-          icon: <Target />,
-          title: "Business First",
-          desc: "Technology aligned with business outcomes.",
-        },
-        {
-          icon: <Workflow />,
-          title: "End-to-End Delivery",
-          desc: "Consulting, implementation and support.",
-        },
-        {
-          icon: <HeartHandshake />,
-          title: "Long-Term Partnership",
-          desc: "Focused on continuous business growth.",
-        },
-      ],
-    },
-
-    {
-      type: "stats",
-
-      tag: "OUR IMPACT",
-
-      title: "Driving Business Success",
-
-      items: [
-        {
-          icon: <Briefcase />,
-          value: "150+",
-          label: "Projects Delivered",
-        },
-        {
-          icon: <Users />,
-          value: "50+",
-          label: "Happy Clients",
-        },
-        {
-          icon: <ShieldCheck />,
-          value: "10+",
-          label: "Years Experience",
-        },
-        {
-          icon: <BadgeCheck />,
-          value: "95%",
-          label: "Client Satisfaction",
-        },
-      ],
-    },
-
-    {
-      type: "process",
-
-      tag: "OUR PROCESS",
-
-      title: "Proven Process. Predictable Results.",
-
-      subtitle:
-        "A structured approach that ensures successful project delivery.",
-
-      steps: [
-        {
-          num: "01",
-          icon: <Search />,
-          title: "Discover",
-          desc: "Understand business challenges and goals.",
-        },
-        {
-          num: "02",
-          icon: <ClipboardList />,
-          title: "Plan",
-          desc: "Create a detailed roadmap.",
-        },
-        {
-          num: "03",
-          icon: <Cog />,
-          title: "Implement",
-          desc: "Deploy Microsoft solutions efficiently.",
-        },
-        {
-          num: "04",
-          icon: <TrendingUp />,
-          title: "Optimize",
-          desc: "Improve adoption and performance.",
-        },
-        {
-          num: "05",
-          icon: <LifeBuoy />,
-          title: "Support",
-          desc: "Continuous optimization and support.",
-        },
-      ],
-    },
-
-    {
-      type: "iconStrip",
-
-      tag: "INDUSTRIES WE SERVE",
-
-      title: "Solutions For Every Industry",
-
-      subtitle:
-        "Delivering Microsoft solutions across multiple industries.",
-
-      columns: 6,
-
-      items: [
-        {
-          icon: <Factory />,
-          label: "Manufacturing",
-          desc: "ERP & Operations",
-        },
-        {
-          icon: <Hospital />,
-          label: "Healthcare",
-          desc: "Secure Digital Care",
-        },
-        {
-          icon: <ShoppingBag />,
-          label: "Retail",
-          desc: "Customer Experience",
-        },
-        {
-          icon: <GraduationCap />,
-          label: "Education",
-          desc: "Modern Learning",
-        },
-        {
-          icon: <Landmark />,
-          label: "Finance",
-          desc: "Compliance & Security",
-        },
-        {
-          icon: <Building />,
-          label: "Professional Services",
-          desc: "Business Productivity",
-        },
-      ],
-
-      footerLink: "Explore Industries",
-    },
-
-    {
-      type: "cta",
-
-      title: "Let's Build The Future Together",
-
-      description:
-        "Ready to transform your business with Microsoft solutions?",
-    },
+  "overview": {
+    "tag": "ABOUT JJC SYSTEMS",
+    "title": "Who We Are",
+    "brandLabel": "JJC Systems",
+    "paragraphs": [
+      "JJC Systems is a Microsoft Solutions Partner helping organizations transform the way they work with Microsoft technologies.",
+      "We combine business consulting, cloud expertise, and modern workplace solutions to deliver measurable business outcomes."
+    ],
+    "checklist": [
+      "Microsoft Solutions Partner",
+      "Certified Experts",
+      "Customer First",
+      "End-to-End Delivery"
+    ]
+  },
+  "whyChooseUs": {
+    "tag": "WHY CLIENTS CHOOSE US",
+    "title": "Committed To Your Success",
+    "subtitle": "Our approach combines technology expertise with business strategy.",
+    "items": [
+      {
+        "icon": "BadgeCheck",
+        "title": "Microsoft Expertise",
+        "description": "Certified professionals across Microsoft technologies."
+      },
+      {
+        "icon": "Target",
+        "title": "Business First",
+        "description": "Technology aligned with business outcomes."
+      },
+      {
+        "icon": "Workflow",
+        "title": "End-to-End Delivery",
+        "description": "Consulting, implementation and support."
+      },
+      {
+        "icon": "HeartHandshake",
+        "title": "Long-Term Partnership",
+        "description": "Focused on continuous business growth."
+      }
+    ]
+  },
+  "stats": {
+    "tag": "OUR IMPACT",
+    "title": "Driving Business Success",
+    "items": [
+      {
+        "icon": "Briefcase",
+        "value": "150+",
+        "label": "Projects Delivered"
+      },
+      {
+        "icon": "Users",
+        "value": "50+",
+        "label": "Happy Clients"
+      },
+      {
+        "icon": "ShieldCheck",
+        "value": "10+",
+        "label": "Years Experience"
+      },
+      {
+        "icon": "BadgeCheck",
+        "value": "95%",
+        "label": "Client Satisfaction"
+      }
+    ]
+  },
+  "process": {
+    "tag": "OUR PROCESS",
+    "title": "Proven Process. Predictable Results.",
+    "subtitle": "A structured approach that ensures successful project delivery.",
+    "steps": [
+      {
+        "step": 1,
+        "icon": "Search",
+        "title": "Discover",
+        "description": "Understand business challenges and goals."
+      },
+      {
+        "step": 2,
+        "icon": "ClipboardList",
+        "title": "Plan",
+        "description": "Create a detailed roadmap."
+      },
+      {
+        "step": 3,
+        "icon": "Cog",
+        "title": "Implement",
+        "description": "Deploy Microsoft solutions efficiently."
+      },
+      {
+        "step": 4,
+        "icon": "TrendingUp",
+        "title": "Optimize",
+        "description": "Improve adoption and performance."
+      },
+      {
+        "step": 5,
+        "icon": "LifeBuoy",
+        "title": "Support",
+        "description": "Continuous optimization and support."
+      }
+    ]
+  },
+  "industries": {
+    "tag": "INDUSTRIES WE SERVE",
+    "title": "Solutions For Every Industry",
+    "subtitle": "Delivering Microsoft solutions across multiple industries.",
+    "items": [
+      {
+        "icon": "Factory",
+        "title": "Manufacturing",
+        "description": "ERP & Operations"
+      },
+      {
+        "icon": "Hospital",
+        "title": "Healthcare",
+        "description": "Secure Digital Care"
+      },
+      {
+        "icon": "ShoppingBag",
+        "title": "Retail",
+        "description": "Customer Experience"
+      },
+      {
+        "icon": "GraduationCap",
+        "title": "Education",
+        "description": "Modern Learning"
+      },
+      {
+        "icon": "Landmark",
+        "title": "Finance",
+        "description": "Compliance & Security"
+      },
+      {
+        "icon": "Building",
+        "title": "Professional Services",
+        "description": "Business Productivity"
+      }
+    ],
+    "footerLink": "Explore Industries"
+  },
+  "cta": {
+    "title": "Let's Build The Future Together",
+    "description": "Ready to transform your business with Microsoft solutions?",
+    "primaryLabel": "Get Started",
+    "secondaryLabel": "Contact Us"
+  },
+  "theme": {
+    "accent": "#2563EB",
+    "accentDark": "#1D4ED8",
+    "accentLight": "#60A5FA",
+    "accentSoft": "rgba(37,99,235,.08)",
+    "heroStart": "#021B4E",
+    "heroEnd": "#0B5ED7",
+    "accentRgb": "37,99,235"
+  },
+  "seo": {
+    "keywords": [
+      "JJC Systems",
+      "Microsoft Solutions Partner",
+      "Business Consulting",
+      "Cloud Expertise",
+      "Modern Workplace"
+    ]
+  },
+  "_id": "about-1",
+  "title": "About JJC Systems",
+  "slug": "about-us",
+  "urlPath": "/about-us",
+  "shortDescription": "We deliver Microsoft-powered solutions that empower businesses to innovate, grow and lead in their industries.",
+  "badge": "ABOUT JJC SYSTEMS",
+  "breadcrumb": [
+    "Home",
+    "About Us"
   ],
-};
+  "isPublished": true,
+  "order": 1,
+  "createdAt": "2026-07-08T00:00:00.000Z",
+  "updatedAt": "2026-07-08T00:00:00.000Z",
+  "__v": 0
+}
+
 
 export const resourcesData = {
-  breadcrumb: ["Home", "Resources"],
-
-  badge: "KNOWLEDGE HUB",
-
-  title: (
-    <>
-      Microsoft Resources,
-      Insights & Best Practices
-    </>
-  ),
-
-  description:
-    "Explore expert insights, implementation guides, industry trends, and Microsoft best practices to help your business innovate with confidence.",
-
-  subDescription:
-    "Stay informed with practical resources covering Microsoft 365, Azure, Dynamics 365, Security, AI, Power Platform, and Digital Transformation.",
-
-  heroBadges: [
-    "Expert Articles",
-    "Implementation Guides",
-    "Industry Insights",
-    "Microsoft Best Practices",
-  ],
-
-  heroImage: resourcesHero,
-
-  floatingIcons: [
-    { icon: <FaBookOpen />, position: { top: -10, left: "12%" } },
-    { icon: <FaDownload />, position: { top: -20, left: "55%" } },
-    { icon: <FaDownload />, position: { top: 45, left: "88%" } },
-    { icon: <FaDownload />, position: { top: 110, left: "92%" } },
-  ],
-
-  theme: {
-    accent: "#2563EB",
-    accentDark: "#1D4ED8",
-    accentLight: "#60A5FA",
-    accentSoft: "rgba(37,99,235,.08)",
-    heroStart: "#021B4E",
-    heroEnd: "#0B5ED7",
+  "hero": {
+    "heading": "Microsoft Resources, Insights & Best Practices",
+    "highlightedHeading": "Knowledge Hub",
+    "description": "Explore expert insights, implementation guides, industry trends, and Microsoft best practices to help your business innovate with confidence.",
+    "subDescription": "Stay informed with practical resources covering Microsoft 365, Azure, Dynamics 365, Security, AI, Power Platform, and Digital Transformation.",
+    "badges": [
+      "Expert Articles",
+      "Implementation Guides",
+      "Industry Insights",
+      "Microsoft Best Practices"
+    ]
   },
+  "overview": {
+    "tag": "KNOWLEDGE HUB",
+    "title": "Your Microsoft Knowledge Center",
+    "brandLabel": "JJC Resources",
+    "paragraphs": [
+      "Access practical Microsoft resources created by certified consultants with real-world implementation experience.",
+      "Whether you're planning a migration, improving security, or adopting AI, our resources help you make better technology decisions."
+    ],
+    "checklist": [
+      "Expert Articles",
+      "Implementation Guides",
+      "Industry Reports",
+      "Free Learning Resources"
+    ]
+  },
+  "capabilities": {
+    "tag": "EXPLORE",
+    "title": "Resource Categories",
+    "subtitle": "Browse knowledge across Microsoft's complete ecosystem.",
+    "items": [
+      {
+        "icon": "BookOpen",
+        "title": "Blogs",
+        "description": "Latest Microsoft technology articles and insights."
+      },
+      {
+        "icon": "Download",
+        "title": "Whitepapers",
+        "description": "Detailed technical and business documents."
+      },
+      {
+        "icon": "Video",
+        "title": "Webinars",
+        "description": "Expert sessions and product demonstrations."
+      },
+      {
+        "icon": "Download",
+        "title": "eBooks",
+        "description": "Downloadable guides and implementation playbooks."
+      },
+      {
+        "icon": "Briefcase",
+        "title": "Case Studies",
+        "description": "Real customer transformation stories."
+      },
+      {
+        "icon": "FileText",
+        "title": "Industry Reports",
+        "description": "Market trends and Microsoft ecosystem updates."
+      },
+      {
+        "icon": "BookOpen",
+        "title": "Implementation Guides",
+        "description": "Step-by-step Microsoft deployment guidance."
+      },
+      {
+        "icon": "BookOpen",
+        "title": "Best Practices",
+        "description": "Recommendations from Microsoft experts."
+      }
+    ]
+  },
+  "caseStudies": {
+    "tag": "FEATURED",
+    "title": "Popular Resources",
+    "items": [
+      {
+        "tag": "Microsoft 365",
+        "title": "Microsoft 365 Migration Guide",
+        "stat": "50+",
+        "statLabel": "Pages",
+        "description": "Complete migration planning and execution guide.",
+        "color": "#0b4fd9"
+      },
+      {
+        "tag": "Azure",
+        "title": "Azure Cost Optimization",
+        "stat": "35%",
+        "statLabel": "Average Savings",
+        "description": "Learn proven cloud cost optimization strategies.",
+        "color": "#005a9e"
+      },
+      {
+        "tag": "Security",
+        "title": "Microsoft Security Checklist",
+        "stat": "100+",
+        "statLabel": "Recommendations",
+        "description": "Security best practices for Microsoft environments.",
+        "color": "#1d4ed8"
+      }
+    ]
+  },
+  "faqs": {
+    "tag": "FREQUENTLY ASKED",
+    "title": "Resources FAQ",
+    "items": [
+      {
+        "question": "Are all resources free?",
+        "answer": "Most of our blogs, guides and articles are available free of charge."
+      },
+      {
+        "question": "Do you publish Microsoft updates?",
+        "answer": "Yes. We regularly publish updates covering Microsoft technologies."
+      },
+      {
+        "question": "Can I download whitepapers?",
+        "answer": "Yes. Whitepapers, eBooks and implementation guides are available for download."
+      },
+      {
+        "question": "Do you provide technical documentation?",
+        "answer": "Yes. We publish technical documentation, migration guides and best practices."
+      },
+      {
+        "question": "How often is content updated?",
+        "answer": "Resources are updated regularly to reflect Microsoft's latest releases."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Need Help Choosing The Right Microsoft Solution?",
+    "description": "Connect with our Microsoft experts for personalized guidance and recommendations.",
+    "primaryLabel": "Contact Our Experts",
+    "secondaryLabel": "Browse All Resources"
+  },
+  "theme": {
+    "accent": "#2563EB",
+    "accentDark": "#1D4ED8",
+    "accentLight": "#60A5FA",
+    "accentSoft": "rgba(37,99,235,.08)",
+    "heroStart": "#021B4E",
+    "heroEnd": "#0B5ED7",
+    "accentRgb": "37,99,235"
+  },
+  "seo": {
+    "keywords": [
+      "Microsoft Resources",
+      "Knowledge Hub",
+      "Microsoft 365 Guides",
+      "Azure Best Practices",
+      "Dynamics 365 Resources",
+      "Microsoft Security",
+      "Power Platform",
+      "Digital Transformation"
+    ]
+  },
+  "_id": "resources-1",
+  "title": "Microsoft Resources, Insights & Best Practices",
+  "slug": "resources",
+  "urlPath": "/resources",
+  "shortDescription": "Explore expert insights, implementation guides, industry trends, and Microsoft best practices to help your business innovate with confidence.",
+  "badge": "KNOWLEDGE HUB",
+  "breadcrumb": [
+    "Home",
+    "Resources"
+  ],
+  "isPublished": true,
+  "order": 1,
+  "createdAt": "2026-07-08T00:00:00.000Z",
+  "updatedAt": "2026-07-08T00:00:00.000Z",
+  "__v": 0
+}
 
-  sections: [
-
-    {
-      type: "overview",
-
-      title: "Your Microsoft Knowledge Center",
-
-      brandLabel: "JJC Resources",
-
-      image: banner,
-
-      coreIcon: "📚",
-
-      orbitIcons: ["💡", "📄", "🚀", "🔒"],
-
-      paragraphs: [
-        "Access practical Microsoft resources created by certified consultants with real-world implementation experience.",
-
-        "Whether you're planning a migration, improving security, or adopting AI, our resources help you make better technology decisions."
-      ],
-
-      checklist: [
-        "Expert Articles",
-        "Implementation Guides",
-        "Industry Reports",
-        "Free Learning Resources"
-      ],
-    },
-
-    {
-      type: "grid",
-
-      tag: "EXPLORE",
-
-      title: "Resource Categories",
-
-      subtitle:
-        "Browse knowledge across Microsoft's complete ecosystem.",
-
-      columns: 4,
-
-      items: [
-        {
-          icon: <FaBookOpen />,
-          title: "Blogs",
-          desc: "Latest Microsoft technology articles and insights."
-        },
-
-        {
-          icon: <FaDownload />,
-          title: "Whitepapers",
-          desc: "Detailed technical and business documents."
-        },
-
-        {
-          icon: <FaVideo />,
-          title: "Webinars",
-          desc: "Expert sessions and product demonstrations."
-        },
-
-        {
-          icon: <FaDownload />,
-          title: "eBooks",
-          desc: "Downloadable guides and implementation playbooks."
-        },
-
-        {
-          icon: <FaCashRegister />,
-          title: "Case Studies",
-          desc: "Real customer transformation stories."
-        },
-
-        {
-          icon: <FaBookOpen />,
-          title: "Industry Reports",
-          desc: "Market trends and Microsoft ecosystem updates."
-        },
-
-        {
-          icon: <FaBookOpen />,
-          title: "Implementation Guides",
-          desc: "Step-by-step Microsoft deployment guidance."
-        },
-
-        {
-          icon: <FaBookOpen />,
-          title: "Best Practices",
-          desc: "Recommendations from Microsoft experts."
-        }
-      ]
-    },
-
-
-
-    {
-      type: "caseStudies",
-
-      tag: "FEATURED",
-
-      title: "Popular Resources",
-
-      items: [
-
-        {
-          tag: "Microsoft 365",
-
-          title: "Microsoft 365 Migration Guide",
-
-          stat: "50+",
-
-          statLabel: "Pages",
-
-          desc: "Complete migration planning and execution guide.",
-
-          color: "#0b4fd9"
-        },
-
-        {
-          tag: "Azure",
-
-          title: "Azure Cost Optimization",
-
-          stat: "35%",
-
-          statLabel: "Average Savings",
-
-          desc: "Learn proven cloud cost optimization strategies.",
-
-          color: "#005a9e"
-        },
-
-        {
-          tag: "Security",
-
-          title: "Microsoft Security Checklist",
-
-          stat: "100+",
-
-          statLabel: "Recommendations",
-
-          desc: "Security best practices for Microsoft environments.",
-
-          color: "#1d4ed8"
-        }
-      ]
-    },
-
-    {
-      type: "faq",
-
-      tag: "FREQUENTLY ASKED",
-
-      title: "Resources FAQ",
-
-      items: [
-
-        {
-          q: "Are all resources free?",
-          a: "Most of our blogs, guides and articles are available free of charge."
-        },
-
-        {
-          q: "Do you publish Microsoft updates?",
-          a: "Yes. We regularly publish updates covering Microsoft technologies."
-        },
-
-        {
-          q: "Can I download whitepapers?",
-          a: "Yes. Whitepapers, eBooks and implementation guides are available for download."
-        },
-
-        {
-          q: "Do you provide technical documentation?",
-          a: "Yes. We publish technical documentation, migration guides and best practices."
-        },
-
-        {
-          q: "How often is content updated?",
-          a: "Resources are updated regularly to reflect Microsoft's latest releases."
-        }
-      ]
-    },
-
-    {
-      type: "cta",
-
-      title: "Need Help Choosing The Right Microsoft Solution?",
-
-      description:
-        "Connect with our Microsoft experts for personalized guidance and recommendations."
-    }
-  ]
-};
 
 
 // platforms/dynamics365SalesData.js
@@ -3265,10 +3124,4 @@ export const allServices = {
 
 };
 
-// export const allServices = {
-//   "microsoft-365": microsoft365Data,
-//   "dynamics-365": dynamics365Data,
-//   "power-platform": powerPlatformData,
-//   "power-bi": powerBIData,
-//   "sharepoint": sharePointData,
-// };
+

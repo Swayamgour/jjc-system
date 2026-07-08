@@ -1,67 +1,52 @@
-import { cards } from '../utils/data';
-import React, { useRef } from 'react'
-// import { useInView } from 'framer-motion';
-import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
-import { useSplitText } from '../hooks/useSplitText';
-// import useSplitText from '../hooks/useSplitText';
+import React, { useRef } from "react";
+import { cards } from "../utils/data";
+import { useSectionAnimation } from "../hooks/useSectionAnimation";
 
 function Services() {
-    const fadeUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    };
-    // cards
-
-    const stagger = {
-        visible: { transition: { staggerChildren: 0.1 } },
-    };
-
-
-    const ref = useRef(null);
-   
-    const inView = useInView(ref, { once: true, amount: 0.2 });
-
+    const sectionRef = useRef(null);
+    const tagRef = useRef(null);
     const titleRef = useRef(null);
+    const cardsRef = useRef(null);
 
-    useSplitText(titleRef)
-
-
+    useSectionAnimation({
+        sectionRef,
+        tagRef,
+        titleRef,
+        listRef: cardsRef,
+    });
 
     return (
-        <section ref={ref} className="services-section">
+        <section
+            ref={sectionRef}
+            className="services-section"
+        >
             <div className="container">
 
-                <motion.div
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
-                    className="section-heading"
-                >
-                    <div className="section-tag">
-                       platform
+                <div className="section-heading">
+
+                    <div
+                        ref={tagRef}
+                        className="section-tag"
+                    >
+                        PLATFORM
                     </div>
 
-                    <h2 ref={titleRef} className="section-title">
-                        {/* End-to-end Microsoft Solutions */}
-                         Your Useful platform 
+                    <h2
+                        ref={titleRef}
+                        className="section-title"
+                    >
+                        Your Useful Platform
                     </h2>
-                </motion.div>
 
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
+                </div>
+
+                <div
+                    ref={cardsRef}
                     className="services-grid"
                 >
                     {cards.map((card, i) => (
-                        <motion.div
+                        <div
                             key={i}
-                            variants={fadeUp}
-                            whileHover={{
-                                y: -6,
-                                boxShadow:
-                                    "0 16px 40px rgba(37,99,235,0.12)"
-                            }}
                             className="service-card"
                         >
                             <div className="service-card-icon">
@@ -75,13 +60,13 @@ function Services() {
                             <div className="service-card-desc">
                                 {card.desc}
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
 
             </div>
         </section>
     );
 }
 
-export default Services
+export default Services;

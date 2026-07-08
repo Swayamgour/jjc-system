@@ -1,73 +1,52 @@
-import { useInView, motion, useSpring } from 'framer-motion';
-import React, { useRef } from 'react'
-import { items } from '../utils/data';
-import { useSplitText } from '../hooks/useSplitText';
-
-
+import React, { useRef } from "react";
+import { items } from "../utils/data";
+import { useSectionAnimation } from "../hooks/useSectionAnimation";
 
 function Resources() {
-    //    items
+    const sectionRef = useRef(null);
+    const tagRef = useRef(null);
+    const titleRef = useRef(null);
+    const cardsRef = useRef(null);
 
-    const ref = useRef(null);
-     const inView = useInView(ref, { once: true, amount: 0.2 });
-
-
-
-
-    const fadeUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-    };
-
-    const stagger = {
-        visible: { transition: { staggerChildren: 0.1 } },
-    };
-
-    // const textRef = useRef(null)
-
-    // useSpring(textRef)
-
-    const textRef = useRef(null)
-    useSplitText(textRef)
-
+    useSectionAnimation({
+        sectionRef,
+        tagRef,
+        titleRef,
+        listRef: cardsRef,
+    });
 
     return (
         <section
-            ref={ref}
+            ref={sectionRef}
             className="resources-section"
         >
             <div className="container">
 
-                <motion.div
-                    variants={fadeUp}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
-                    className="resources-header"
-                >
-                    <div className="section-tag">
+                <div className="resources-header">
+
+                    <div
+                        ref={tagRef}
+                        className="section-tag"
+                    >
                         RESOURCES & INSIGHTS
                     </div>
 
-                    <h2 ref={textRef} className="resources-title">
+                    <h2
+                        ref={titleRef}
+                        className="resources-title"
+                    >
                         Learn. Explore. Stay Ahead.
                     </h2>
-                </motion.div>
 
-                <motion.div
-                    variants={stagger}
-                    initial="hidden"
-                    animate={inView ? "visible" : "hidden"}
+                </div>
+
+                <div
+                    ref={cardsRef}
                     className="resources-grid"
                 >
                     {items.map((item, index) => (
-                        <motion.div
+                        <div
                             key={index}
-                            variants={fadeUp}
-                            whileHover={{
-                                y: -6,
-                                boxShadow:
-                                    "0 16px 40px rgba(37,99,235,0.1)"
-                            }}
                             className="resource-card"
                         >
                             <div className="resource-icon">
@@ -78,20 +57,23 @@ function Resources() {
                                 {item.title}
                             </div>
 
-                            <div style={{marginBottom:'5px'}} className="service-card-desc">
+                            <div
+                                className="service-card-desc"
+                                style={{ marginBottom: "5px" }}
+                            >
                                 {item.sub}
                             </div>
 
                             <div className="resource-link">
                                 {item.link}
                             </div>
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
 
             </div>
         </section>
     );
 }
 
-export default Resources
+export default Resources;
