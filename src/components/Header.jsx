@@ -168,14 +168,29 @@ const Navbar = () => {
 
     const closeDropdown = () => setActiveDropdown(null);
 
+    // const handleNavItemClick = (menu) => {
+    //     if (menu.hasDropdown) {
+    //         if (menu.path) {
+    //             navigate(menu.path);
+    //         }
+    //     } else {
+    //         navigate(menu.path || `/${menu.title.toLowerCase().replace(/\s+/g, "-")}`);
+    //     }
+
+    //     closeDropdown();
+    //     setIsMobileMenuOpen(false);
+    // };
+
+
     const handleNavItemClick = (menu) => {
         if (menu.hasDropdown) {
-            if (menu.path) {
-                navigate(menu.path);
-            }
-        } else {
-            navigate(menu.path || `/${menu.title.toLowerCase().replace(/\s+/g, "-")}`);
+            closeDropdown(); // dropdown close
+            return;
         }
+
+        navigate(
+            menu.path || `/${menu.title.toLowerCase().replace(/\s+/g, "-")}`
+        );
 
         closeDropdown();
         setIsMobileMenuOpen(false);
@@ -272,14 +287,27 @@ const Navbar = () => {
                                 handleDropdownEnter(idx);
                             }}
                             onMouseLeave={handleDropdownLeave}
-                            onClick={() => {
+                            // onClick={() => {
+                            //     if (!menu.hasDropdown) return;
+
+                            //     if (activeDropdown === idx) {
+                            //         handleDropdownEnter(idx);
+                            //         // setActiveDropdown(null); // Close if already open
+                            //     } else {
+                            //         handleDropdownEnter(idx); // Open
+                            //     }
+                            // }}
+
+
+                            onClick={(e) => {
+                                e.stopPropagation();
+
                                 if (!menu.hasDropdown) return;
 
                                 if (activeDropdown === idx) {
-                                    handleDropdownEnter(idx);
-                                    // setActiveDropdown(null); // Close if already open
+                                    setActiveDropdown(null); // close on second click
                                 } else {
-                                    handleDropdownEnter(idx); // Open
+                                    handleDropdownEnter(idx);
                                 }
                             }}
                         >

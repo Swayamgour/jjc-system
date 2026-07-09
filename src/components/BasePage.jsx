@@ -19,13 +19,18 @@ export default function BasePage({ data, pageType = "service" }) {
 
     const d = data;
 
+//      theme: {
+//     accent: "#2563EB", accentDark: "#1D4ED8", accentLight: "#4F8CFF",
+//     accentSoft: "rgba(37,99,235,0.08)", heroStart: "#03153c", heroEnd: "#0c5de8",
+//   },
+
     const themeVars = {
-        "--svc-accent": d?.theme?.accent,
-        "--svc-accent-dark": d?.theme?.accentDark,
-        "--svc-accent-light": d?.theme?.accentLight,
-        "--svc-accent-soft": d?.theme?.accentSoft,
-        "--svc-hero-start": d?.theme?.heroStart,
-        "--svc-hero-end": d?.theme?.heroEnd,
+        "--svc-accent": d?.theme?.accent ||"#2563EB" ,
+        "--svc-accent-dark": d?.theme?.accentDark || "#1D4ED8",
+        "--svc-accent-light": d?.theme?.accentLight || "#4F8CFF",
+        "--svc-accent-soft": d?.theme?.accentSoft || "rgba(37,99,235,0.08)",
+        "--svc-hero-start": d?.theme?.heroStart || "#03153c",
+        "--svc-hero-end": d?.theme?.heroEnd || "#0c5de8",
         "--accent-rgb": d?.theme?.accentRgb || "37,99,235",
     };
 

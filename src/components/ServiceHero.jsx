@@ -11,6 +11,7 @@ import { useSplitText } from "../hooks/useSplitText";
 function ServiceHero({ d }) {
     console.log(d)
 
+
     const heroRef = useRef(null);
     const breadcrumbRef = useRef(null);
     const tagRef = useRef(null);
@@ -218,10 +219,10 @@ function ServiceHero({ d }) {
                     </h1>
 
                     <p ref={descRef} className="service-hero-desc">
-                        {d?.hero?.description}
+                        {d?.hero?.description || d?.hero?.shortDescription}
                     </p>
                     <p ref={descRef} className="service-hero-desc">
-                        {d?.hero?.subDescription}
+                        {d?.hero?.subDescription || d?.hero?.subHeading}
                     </p>
 
                     {/* <p ref={subDescRef} className="service-hero-desc" style={{ marginBottom: 0 }}>
