@@ -10,6 +10,8 @@ import { useGetCategoryQuery } from '../redux/api';
 import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 
+import headerImage from '../assets/bread-contact.webp';
+
 // ─── Animated Nub (desktop mega-dropdown) ────────────────────────────────────
 const DropdownNub = ({ activeTab }) => {
     const [left, setLeft] = useState(0);
@@ -264,12 +266,22 @@ const Navbar = () => {
                     {menuData.map((menu, idx) => (
                         <li
                             key={idx}
-                            className={`nav-item ${activeDropdown === idx ? 'active' : ''}`}
+                            className={`nav-item ${activeDropdown === idx ? "active" : ""}`}
                             onMouseEnter={() => {
                                 if (!menu.hasDropdown) return;
                                 handleDropdownEnter(idx);
                             }}
                             onMouseLeave={handleDropdownLeave}
+                            onClick={() => {
+                                if (!menu.hasDropdown) return;
+
+                                if (activeDropdown === idx) {
+                                    handleDropdownEnter(idx);
+                                    // setActiveDropdown(null); // Close if already open
+                                } else {
+                                    handleDropdownEnter(idx); // Open
+                                }
+                            }}
                         >
                             <span
                                 className="nav-links"
@@ -293,30 +305,36 @@ const Navbar = () => {
                                 <AnimatePresence>
                                     {activeDropdown === idx && (
                                         <motion.div
-                                            className="mega-dropdown show"
+                                            className="mega-dropdown"
                                             initial={{ opacity: 0, y: 12 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: 12 }}
-                                            transition={{ duration: 0.22, ease: 'easeOut' }}
+                                            transition={{ duration: 0.22 }}
                                             onMouseEnter={handleDropdownStay}
                                             onMouseLeave={handleDropdownLeave}
-                                            style={{ opacity: 1, visibility: 'visible', pointerEvents: 'auto' }}
                                         >
-                                            <div style={{
-                                                position: 'absolute',
-                                                top: -24,
-                                                left: 0,
-                                                right: 0,
-                                                height: 24
-                                            }} />
+                                            {/* Hover bridge */}
+                                            <div className="mega-dropdown-bridge" />
 
-                                            <MegaDropdownContent
-                                                menu={menu}
-                                                activeTab={activeTab}
-                                                prevTab={prevTab}
-                                                setActiveTab={handleTabChange}
-                                                handlePanelLinkClick={handlePanelLinkClick}
-                                            />
+
+                                            <div className="mega-dropdown-right">
+                                                <img
+                                                    src={headerImage}
+                                                    alt={menu.title}
+                                                />
+                                            </div>
+
+                                            <div className="mega-dropdown-left">
+                                                <MegaDropdownContent
+                                                    menu={menu}
+                                                    activeTab={activeTab}
+                                                    prevTab={prevTab}
+                                                    setActiveTab={handleTabChange}
+                                                    handlePanelLinkClick={handlePanelLinkClick}
+                                                />
+                                            </div>
+
+
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
@@ -471,7 +489,7 @@ const Navbar = () => {
                     </div>
                 </Box>
             </Drawer>
-        </nav>
+        </nav >
     );
 };
 
