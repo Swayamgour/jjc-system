@@ -2987,7 +2987,260 @@ section {
 
 
 /* Platform Services Section */
+.platform-services-section {
+    padding: 80px 0;
+    background: var(--bg-section);
+}
 
+.platform-services-layout {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 40px;
+    align-items: flex-start;
+    margin-top: 48px;
+}
+
+/* Left Sidebar - Tabs */
+.platform-services-tabs-wrapper {
+    position: sticky;
+    top: 90px;
+    max-height: calc(80vh - 120px);
+    overflow-y: auto;
+    padding-right: 8px;
+}
+
+/* Custom scrollbar for tabs */
+.platform-services-tabs-wrapper::-webkit-scrollbar {
+    width: 4px;
+}
+
+.platform-services-tabs-wrapper::-webkit-scrollbar-track {
+    background: var(--border-light);
+    border-radius: 4px;
+}
+
+.platform-services-tabs-wrapper::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+}
+
+.platform-services-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.platform-tab-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+    background: var(--bg-white);
+    color: var(--text-body);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    width: 100%;
+    min-height: 48px;
+}
+
+.platform-tab-btn .tab-icon {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--primary);
+    transition: color 0.3s ease;
+}
+
+.platform-tab-btn .tab-label {
+    flex: 1;
+    line-height: 1.3;
+}
+
+.platform-tab-btn:hover {
+    border-color: var(--primary-light);
+    color: var(--primary);
+    background: rgba(37, 99, 235, 0.04);
+}
+
+.platform-tab-btn:hover .tab-icon {
+    color: var(--primary);
+}
+
+.platform-tab-btn.active {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--text-white);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.platform-tab-btn.active .tab-icon {
+    color: var(--text-white);
+}
+
+/* Right Panel */
+.platform-services-panel {
+    background: var(--bg-white);
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 36px 40px;
+    min-height: 400px;
+    transition: all 0.3s ease;
+}
+
+.platform-panel-title {
+    margin: 0 0 6px;
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text-heading);
+    line-height: 1.2;
+}
+
+.platform-panel-subtitle {
+    margin: 0 0 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.platform-panel-intro,
+.platform-panel-outro {
+    color: var(--text-body);
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 16px;
+}
+
+.platform-panel-list {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 16px;
+}
+
+.platform-panel-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: var(--text-heading);
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 0;
+}
+
+.platform-panel-list li svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--primary);
+    font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .platform-services-layout {
+        grid-template-columns: 260px 1fr;
+        gap: 30px;
+    }
+
+    .platform-services-panel {
+        padding: 28px 30px;
+    }
+}
+
+@media (max-width: 900px) {
+    .platform-services-layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .platform-services-tabs-wrapper {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+    }
+
+    .platform-services-tabs {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .platform-tab-btn {
+        flex: 0 0 auto;
+        width: auto;
+        padding: 10px 16px;
+        min-height: 40px;
+        font-size: 12px;
+    }
+
+    .platform-tab-btn .tab-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    .platform-services-panel {
+        padding: 24px;
+        min-height: 280px;
+    }
+
+    .platform-panel-list {
+        grid-template-columns: 1fr;
+    }
+
+    .platform-panel-title {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .platform-services-section {
+        padding: 60px 0;
+    }
+
+    .platform-services-tabs {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .platform-tab-btn {
+        width: 100%;
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    .platform-services-panel {
+        padding: 20px;
+        min-height: 200px;
+    }
+
+    .platform-panel-title {
+        font-size: 18px;
+    }
+
+    .platform-panel-subtitle {
+        font-size: 14px;
+    }
+
+    .platform-panel-intro,
+    .platform-panel-outro {
+        font-size: 14px;
+    }
+
+    .platform-panel-list li {
+        font-size: 13px;
+    }
+}
 
 
 /* ---------- Benefits ---------- */
