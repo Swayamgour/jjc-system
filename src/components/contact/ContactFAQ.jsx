@@ -1,5 +1,5 @@
 // components/contact/ContactFAQ.jsx
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useEffect, useLayoutEffect } from 'react';
 import { Plus, Minus } from 'lucide-react';
 import gsap from 'gsap';
 import SplitType from 'split-type';
@@ -52,8 +52,14 @@ const FAQItem = ({ item, isOpen, onToggle, index }) => {
 };
 
 // ── Main Component ────────────────────────────────────────────────────────────
-const ContactFAQ = ({ faqs }) => {
-  const [openId, setOpenId] = useState(1);
+const ContactFAQ = ({
+  faqs,
+  tag = "FAQ",
+  title = "Frequently Asked Questions",
+  description = "Can't find what you're looking for? Send us a message through the form above and we'll get back to you.",
+  ready = true,
+}) => {
+  const [openId, setOpenId] = useState(faqs?.[0]?.id ?? null);
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const eyebrowRef = useRef(null);
@@ -61,9 +67,16 @@ const ContactFAQ = ({ faqs }) => {
   const descRef = useRef(null);
   const accordionRef = useRef(null);
 
+  // Keep the first item open once dynamic FAQ data replaces the fallback list
+  useEffect(() => {
+    if (faqs?.length) setOpenId(faqs[0].id);
+  }, [faqs]);
+
   const toggle = (id) => setOpenId((prev) => (prev === id ? null : id));
 
   useLayoutEffect(() => {
+    if (!ready) return;
+
     const ctx = gsap.context(() => {
       // Split text for title
       const split = new SplitType(titleRef.current, {
@@ -131,20 +144,19 @@ const ContactFAQ = ({ faqs }) => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [ready]);
 
   return (
     <section ref={sectionRef} className={styles.section} aria-labelledby="faq-heading">
       <div className={styles.inner}>
         {/* Left: heading */}
         <div className={styles.headingCol}>
-          <span ref={eyebrowRef} className={styles.eyebrow}>FAQ</span>
+          <span ref={eyebrowRef} className={styles.eyebrow}>{tag}</span>
           <h2 ref={titleRef} id="faq-heading" className={styles.heading}>
-            Frequently Asked Questions
+            {title}
           </h2>
           <p ref={descRef} className={styles.description}>
-            Can't find what you're looking for? Send us a message through the
-            form above and we'll get back to you.
+            {description}
           </p>
         </div>
 

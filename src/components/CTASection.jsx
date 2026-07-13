@@ -1,12 +1,18 @@
 import { useInView, motion } from 'framer-motion';
 import React, { useRef } from 'react'
 import { Icons } from '../utils/data';
+import { useHomeSection } from '../hooks/useHomeSection';
 
-
+const DEFAULT_TITLE = "Ready to Transform Your Business with Microsoft Solutions?";
+const DEFAULT_DESCRIPTION = "Let's build the future together.";
+const DEFAULT_PRIMARY_LABEL = "Schedule Consultation";
+const DEFAULT_SECONDARY_LABEL = "Request Assessment";
 
 function CTASection() {
     const ref = useRef(null);
-     const inView = useInView(ref, { once: true, amount: 0.2 });
+    const inView = useInView(ref, { once: true, amount: 0.2 });
+
+    const { section, isPublished } = useHomeSection("cta");
 
     const slideRight = {
         hidden: { opacity: 0, x: 50 },
@@ -18,7 +24,7 @@ function CTASection() {
         visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } },
     };
 
-    // Icons
+    if (!isPublished) return null;
 
     return (
         <section ref={ref} className="cta-section">
@@ -32,13 +38,11 @@ function CTASection() {
                     className="cta-content"
                 >
                     <h2 className="cta-title">
-                        Ready to Transform Your Business
-                        <br />
-                        with Microsoft Solutions?
+                        {section?.title || DEFAULT_TITLE}
                     </h2>
 
                     <p className="cta-description">
-                        Let's build the future together.
+                        {section?.description || DEFAULT_DESCRIPTION}
                     </p>
                 </motion.div>
 
@@ -49,22 +53,24 @@ function CTASection() {
                     className="cta-actions"
                 >
 
-                    <motion.button
+                    <motion.a
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.97 }}
                         className="cta-btn-primary"
+                        href={section?.primaryLink || "/contact"}
                     >
-                        Schedule Consultation
+                        {section?.primaryLabel || DEFAULT_PRIMARY_LABEL}
                         <Icons.Arrow />
-                    </motion.button>
+                    </motion.a>
 
-                    <motion.button
+                    <motion.a
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.97 }}
                         className="cta-btn-secondary"
+                        href={section?.secondaryLink || "/contact"}
                     >
-                        Request Assessment
-                    </motion.button>
+                        {section?.secondaryLabel || DEFAULT_SECONDARY_LABEL}
+                    </motion.a>
 
                 </motion.div>
 

@@ -2,13 +2,10 @@
 
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
-// import SplitText from "gsap/SplitText";
 import SplitType from "split-type";
 import { motion } from "framer-motion";
 
-import { Icons, stats, floatingCards } from "../utils/data";
-
-// gsap.registerPlugin(SplitText);
+import { Icons } from "../utils/data";
 
 const fadeLeft = {
     hidden: { opacity: 0, x: -60 },
@@ -16,15 +13,6 @@ const fadeLeft = {
         opacity: 1,
         x: 0,
         transition: { duration: 0.8 }
-    }
-};
-
-const fadeRight = {
-    hidden: { opacity: 0, x: 60 },
-    show: {
-        opacity: 1,
-        x: 0,
-        transition: { duration: 0.8, delay: 0.2 }
     }
 };
 
@@ -36,10 +24,10 @@ export default function Hero({
     secondaryButton,
     partners,
     image,
-    floatingCards
+    floatingCards,
+    ready = true,
 }) {
 
-    // const titleRef = useRef(null);
     const heroRef = useRef(null);
     const tagRef = useRef(null);
     const titleRef = useRef(null);
@@ -49,10 +37,13 @@ export default function Hero({
     const imageRef = useRef(null);
 
     useLayoutEffect(() => {
+        if (!ready) return;
+
         const ctx = gsap.context(() => {
 
             const split = new SplitType(titleRef.current, {
-                types: "chars"
+                types: "lines, words, chars",
+
             });
 
             const tl = gsap.timeline({
@@ -88,7 +79,7 @@ export default function Hero({
                     duration: 0.5
                 }, "-=0.3")
 
-                .from(partnersRef.current.children, {
+                .from(partnersRef.current?.children || [], {
                     y: 20,
                     opacity: 0,
                     stagger: 0.1,
@@ -163,11 +154,10 @@ export default function Hero({
 
         return () => ctx.revert();
 
-    }, []);
+    }, [ready]);
 
 
     return (
-        // <section className="hero">
         <section ref={heroRef} className="hero">
 
             <div className="container-hero hero-container">
@@ -181,62 +171,55 @@ export default function Hero({
                     animate="show"
                 >
                     <span ref={tagRef} className="hero-tag">
-                        {/* SMART SOLUTIONS. REAL IMPACT. */}
                         {tag}
                     </span>
 
-
-
                     <h1 ref={titleRef} className="hero-title">
                         {title}
-                        {/* Microsoft Consulting
-                        <br />
-                        Services for
-                        <span className="highlight"> Modern</span>
-                        <br />
-                        Business Operations */}
                     </h1>
 
                     <p ref={descRef} className="hero-description">
-                        {/* JJC Partners helps enterprises unlock the full potential
-                        of Microsoft technologies to drive efficiency,
-                        agility, and growth. */}
-
                         {description}
                     </p>
 
                     <div ref={actionsRef} className="hero-actions">
 
-                        <button className="btn-primary">
-                            {primaryButton.text}
+                        <a
+                            className="btn-primary"
+                            href={primaryButton?.link || "/contact"}
+                        >
+                            {primaryButton?.text}
                             <Icons.Arrow />
-                        </button>
+                        </a>
 
-                        <button className="btn-secondary">
-                            {secondaryButton.text}
-                        </button>
+                        <a
+                            className="btn-secondary"
+                            href={secondaryButton?.link || "/services"}
+                        >
+                            {secondaryButton?.text}
+                        </a>
 
                     </div>
 
-                    <div ref={partnersRef} className="hero-partners">
-                        {partners.map((item, index) => (
-                            <div className="partner-item" key={index}>
-                                {item.icon}
-                                <span>{item.title}</span>
-                            </div>
-                        ))}
-                    </div>
+                    {partners?.length > 0 && (
+                        <div ref={partnersRef} className="hero-partners">
+                            {partners.map((item, index) => (
+                                <div className="partner-item" key={index}>
+                                    {item.icon}
+                                    <span>{item.title}</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
                 </motion.div>
 
                 {/* Right */}
 
                 <div ref={imageRef} className="hero-image-area">
 
-                    {/* <div className="hero-team-card"> */}
-                    <img src={image} alt="team" />
-                    {/* </div> */}
+                    <img src={image} alt="JJC Systems" />
 
-                    {floatingCards.map((card, index) => (
+                    {floatingCards?.map((card, index) => (
                         <motion.div
                             key={index}
                             className={`floating-card floating-card-${index}`}

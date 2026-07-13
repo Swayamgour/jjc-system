@@ -1,11 +1,13 @@
 import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
-import { useSplitText } from "../hooks/useSplitText";
-import { Icons , benefits } from "../utils/data";
-import { FaCheck } from "react-icons/fa6";
+import { benefits as DEFAULT_ITEMS } from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
+import { useHomeSection } from "../hooks/useHomeSection";
+import { resolveIcon } from "../utils/resolveIcon";
 
-
+const DEFAULT_TAG = "BENEFITS";
+const DEFAULT_TITLE = "Microsoft Consulting Services Benefits";
+const DEFAULT_DESCRIPTION =
+    "Partnering with JJC Systems helps organizations achieve long-term value, not just short-term technology improvements.";
 
 function Benefits() {
     const sectionRef = useRef(null);
@@ -14,13 +16,25 @@ function Benefits() {
     const descRef = useRef(null);
     const cardsRef = useRef(null);
 
+    const { section, items, ready, isPublished } = useHomeSection("benefits");
+
     useSectionAnimation({
         sectionRef,
         tagRef,
         titleRef,
         descRef,
         listRef: cardsRef,
+        ready,
     });
+
+    if (!isPublished) return null;
+
+    const benefitItems = items.length
+        ? items.map((item) => ({
+            icon: resolveIcon(item.icon),
+            text: item.title,
+        }))
+        : DEFAULT_ITEMS;
 
     return (
         <section ref={sectionRef} className="benefits-section">
@@ -32,22 +46,21 @@ function Benefits() {
                         ref={tagRef}
                         className="section-tag"
                     >
-                        BENEFITS
+                        {section?.tag || DEFAULT_TAG}
                     </div>
 
                     <h2
                         ref={titleRef}
                         className="section-title"
                     >
-                        Microsoft Consulting Services Benefits
+                        {section?.title || DEFAULT_TITLE}
                     </h2>
 
                     <p
                         ref={descRef}
                         className="benefits-intro"
                     >
-                        Partnering with JJC Systems helps organizations achieve long-term
-                        value, not just short-term technology improvements.
+                        {section?.description || DEFAULT_DESCRIPTION}
                     </p>
 
                 </div>
@@ -56,7 +69,7 @@ function Benefits() {
                     ref={cardsRef}
                     className="why-choose-list"
                 >
-                    {benefits.map((item, index) => (
+                    {benefitItems.map((item, index) => (
                         <div
                             key={index}
                             className="why-choose-item"

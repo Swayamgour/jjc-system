@@ -19,13 +19,13 @@ export default function BasePage({ data, pageType = "service" }) {
 
     const d = data;
 
-//      theme: {
-//     accent: "#2563EB", accentDark: "#1D4ED8", accentLight: "#4F8CFF",
-//     accentSoft: "rgba(37,99,235,0.08)", heroStart: "#03153c", heroEnd: "#0c5de8",
-//   },
+    //      theme: {
+    //     accent: "#2563EB", accentDark: "#1D4ED8", accentLight: "#4F8CFF",
+    //     accentSoft: "rgba(37,99,235,0.08)", heroStart: "#03153c", heroEnd: "#0c5de8",
+    //   },
 
     const themeVars = {
-        "--svc-accent": d?.theme?.accent ||"#2563EB" ,
+        "--svc-accent": d?.theme?.accent || "#2563EB",
         "--svc-accent-dark": d?.theme?.accentDark || "#1D4ED8",
         "--svc-accent-light": d?.theme?.accentLight || "#4F8CFF",
         "--svc-accent-soft": d?.theme?.accentSoft || "rgba(37,99,235,0.08)",
@@ -36,32 +36,73 @@ export default function BasePage({ data, pageType = "service" }) {
 
     const sections = [
 
-        // --------------------
-        // COMMON
-        // --------------------
+        // ==========================
+        // COMMON OVERVIEW
+        // ==========================
 
         d?.overview && {
             type: "overview",
             ...d.overview,
         },
 
-        // --------------------
-        // SERVICE / ABOUT
-        // --------------------
 
-        (d?.capabilities || d?.whyChooseUs) && {
+        // ==========================
+        // GRID SECTIONS
+        // services + platform + industry
+        // ==========================
+
+        d?.capabilities && {
             type: "grid",
-            ...(d.capabilities || d.whyChooseUs),
+            ...d.capabilities,
         },
 
-        (d?.benefits || d?.stats) && {
-            type: "benefits",
-            ...(d.benefits || d.stats),
+        d?.challenges && {
+            type: "grid",
+            ...d.challenges,
         },
 
-        (d?.implementationProcess || d?.process) && {
+        d?.serviceScope && {
+            type: "grid",
+            ...d.serviceScope,
+        },
+
+        d?.solutions && {
+            type: "grid",
+            ...d.solutions,
+        },
+
+        d?.costFactors && {
+            type: "grid",
+            ...d.costFactors,
+        },
+
+
+        // ==========================
+        // PROCESS
+        // ==========================
+
+        (
+            d?.implementationProcess ||
+            d?.deliveryProcess ||
+            d?.process
+        ) && {
             type: "process",
-            ...(d.implementationProcess || d.process),
+            ...(
+                d.implementationProcess ||
+                d.deliveryProcess ||
+                d.process
+            ),
+        },
+
+
+        // ==========================
+        // ICON STRIP
+        // platforms + industries
+        // ==========================
+
+        d?.relatedPlatforms && {
+            type: "iconStrip",
+            ...d.relatedPlatforms,
         },
 
         d?.industries && {
@@ -69,15 +110,50 @@ export default function BasePage({ data, pageType = "service" }) {
             ...d.industries,
         },
 
+        d?.industryExamples && {
+            type: "iconStrip",
+            title: d.industryExamples.title,
+            tag: d.industryExamples.tag,
+            subtitle: d.industryExamples.subtitle,
+
+            items: d.industryExamples.items?.map(item => ({
+                icon: item.icon,
+                title: item.industry,
+                description: item.example
+            }))
+        },
+
+
+        d?.technologies && {
+            type: "iconStrip",
+            ...d.technologies,
+        },
+
+
+        // ==========================
+        // BENEFITS
+        // ==========================
+
+        d?.benefits && {
+            type: "benefits",
+            ...d.benefits,
+        },
+
+
+        // ==========================
+        // CASE STUDIES
+        // ==========================
+
         d?.caseStudies && {
             type: "caseStudies",
             ...d.caseStudies,
             themeVars,
         },
 
-        // --------------------
-        // CONTACT PAGE
-        // --------------------
+
+        // ==========================
+        // CONTACT PAGE SUPPORT
+        // ==========================
 
         d?.contactForm && {
             type: "contactForm",
@@ -94,19 +170,26 @@ export default function BasePage({ data, pageType = "service" }) {
             ...d.officeLocations,
         },
 
-        // --------------------
-        // COMMON
-        // --------------------
+
+        // ==========================
+        // FAQ
+        // ==========================
 
         d?.faqs && {
             type: "faq",
             ...d.faqs,
         },
 
+
+        // ==========================
+        // CTA
+        // ==========================
+
         d?.cta && {
             type: "cta",
             ...d.cta,
         },
+
 
     ].filter(Boolean);
 

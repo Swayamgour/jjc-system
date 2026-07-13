@@ -1,18 +1,34 @@
 import React, { useRef } from "react";
 import { GoArrowLeft, GoArrowRight } from "react-icons/go";
-import { clientLogos } from "../utils/data";
+import { clientLogo as DEFAULT_LOGOS } from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
+import { useHomeSection } from "../hooks/useHomeSection";
+
+const DEFAULT_TAG = "TRUSTED BY INDUSTRY LEADERS";
 
 function ClientLogos() {
     const sectionRef = useRef(null);
     const tagRef = useRef(null);
     const marqueeRef = useRef(null);
 
+    const { section, items, ready, isPublished } = useHomeSection("clientLogos");
+
     useSectionAnimation({
         sectionRef,
         tagRef,
         outroRef: marqueeRef,
+        ready,
     });
+
+    if (!isPublished) return null;
+
+    const logos = items.length
+        ? items
+            .filter((item) => item.image?.url)
+            .map((item) => ({ name: item.title, image: item.image.url }))
+        : DEFAULT_LOGOS;
+
+    if (!logos.length) return null;
 
     return (
         <section
@@ -28,7 +44,7 @@ function ClientLogos() {
                         className="section-tag"
                     >
                         <GoArrowLeft style={{ fontSize: "16px" }} />
-                        {" "}TRUSTED BY INDUSTRY LEADERS{" "}
+                        {" "}{section?.tag || section?.title || DEFAULT_TAG}{" "}
                         <GoArrowRight style={{ fontSize: "16px" }} />
                     </div>
 
@@ -39,7 +55,7 @@ function ClientLogos() {
                     className="clients-marquee"
                 >
                     <div className="clients-track">
-                        {[...clientLogos, ...clientLogos].map((logo, index) => (
+                        {[...logos, ...logos].map((logo, index) => (
                             <div
                                 key={index}
                                 className="client-logo-card"

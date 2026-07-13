@@ -1,8 +1,13 @@
 import React, { useRef } from "react";
-import { Icons } from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
+import { useHomeSection } from "../hooks/useHomeSection";
 
-const steps = [
+const DEFAULT_TAG = "OUR PROCESS";
+const DEFAULT_TITLE = "Microsoft Consulting Process";
+const DEFAULT_DESCRIPTION =
+    "We follow a structured process to deliver reliable Microsoft solutions.";
+
+const DEFAULT_STEPS = [
     {
         num: "01",
         title: "Business Assessment",
@@ -25,6 +30,14 @@ const steps = [
     },
 ];
 
+const DEFAULT_EXPERTISE_TAG = "WHY JJC SYSTEMS";
+const DEFAULT_EXPERTISE_TITLE = "Why JJC Systems is Your Microsoft Consulting Partner";
+const DEFAULT_EXPERTISE_PARAGRAPHS = [
+    "JJC Systems combines Microsoft technology expertise with business-focused consulting to help organizations achieve digital transformation.",
+    "Our team understands that every business requires a unique technology approach. Therefore, we deliver customized Microsoft solutions that improve efficiency, security, and scalability.",
+    "With expertise across Microsoft 365, Azure, Dynamics 365, Power Platform, Business Central, SharePoint, Power BI, and Microsoft Security solutions, we help businesses maximize their technology investments.",
+];
+
 function DeliveryProcess() {
     const sectionRef = useRef(null);
     const titleRef = useRef(null);
@@ -33,14 +46,32 @@ function DeliveryProcess() {
     const tagRef = useRef(null);
     const descRef = useRef(null);
 
+    const { section, items, ready, isPublished } = useHomeSection("deliveryProcess");
+    const { section: partnerSection } = useHomeSection("whyJJCPartner");
+
     useSectionAnimation({
         sectionRef,
         tagRef,
-        descRef ,
+        descRef,
         titleRef,
         listRef: timelineRef,
         outroRef: cardRef,
+        ready,
     });
+
+    if (!isPublished) return null;
+
+    const steps = items.length
+        ? items.map((item, index) => ({
+            num: String(index + 1).padStart(2, "0"),
+            title: item.title,
+            desc: item.description,
+        }))
+        : DEFAULT_STEPS;
+
+    const expertiseParagraphs = partnerSection?.description
+        ? [partnerSection.description, partnerSection.outro].filter(Boolean)
+        : DEFAULT_EXPERTISE_PARAGRAPHS;
 
     return (
         <section ref={sectionRef} className="approach-section">
@@ -52,23 +83,22 @@ function DeliveryProcess() {
                     ref={tagRef}
                     className="section-tag"
                 >
-                    INDUSTRIES WE SERVE
+                    {section?.tag || DEFAULT_TAG}
                 </div>
 
                 <h2
                     ref={titleRef}
                     className="industries-title"
                 >
-                    Microsoft Consulting Process
-                   
+                    {section?.title || DEFAULT_TITLE}
+
                 </h2>
 
                 <p
                     ref={descRef}
                     className="industries-desc"
                 >
-                    We follow a structured process to deliver reliable
-                    Microsoft solutions.
+                    {section?.description || DEFAULT_DESCRIPTION}
                 </p>
 
             </div>
@@ -78,15 +108,7 @@ function DeliveryProcess() {
 
                 {/* LEFT */}
 
-
-
                 <div className="approach-content">
-
-                    {/* <div className="section-tag">
-                        MICROSOFT CONSULTING PROCESS
-                    </div> */}
-
-
 
                     <div className="approach-timeline">
 
@@ -131,33 +153,18 @@ function DeliveryProcess() {
                 >
 
                     <div className="expertise-tag">
-                        WHY JJC SYSTEMS
+                        {DEFAULT_EXPERTISE_TAG}
                     </div>
 
                     <h3 className="expertise-title">
-                        Why JJC Systems is Your Microsoft Consulting Partner
+                        {partnerSection?.title || DEFAULT_EXPERTISE_TITLE}
                     </h3>
 
-                    <p className="expertise-description">
-                        JJC Systems combines Microsoft technology expertise
-                        with business-focused consulting to help organizations
-                        achieve digital transformation.
-                    </p>
-
-                    <p className="expertise-description">
-                        Our team understands that every business requires a
-                        unique technology approach. Therefore, we deliver
-                        customized Microsoft solutions that improve efficiency,
-                        security, and scalability.
-                    </p>
-
-                    <p className="expertise-description">
-                        With expertise across Microsoft 365, Azure, Dynamics
-                        365, Power Platform, Business Central, SharePoint,
-                        Power BI, and Microsoft Security solutions, we help
-                        businesses maximize their technology investments.
-                    </p>
-
+                    {expertiseParagraphs.map((para, i) => (
+                        <p key={i} className="expertise-description">
+                            {para}
+                        </p>
+                    ))}
 
                 </div>
 

@@ -1,6 +1,11 @@
 import React, { useRef } from "react";
-import { solutions } from "../utils/data";
+import { solutions as DEFAULT_ITEMS } from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
+import { useHomeSection } from "../hooks/useHomeSection";
+import { resolveIcon } from "../utils/resolveIcon";
+
+const DEFAULT_TAG = "OUR SOLUTION AREAS";
+const DEFAULT_TITLE = "Solutions That Drive Real Business Outcomes";
 
 function SolutionAreas() {
   const sectionRef = useRef(null);
@@ -8,12 +13,25 @@ function SolutionAreas() {
   const titleRef = useRef(null);
   const cardsRef = useRef(null);
 
+  const { section, items, ready, isPublished } = useHomeSection("solutionAreas");
+
   useSectionAnimation({
     sectionRef,
     tagRef,
     titleRef,
     listRef: cardsRef,
+    ready,
   });
+
+  if (!isPublished) return null;
+
+  const solutionItems = items.length
+    ? items.map((item) => ({
+      icon: resolveIcon(item.icon),
+      title: item.title,
+      desc: item.description,
+    }))
+    : DEFAULT_ITEMS;
 
   return (
     <section
@@ -28,14 +46,14 @@ function SolutionAreas() {
             ref={tagRef}
             className="section-tag"
           >
-            OUR SOLUTION AREAS
+            {section?.tag || DEFAULT_TAG}
           </div>
 
           <h2
             ref={titleRef}
             className="solutions-title"
           >
-            Solutions That Drive Real Business Outcomes
+            {section?.title || DEFAULT_TITLE}
           </h2>
 
         </div>
@@ -44,7 +62,7 @@ function SolutionAreas() {
           ref={cardsRef}
           className="solutions-grid"
         >
-          {solutions.map((sol, index) => (
+          {solutionItems.map((sol, index) => (
             <div
               key={index}
               className="solution-card"

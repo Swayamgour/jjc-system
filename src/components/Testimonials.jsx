@@ -1,7 +1,11 @@
 import React, { useRef } from "react";
 import { FaQuoteLeft } from "react-icons/fa6";
-import { Icons, reviews } from "../utils/data";
+import { Icons, reviews as DEFAULT_REVIEWS } from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
+import { useHomeSection } from "../hooks/useHomeSection";
+
+const DEFAULT_TAG = "WHAT OUR CLIENTS SAY";
+const DEFAULT_TITLE = "Testimonials";
 
 function Testimonials() {
     const sectionRef = useRef(null);
@@ -9,12 +13,25 @@ function Testimonials() {
     const titleRef = useRef(null);
     const cardsRef = useRef(null);
 
+    const { section, items, ready, isPublished } = useHomeSection("testimonials");
+
     useSectionAnimation({
         sectionRef,
         tagRef,
         titleRef,
         listRef: cardsRef,
+        ready,
     });
+
+    if (!isPublished) return null;
+
+    const testimonials = items.length
+        ? items.map((item) => ({
+            text: item.description,
+            name: item.title,
+            title: item.subtitle,
+        }))
+        : DEFAULT_REVIEWS;
 
     return (
         <section
@@ -29,14 +46,14 @@ function Testimonials() {
                         ref={tagRef}
                         className="section-tag"
                     >
-                        WHAT OUR CLIENTS SAY
+                        {section?.tag || DEFAULT_TAG}
                     </div>
 
                     <h2
                         ref={titleRef}
                         className="resources-title"
                     >
-                        Testimonials
+                        {section?.title || DEFAULT_TITLE}
                     </h2>
 
                 </div>
@@ -45,7 +62,7 @@ function Testimonials() {
                     ref={cardsRef}
                     className="testimonials-grid"
                 >
-                    {reviews.map((review, index) => (
+                    {testimonials.map((review, index) => (
                         <div
                             key={index}
                             className="testimonial-card"
@@ -61,7 +78,7 @@ function Testimonials() {
                             <div className="testimonial-user">
 
                                 <div className="testimonial-avatar">
-                                    {review.name[0]}
+                                    {review.name?.[0]}
                                 </div>
 
                                 <div>

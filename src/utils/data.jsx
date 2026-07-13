@@ -360,7 +360,7 @@ export const industries = [
 
 
 
-export const clientLogos = [
+export const clientLogo = [
 
     {
         name: "Adama US",

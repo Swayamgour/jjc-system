@@ -632,6 +632,13 @@
     font-weight: 700;
 }
 
+.grid-card-sub-title {
+    margin-bottom: 4px;
+    color: var(--text-heading);
+    font-size: 13px;
+    font-weight: 500;
+}
+
 .grid-card-desc {
     color: var(--text-body);
     font-size: 12.5px;
@@ -702,6 +709,7 @@
     border-radius: 14px;
     background: var(--accent-soft);
     font-size: 22px;
+    color: var(--accent);
 }
 
 .icon-strip-label {
@@ -986,10 +994,19 @@
     color: rgba(255, 255, 255, 0.8);
     font-size: 13px;
     line-height: 1.6;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    /* kitni line show karni hai */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .case-study-link {
     display: flex;
+
+    align-items: center;
     gap: 6px;
     color: var(--svc-accent-light, var(--primary-light));
     font-size: 13px;

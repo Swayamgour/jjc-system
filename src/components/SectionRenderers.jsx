@@ -116,14 +116,14 @@ export function GridSection({ s }) {
                 </Reveal>
                 <Reveal stagger className={`grid-cards grid-cols-${cols}`}>
                     {s?.items?.map((item, i) => {
-                        const Icon = Icons[item.icon];
+                        const Icon = Icons[item?.icon];
                         return (
 
 
                             <motion.div
                                 key={i}
                                 variants={fadeUp}
-                                className={`grid-card ${s?.alignLeft ? "align-left" : ""}`}
+                                className={`grid-card `}
                                 whileHover={{
                                     y: -8,
                                     scale: 1.02,
@@ -139,8 +139,10 @@ export function GridSection({ s }) {
                                 >
                                     {Icon && <Icon size={32} />}
                                 </motion.div>
-                                <div className="grid-card-title">{item.title}</div>
-                                <div className="grid-card-desc">{item.desc}</div>
+                                <div className="grid-card-title">{item?.title}</div>
+                                <div className="grid-card-sub-title">{item?.subtitle}</div>
+                                <div className="grid-card-desc">{item?.desc || item?.description}</div>
+                                {/* <div className="grid-card-desc">{item?.desc}</div> */}
                             </motion.div>
                         )
 
@@ -197,7 +199,7 @@ export function IconStripSection({ s }) {
                     }}
                 >
                     {s?.items?.map((item, i) => {
-                        const Icon = Icons[item.icon] || Icons.CircleCheck;
+                        const Icon = Icons[item?.icon] || Icons.CircleCheck;
 
                         return (
                             <motion.div
@@ -214,31 +216,36 @@ export function IconStripSection({ s }) {
                             >
                                 <motion.div
                                     className="icon-strip-icon"
-                                    whileHover={{
-                                        rotate: [0, -15, 15, 0],
-                                        scale: 1.15,
-                                    }}
+                                    // whileHover={{
+                                    //     rotate: [0, -15, 15, 0],
+                                    //     scale: 1.15,
+                                    // }}
                                     transition={{
                                         duration: 0.6,
                                     }}
                                 >
-                                    <Icon size={32} />
+
+                                    {/* <div className="grid-card-icon"> */}
+                                        <Icon size={32} />
+
+                                    {/* </div> */}
+
                                 </motion.div>
 
                                 <div className="icon-strip-label">
-                                    {item.label || item.title}
+                                    {item?.label || item?.title || item?.industry}
                                 </div>
 
-                                {(item.description || item.desc) && (
+                                {(item?.description || item?.desc || item?.example) && (
                                     <div className="icon-strip-desc">
-                                        {item.description || item.desc}
+                                        {item?.description || item?.desc || item?.example}
                                     </div>
                                 )}
                             </motion.div>
                         );
                     })}
                 </Reveal>
-                {s?.footerLink && (
+                {/* {s?.footerLink && (
                     <Reveal>
                         <div className="grid-footer">
                             <motion.button
@@ -250,7 +257,7 @@ export function IconStripSection({ s }) {
                             </motion.button>
                         </div>
                     </Reveal>
-                )}
+                )} */}
             </div>
         </section>
     );
@@ -421,8 +428,8 @@ export function BenefitsSection({ s }) {
 
                 <Reveal stagger className="benefits-grid">
                     {s?.items?.map((item, i) => {
-                        // const Icon = Icons[item.icon];
-                        const Icon = Icons[item.icon] || Icons.CircleCheck;
+                        // const Icon = Icons[item?.icon];
+                        const Icon = Icons[item?.icon] || Icons.CircleCheck;
 
                         return (
                             <motion.div
@@ -451,11 +458,11 @@ export function BenefitsSection({ s }) {
                                 </motion.div>
 
                                 <div className="benefit-title">
-                                    {item.title}
+                                    {item?.title}
                                 </div>
 
                                 <div className="benefit-desc">
-                                    {item.description || item.desc}
+                                    {item?.description || item?.desc}
                                 </div>
                             </motion.div>
                         );
@@ -532,13 +539,7 @@ export function SplitPanelSection({ s }) {
                                 </motion.div>
                             ))}
                         </div>
-                        <motion.button
-                            className="split-panel-btn"
-                            whileHover={{ scale: 1.05, boxShadow: "0 12px 30px rgba(0,0,0,0.2)" }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            {s?.buttonLabel} <Arrow />
-                        </motion.button>
+                       
                     </Reveal>
                 </motion.div>
             </div>
@@ -547,7 +548,7 @@ export function SplitPanelSection({ s }) {
 }
 
 export function CaseStudiesSection({ s }) {
-    console.log(s)
+    // console.log(s)
     return (
         <section className="case-studies-section">
             <div className="container">
@@ -565,60 +566,53 @@ export function CaseStudiesSection({ s }) {
                 </Reveal>
                 <Reveal stagger className="case-studies-grid">
                     {/* {console.log(s)} */}
-                    {s?.items?.map((c, i) => (
-                        <motion.div
-                            key={i}
-                            variants={fadeUp}
-                            whileHover={{ scale: 1.03, y: -8 }}
-                            whileTap={{ scale: 0.97 }}
-                            className="case-study-card"
-                            style={{ background: s.themeVars?.["--svc-accent"] }}
-                        >
-                            <div className="case-study-overlay" />
-                            <div className="case-study-content">
-                                <motion.div
-                                    className="case-study-tag"
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{ delay: 0.2 + i * 0.1 }}
-                                >
-                                    {c.tag}
-                                </motion.div>
-                                <h3 className="case-study-title">{c.title}</h3>
-                                {c.stat && (
+                    {s?.items?.map((c, i) => {
+                        const Icon = Icons[c?.icon] || Icons.CircleCheck;
+                        return (
+                            <motion.div
+                                key={i}
+                                variants={fadeUp}
+                                whileHover={{ scale: 1.03, y: -8 }}
+                                whileTap={{ scale: 0.97 }}
+                                className="case-study-card"
+                                style={{ background: s.themeVars?.["--svc-accent"] }}
+                            >
+                                <div className="case-study-overlay" />
+                                <div className="case-study-content">
                                     <motion.div
-                                        className="case-study-stat"
-                                        initial={{ scale: 0.5 }}
-                                        animate={{ scale: 1 }}
-                                        transition={{ delay: 0.3 + i * 0.1, type: "spring", stiffness: 300 }}
+                                        className="case-study-tag"
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.2 + i * 0.1 }}
                                     >
-                                        {c.stat}
+                                        {c.tag || c?.icon}
                                     </motion.div>
-                                )}
-                                {c.statLabel && <div className="case-study-stat-label">{c.statLabel}</div>}
-                                {!c.stat && <p className="case-study-description">{c.desc}</p>}
-                                <motion.div
-                                    className="case-study-link"
-                                    whileHover={{ x: 5 }}
-                                    transition={{ duration: 0.3 }}
-                                >
-                                    Read Case Study <Arrow />
-                                </motion.div>
-                            </div>
-                        </motion.div>
-                    ))}
+                                    <h3 className="case-study-title">{c.title}</h3>
+                                    {/* {c.stat && (
+                                        <motion.div
+                                            className="case-study-stat"
+                                            initial={{ scale: 0.5 }}
+                                            animate={{ scale: 1 }}
+                                            transition={{ delay: 0.3 + i * 0.1, type: "spring", stiffness: 300 }}
+                                        >
+                                            {c.stat}
+                                        </motion.div>
+                                    )} */}
+                                    {/* <div className="case-study-stat-label">{c?.statLabel || c?.subtitle}</div> */}
+                                    <p className="case-study-description">{c?.desc || c?.description}</p>
+                                    <motion.div
+                                        className="case-study-link"
+                                        whileHover={{ x: 5 }}
+                                        transition={{ duration: 0.3 }}
+                                    >
+                                        Read Case Study <Arrow />
+                                    </motion.div>
+                                </div>
+                            </motion.div>
+                        )
+                    })}
                 </Reveal>
-                <Reveal>
-                    <div className="case-studies-footer">
-                        <motion.button
-                            className="text-link-btn"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            View All Case Studies <Arrow />
-                        </motion.button>
-                    </div>
-                </Reveal>
+               
             </div>
         </section>
     );
@@ -681,8 +675,8 @@ export function FaqSection({ s }) {
                     {s?.items?.map((item, i) => (
                         <motion.div key={i} variants={fadeUp}>
                             <FaqItem
-                                q={item.question}
-                                a={item.answer}
+                                q={item?.question}
+                                a={item?.answer}
                                 isOpen={openFaq === i}
                                 onClick={() => setOpenFaq(openFaq === i ? -1 : i)}
                                 index={i}

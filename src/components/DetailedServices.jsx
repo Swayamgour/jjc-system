@@ -3,6 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaCheck } from "react-icons/fa6";
 import platformServices from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
+import { useHomeSection } from "../hooks/useHomeSection";
+
+const DEFAULT_TAG = "MICROSOFT PLATFORMS";
+const DEFAULT_TITLE = "Complete Microsoft Solutions for Business Growth";
+const DEFAULT_DESCRIPTION =
+    "Our Microsoft consulting approach begins by understanding your business challenges. Then, we design and implement solutions that improve performance, security, and operational efficiency.";
 
 function PlatformServices() {
     const sectionRef = useRef(null);
@@ -13,13 +19,18 @@ function PlatformServices() {
 
     const [active, setActive] = useState(0);
 
+    const { section, ready, isPublished } = useHomeSection("detailedServices");
+
     useSectionAnimation({
         sectionRef,
         tagRef,
         titleRef,
         descRef,
         listRef: tabsRef,
+        ready,
     });
+
+    if (!isPublished) return null;
 
     return (
         <section ref={sectionRef} className="platform-services-section">
@@ -30,24 +41,21 @@ function PlatformServices() {
                         ref={tagRef}
                         className="section-tag"
                     >
-                        MICROSOFT PLATFORMS
+                        { DEFAULT_TAG}
                     </div>
 
                     <h2
                         ref={titleRef}
                         className="section-title"
                     >
-                        Complete Microsoft Solutions for Business Growth
+                        { DEFAULT_TITLE}
                     </h2>
 
                     <p
                         ref={descRef}
                         className="section-description"
                     >
-                        Our Microsoft consulting approach begins by understanding
-                        your business challenges. Then, we design and implement
-                        solutions that improve performance, security, and
-                        operational efficiency.
+                        { DEFAULT_DESCRIPTION}
                     </p>
                 </div>
 

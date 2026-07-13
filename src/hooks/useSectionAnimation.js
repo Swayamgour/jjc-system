@@ -12,8 +12,13 @@ export const useSectionAnimation = ({
     descRef,
     listRef,
     outroRef,
+    // Gate the entrance animation until dynamic content is ready
+    // (defaults to true so components with static content are unaffected).
+    ready = true,
 }) => {
     useLayoutEffect(() => {
+        if (!ready) return;
+
         const ctx = gsap.context(() => {
             let split = null;
 
@@ -107,5 +112,5 @@ export const useSectionAnimation = ({
         }, sectionRef);
 
         return () => ctx.revert();
-    }, []);
+    }, [ready]);
 };

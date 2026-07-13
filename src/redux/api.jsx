@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL = "https://daryoo.lead.crm.amaxjobs.com/api";
-const BASE_URL = "https://jjc-backend-new-two.onrender.com/api";
-// const BASE_URL = "http://localhost:5000/api";
+// const BASE_URL = "https://jjc-backend-new-two.onrender.com/api";
+const BASE_URL = "http://localhost:5009/api";
+// const BASE_URL = "https://jjc.admin.amaxjobs.com/api";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: BASE_URL,
@@ -28,7 +29,8 @@ export const api = createApi({
     tagTypes: [
         "Auth",
         "Users",
-
+        "HomeHero",
+        "HomeSection",
     ],
 
     endpoints: (builder) => ({
@@ -38,6 +40,19 @@ export const api = createApi({
         getCategory: builder.query({
             query: () => "/categories",
             providesTags: ["Auth"],
+        }),
+
+        // Home page hero (singleton)
+        getHomeHero: builder.query({
+            query: () => "/home-content/hero",
+            providesTags: ["HomeHero"],
+        }),
+
+        // Generic: any home-content card section by its sectionKey
+        // e.g. useGetHomeSectionQuery("whyChooseUs")
+        getHomeSection: builder.query({
+            query: (key) => `/home-content/sections/${key}`,
+            providesTags: (result, error, key) => [{ type: "HomeSection", id: key }],
         }),
 
 
@@ -63,6 +78,8 @@ export const api = createApi({
 export const {
 
     useGetCategoryQuery,
+    useGetHomeHeroQuery,
+    useGetHomeSectionQuery,
     useGetPlatformBySlugQuery,
     useGetServiceBySlugQuery,
     useGetIndustryBySlugQuery,

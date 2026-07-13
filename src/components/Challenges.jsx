@@ -1,6 +1,13 @@
 import React, { useRef } from "react";
-import { ChallengesData } from "../utils/data";
+import { ChallengesData as DEFAULT_ITEMS } from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
+import { useHomeSection } from "../hooks/useHomeSection";
+import { resolveIcon } from "../utils/resolveIcon";
+
+const DEFAULT_TAG = "BUSINESS CHALLENGES WE SOLVE";
+const DEFAULT_TITLE = "Turning Technology Challenges into Business Opportunities";
+const DEFAULT_DESCRIPTION =
+    "Every organization faces technology challenges while growing. However, the right Microsoft solutions can simplify operations, improve productivity, and create better business outcomes.";
 
 function Challenges() {
     const sectionRef = useRef(null);
@@ -9,13 +16,26 @@ function Challenges() {
     const descRef = useRef(null);
     const cardsRef = useRef(null);
 
+    const { section, items, ready, isPublished } = useHomeSection("challenges");
+
     useSectionAnimation({
         sectionRef,
         tagRef,
         titleRef,
         descRef,
         listRef: cardsRef,
+        ready,
     });
+
+    if (!isPublished) return null;
+
+    const challenges = items.length
+        ? items.map((item) => ({
+            icon: resolveIcon(item.icon),
+            title: item.title,
+            sub: item.description,
+        }))
+        : DEFAULT_ITEMS;
 
     return (
         <section
@@ -30,23 +50,21 @@ function Challenges() {
                         ref={tagRef}
                         className="section-tag"
                     >
-                        BUSINESS CHALLENGES WE SOLVE
+                        {section?.tag || DEFAULT_TAG}
                     </div>
 
                     <h2
                         ref={titleRef}
                         className="challenges-title"
                     >
-                        Turning Technology Challenges into Business Opportunities
+                        {section?.title || DEFAULT_TITLE}
                     </h2>
 
                     <p
                         ref={descRef}
                         className="challenges-desc"
                     >
-                        Every organization faces technology challenges while growing.
-                        However, the right Microsoft solutions can simplify operations,
-                        improve productivity, and create better business outcomes.
+                        {section?.description || DEFAULT_DESCRIPTION}
                     </p>
 
                 </div>
@@ -55,10 +73,10 @@ function Challenges() {
                     ref={cardsRef}
                     className="challenges-grid"
                 >
-                    {ChallengesData.map((item, index) => (
+                    {challenges.map((item, index) => (
                         <div
                             key={index}
-                            className={`challenge-card ${index !== ChallengesData.length - 1
+                            className={`challenge-card ${index !== challenges.length - 1
                                     ? "with-divider"
                                     : ""
                                 }`}
