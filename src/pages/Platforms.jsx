@@ -27,5 +27,5 @@ export default function Platforms() {
         );
     }
 
-    return <BasePage data={data} pageType="platform" />;
+    return <BasePage data={data} pageType="platform" key={slug} />;
 }

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronDown, Menu, X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
-import logo from '../assets/logo.png';
+import logo from '../assets/Original.jpg';
 import { useNavigate } from 'react-router';
 import { useGetCategoryQuery } from '../redux/api';
 
@@ -124,11 +124,11 @@ const Navbar = () => {
     const { data } = useGetCategoryQuery();
 
     const menuData = [
-        {
-            title: "Home",
-            path: "/",
-            hasDropdown: false
-        },
+        // {
+        //     title: "Home",
+        //     path: "/",
+        //     hasDropdown: false
+        // },
         {
             title: "What We Do",
             hasDropdown: true,
@@ -150,12 +150,91 @@ const Navbar = () => {
                 })) || []
         },
         {
-            title: "Why Us",
+            title: "Cash study",
             path: "/About",
             hasDropdown: false
         },
+        // {
+        //     title: "Why Us",
+        //     path: "/About",
+        //     hasDropdown: false
+        // },
+
         {
-            title: "Resources",
+            title: "Why Us",
+            hasDropdown: true,
+            dropdownType: "whyUs",
+            groups: [
+                {
+                    heading: "Get Started",
+                    items: [
+                        {
+                            label: "Onboarding Guide",
+                            path: "/why-us/onboarding-guide",
+                        },
+                        // {
+                        //     label: "Open A Ticket",
+                        //     path: "/why-us/open-a-ticket",
+                        // },
+                        {
+                            label: "Our Approach",
+                            path: "/why-us/our-approach",
+                        },
+                        {
+                            label: "FAQs",
+                            path: "/why-us/faq",
+                        },
+                    ],
+                },
+
+                {
+                    heading: "Company",
+                    items: [
+                        {
+                            label: "About Us",
+                            path: "/why-us/about-us",
+                        },
+                        {
+                            label: "Team",
+                            path: "/why-us/team",
+                        },
+                        {
+                            label: "Partners",
+                            path: "/why-us/partners",
+                        },
+                        {
+                            label: "Locations",
+                            path: "/why-us/locations",
+                        },
+                        {
+                            label: "Careers",
+                            path: "/why-us/careers",
+                        },
+                    ],
+                },
+
+                {
+                    heading: "Legal",
+                    items: [
+                        {
+                            label: "Privacy Policy",
+                            path: "/why-us/privacy-policy",
+                        },
+                        {
+                            label: "Return Policy",
+                            path: "/why-us/return-policy",
+                        },
+                        {
+                            label: "Terms of Service",
+                            path: "/why-us/terms-of-service",
+                        },
+                    ],
+                },
+            ],
+        },
+
+        {
+            title: "Insights",
             path: "/Resources",
             hasDropdown: false
         },

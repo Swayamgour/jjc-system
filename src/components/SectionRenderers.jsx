@@ -738,6 +738,7 @@ export function CtaSection({ s }) {
 }
 
 export function ContactFormSection({ s }) {
+    console.log(s)
     const titleRef = useRef(null);
     useSplitText(titleRef);
 

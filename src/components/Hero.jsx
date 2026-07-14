@@ -42,8 +42,8 @@ export default function Hero({
         const ctx = gsap.context(() => {
 
             const split = new SplitType(titleRef.current, {
+                // types: "chars"
                 types: "lines, words, chars",
-
             });
 
             const tl = gsap.timeline({

@@ -14,8 +14,9 @@ import {
     ContactInfoSection,
     OfficeLocationsSection,
 } from "../components/SectionRenderers";
+import { useEffect } from "react";
 
-export default function BasePage({ data, pageType = "service" }) {
+export default function BasePage({ data, pageType = "service", key }) {
 
     const d = data;
 
@@ -33,6 +34,15 @@ export default function BasePage({ data, pageType = "service" }) {
         "--svc-hero-end": d?.theme?.heroEnd || "#0c5de8",
         "--accent-rgb": d?.theme?.accentRgb || "37,99,235",
     };
+
+
+
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+        });
+    }, [key]);
 
     const sections = [
 

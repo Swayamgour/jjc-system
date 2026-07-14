@@ -1,143 +1,134 @@
 import React, { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaCheck } from "react-icons/fa6";
+import { ArrowUpRight } from "lucide-react";
 import platformServices from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
 import { useHomeSection } from "../hooks/useHomeSection";
+import { resolveIcon } from "../utils/resolveIcon";
 
 const DEFAULT_TAG = "MICROSOFT PLATFORMS";
-const DEFAULT_TITLE = "Complete Microsoft Solutions for Business Growth";
-const DEFAULT_DESCRIPTION =
-    "Our Microsoft consulting approach begins by understanding your business challenges. Then, we design and implement solutions that improve performance, security, and operational efficiency.";
+const DEFAULT_TITLE = "What Should Our Platforms Do For You";
+
+// Combines `intro` + `outro` into a single flowing paragraph for the
+// showcase card, dropping the trailing "...services include:" lead-in
+// that was written to introduce a bullet list.
+function buildDescription(intro = "", outro = "") {
+    const sentences = intro.split(/(?<=[.!?])\s+/).filter(Boolean);
+    if (sentences.length && /:$/.test(sentences[sentences.length - 1].trim())) {
+        sentences.pop();
+    }
+    return [sentences.join(" "), outro].filter(Boolean).join(" ");
+}
 
 function PlatformServices() {
     const sectionRef = useRef(null);
     const tagRef = useRef(null);
     const titleRef = useRef(null);
-    const descRef = useRef(null);
-    const tabsRef = useRef(null);
+    const pillsRef = useRef(null);
 
     const [active, setActive] = useState(0);
 
     const { section, ready, isPublished } = useHomeSection("detailedServices");
 
+    // console.log(section)
+
     useSectionAnimation({
         sectionRef,
         tagRef,
         titleRef,
-        descRef,
-        listRef: tabsRef,
+        listRef: pillsRef,
         ready,
     });
 
     if (!isPublished) return null;
 
+    const activeService = section?.items[active];
+    console.log(activeService)
+
     return (
         <section ref={sectionRef} className="platform-services-section">
             <div className="container">
 
-                <div className="section-heading">
-                    <div
-                        ref={tagRef}
-                        className="section-tag"
-                    >
-                        { DEFAULT_TAG}
-                    </div>
+                <h2
+                    ref={titleRef}
+                    className="platform-services-heading"
+                >
+                    {section?.title || DEFAULT_TITLE}
+                </h2>
+               
 
-                    <h2
-                        ref={titleRef}
-                        className="section-title"
-                    >
-                        { DEFAULT_TITLE}
-                    </h2>
+                <div ref={pillsRef} className="platform-pills">
+                    {section?.items?.map((service, index) => (
+                        <button
+                            key={service._id}
+                            type="button"
+                            className={`platform-pill ${active === index ? "active" : ""}`}
+                            onClick={() => setActive(index)}
+                        >
+                            <span className="platform-pill-icon">
+                                {resolveIcon(service.icon)}
+                            </span>
 
-                    <p
-                        ref={descRef}
-                        className="section-description"
-                    >
-                        { DEFAULT_DESCRIPTION}
-                    </p>
+                            <span className="platform-pill-label">
+                                {service.title}
+                            </span>
+                        </button>
+                    ))}
                 </div>
 
-                <div className="platform-services-layout">
-
-                    {/* Left */}
-                    <div className="platform-services-tabs-wrapper">
-
-                        <div
-                            ref={tabsRef}
-                            className="platform-services-tabs"
+                <AnimatePresence mode="wait">
+                    {activeService && (
+                        <motion.div
+                            key={activeService._id}
+                            className="platform-showcase"
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.35 }}
                         >
-                            {platformServices.map((service, index) => (
-                                <button
-                                    key={index}
-                                    type="button"
-                                    className={`platform-tab-btn ${active === index ? "active" : ""
-                                        }`}
-                                    onClick={() => setActive(index)}
-                                >
-                                    <span className="tab-icon">
-                                        {service.icon}
-                                    </span>
+                            <div className="platform-showcase-image">
+                                <img
+                                    src={activeService.image?.url}
+                                    alt={activeService.title}
+                                />
+                            </div>
 
-                                    <span className="tab-label">
-                                        {service.shortTitle ||
-                                            service.title.replace(
-                                                " Consulting Services",
-                                                ""
-                                            )}
-                                    </span>
-                                </button>
-                            ))}
-                        </div>
+                            <div className="platform-showcase-card">
+                                <div className="platform-showcase-topbar">
+                                    <div className="platform-showcase-dots">
+                                        <span className="dot dot-red" />
+                                        <span className="dot dot-yellow" />
+                                        <span className="dot dot-green" />
+                                    </div>
 
-                    </div>
+                                    <div className="platform-showcase-more">
+                                        •••
+                                    </div>
+                                </div>
 
-                    {/* Right */}
-                    <div className="platform-services-panel">
+                                <h3 className="platform-showcase-title">
+                                    {/* <span className="platform-showcase-title-icon">
+                                        {resolveIcon(activeService.icon)}
+                                    </span> */}
 
-                        <AnimatePresence mode="wait">
-
-                            <motion.div
-                                key={active}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                exit={{ opacity: 0, y: -20 }}
-                                transition={{ duration: 0.35 }}
-                            >
-                                <h3 className="platform-panel-title">
-                                    {platformServices[active].title}
+                                    {activeService.subtitle}
                                 </h3>
 
-                                <p className="platform-panel-subtitle">
-                                    {platformServices[active].subtitle}
-                                </p>
+                                <div className="platform-showcase-desc">
+                                    <p>{activeService.description}</p>
+                                </div>
 
-                                <p className="platform-panel-intro">
-                                    {platformServices[active].intro}
-                                </p>
-
-                                <ul className="platform-panel-list">
-                                    {platformServices[active].bullets.map(
-                                        (bullet, index) => (
-                                            <li key={index}>
-                                                <FaCheck />
-                                                <span>{bullet}</span>
-                                            </li>
-                                        )
-                                    )}
-                                </ul>
-
-                                <p className="platform-panel-outro">
-                                    {platformServices[active].outro}
-                                </p>
-                            </motion.div>
-
-                        </AnimatePresence>
-
-                    </div>
-
-                </div>
+                                <a
+                                    href={activeService.link || "/contact"}
+                                    className="platform-showcase-cta"
+                                    aria-label={activeService.title}
+                                >
+                                    <ArrowUpRight />
+                                </a>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
             </div>
         </section>

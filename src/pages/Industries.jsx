@@ -23,5 +23,5 @@ export default function Industries() {
         );
     }
 
-    return <BasePage data={data} pageType="industry" />;
+    return <BasePage data={data} pageType="industry" key={slug} />;
 }

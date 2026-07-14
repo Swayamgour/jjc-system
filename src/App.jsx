@@ -15,6 +15,16 @@ import Resources from "./pages/Resources";
 import Platforms from "./pages/Platforms";
 import Industries from "./pages/Industries";
 // import index from "./pages/ContactUs/ContactUs";
+import OnboardingGuide from "./pages/OnboardingGuide";
+import OurApproach from "./pages/OurApproach";
+import FAQPage from "./pages/FAQPage";
+import Team from "./pages/Team";
+import Locations from "./pages/Locations";
+import Partners from "./pages/Partners";
+import Careers from "./pages/Careers";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ReturnPolicy from "./pages/ReturnPolicy";
+import TermsOfService from "./pages/TermsOfService";
 
 
 
@@ -33,6 +43,33 @@ export default function App() {
           <Route path="/About" element={<AboutUs />} />
           <Route path="/Contact" element={<ContactUs />} />
           <Route path="/Resources" element={<Resources />} />
+
+          {/* Get Started */}
+          {/* <Route path="/onboarding-guide" element={<OnboardingGuide />} /> */}
+          {/* <Route path="/our-approach" element={<OurApproach />} /> */}
+          {/* <Route path="/faq" element={<FAQPage />} /> */}
+
+        
+
+         
+
+
+          {/* <Route path="/why-us/about-us" element={<AboutUs />} /> */}
+          <Route path="/why-us/onboarding-guide" element={<OnboardingGuide />} />
+          {/* <Route path="/why-us/open-a-ticket" element={<OpenTicket />} /> */}
+          <Route path="/why-us/our-approach" element={<OurApproach />} />
+          <Route path="/why-us/faq" element={<FAQPage />} />
+
+          <Route path="/why-us/team" element={<Team />} />
+          <Route path="/why-us/partners" element={<Partners />} />
+          <Route path="/why-us/locations" element={<Locations />} />
+          <Route path="/why-us/careers" element={<Careers />} />
+
+          <Route path="/why-us/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/why-us/return-policy" element={<ReturnPolicy />} />
+          <Route path="/why-us/terms-of-service" element={<TermsOfService />} />
+
+
         </Routes>
 
         {/* <Home /> */}

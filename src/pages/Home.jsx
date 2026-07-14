@@ -1,7 +1,7 @@
 import React from 'react'
 import Hero from '../components/Hero'
 import WhyChooseUs from '../components/WhyChooseUs'
-import Services from '../components/Services'
+
 import DetailedServices from '../components/DetailedServices'
 import Challenges from '../components/Challenges'
 import SolutionAreas from '../components/SolutionAreas'
@@ -169,7 +169,7 @@ function Home() {
                 description={faqSection?.description}
                 ready={faqReady}
             />
-            {/* <Services />2 */}
+       
             <CTASection />
         </div>
     )

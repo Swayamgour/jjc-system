@@ -7,6 +7,28 @@
     overflow-x: hidden;
 }
 
+.legal-page {
+    --accent: var(--svc-accent, var(--primary));
+    --accent-dark: var(--svc-accent-dark, var(--primary-dark));
+    --accent-soft: var(--svc-accent-soft, rgba(37, 99, 235, 0.08));
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-white);
+    overflow-x: hidden;
+}
+
+.split-panel-section {
+    --accent: var(--svc-accent, var(--primary));
+    --accent-dark: var(--svc-accent-dark, var(--primary-dark));
+    --accent-soft: var(--svc-accent-soft, rgba(37, 99, 235, 0.08));
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-white);
+    overflow-x: hidden;
+}
+
+
+
+
+
 .container-hero {
     /* max-width: 1280px; */
     margin-left: 80px;

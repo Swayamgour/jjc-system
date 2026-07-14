@@ -1,22 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Icons, team as DEFAULT_TEAM } from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
 import { useHomeSection } from "../hooks/useHomeSection";
 
 const DEFAULT_TAG = "OUR LEADERSHIP TEAM";
-
-const GRADIENT_COLORS = [
-    "#2563EB",
-    "#0F3D91",
-    "#4F8CFF",
-    "#1D4ED8",
-    "#3B82F6",
-];
+const DEFAULT_TITLE = "Meet Our Visionary Leaders";
+const DEFAULT_SUBTITLE = "Passionate experts driving innovation and excellence in everything we do";
 
 function LeadershipTeam() {
     const sectionRef = useRef(null);
     const tagRef = useRef(null);
     const cardsRef = useRef(null);
+    const [hoveredIndex, setHoveredIndex] = useState(null);
 
     const { section, items, ready, isPublished } = useHomeSection("leadershipTeam");
 
@@ -38,94 +33,88 @@ function LeadershipTeam() {
         }))
         : DEFAULT_TEAM;
 
+    const handleLinkedInClick = (e, link) => {
+        e.stopPropagation();
+        if (link) {
+            window.open(link, '_blank', 'noopener,noreferrer');
+        }
+    };
+
     return (
         <section
             ref={sectionRef}
             className="leadership-section"
         >
             <div className="container">
-
-                <div className="leadership-header">
-
-                    <div
-                        ref={tagRef}
-                        className="section-tag"
-                    >
+                <div className="testimonials-header">
+                    <div ref={tagRef} className="section-tag">
                         {section?.tag || DEFAULT_TAG}
                     </div>
-
+                    <h2 className="section-title">
+                        {section?.title || DEFAULT_TITLE}
+                    </h2>
+                    <p className="section-subtitle">
+                        {section?.subtitle || DEFAULT_SUBTITLE}
+                    </p>
                 </div>
 
-                <div
-                    ref={cardsRef}
-                    className="leadership-grid"
-                >
-                    {team.map((member, i) => (
+                <div ref={cardsRef} className="leadership-grid">
+                    {team.map((member, index) => (
                         <div
-                            key={i}
-                            className="leader-card"
+                            key={index}
+                            className={`leader-card ${!member.photo ? 'loading' : ''}`}
+                            onMouseEnter={() => setHoveredIndex(index)}
+                            onMouseLeave={() => setHoveredIndex(null)}
                         >
-                            {member.photo ? (
-                                <div
-                                    className="leader-image"
-                                    style={{
-                                        backgroundImage: `url(${member.photo})`,
-                                        backgroundSize: "cover",
-                                        backgroundPosition: "center",
-                                    }}
-                                />
-                            ) : (
-                                <div
-                                    className="leader-image"
-                                    style={{
-                                        background: `linear-gradient(
-                                            160deg,
-                                            ${GRADIENT_COLORS[i % GRADIENT_COLORS.length]},
-                                            ${GRADIENT_COLORS[(i + 2) % GRADIENT_COLORS.length]}
-                                        )`,
-                                    }}
-                                >
-                                    <svg
-                                        width="60"
-                                        height="70"
-                                        viewBox="0 0 60 70"
-                                        fill="none"
-                                    >
-                                        <circle
-                                            cx="30"
-                                            cy="24"
-                                            r="16"
-                                            fill="rgba(255,255,255,0.3)"
-                                        />
+                            <div className="leader-image">
+                                {member?.photo ? (
+                                    <img
+                                        src={member.photo}
+                                        alt={member?.name || 'Team member'}
+                                        loading="lazy"
+                                    />
+                                ) : (
+                                    <div className="placeholder-avatar">
+                                        {member?.name?.charAt(0) || 'T'}
+                                    </div>
+                                )}
 
-                                        <path
-                                            d="M5 65a25 25 0 0150 0"
-                                            fill="rgba(255,255,255,0.2)"
-                                        />
-                                    </svg>
-                                </div>
-                            )}
+                                {member?.link && (
+                                    <div className="social-badge">
+                                        <div
+                                            className="linkedin-btn"
+                                            onClick={(e) => handleLinkedInClick(e, member.link)}
+                                            aria-label={`Connect with ${member?.name} on LinkedIn`}
+                                        >
+                                            <svg viewBox="0 0 24 24">
+                                                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
 
                             <div className="leader-name">
-                                {member.name}
+                                {member?.name || 'Team Member'}
                             </div>
 
                             <div className="leader-role">
-                                {member.title}
+                                {member?.title || 'Role'}
                             </div>
 
-                            {/* <a
-                                className="linkedin-btn"
-                                href={member.link || undefined}
-                                target={member.link ? "_blank" : undefined}
-                                rel={member.link ? "noopener noreferrer" : undefined}
-                            >
-                                <Icons.LinkedIn />
-                            </a> */}
+                            {member?.link && (
+                                <div className="linkedin-btn"
+                                    onClick={(e) => handleLinkedInClick(e, member.link)}
+                                    style={{ opacity: hoveredIndex === index ? 1 : 0.7 }}
+                                >
+                                    <svg viewBox="0 0 24 24">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                                    </svg>
+                                </div>
+                            )}
                         </div>
                     ))}
                 </div>
-
             </div>
         </section>
     );

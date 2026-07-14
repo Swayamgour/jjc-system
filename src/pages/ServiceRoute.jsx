@@ -26,7 +26,7 @@ export default function ServiceRoute() {
         );
     }
 
-    return <BasePage data={data} pageType="service" />;
+    return <BasePage data={data} pageType="service" key={slug} />;
 
 
 

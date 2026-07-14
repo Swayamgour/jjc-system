@@ -1,5 +1,15 @@
 import imageBg from '../assets/team.jpg'
 
+// Fallback showcase images for the Platform Services tabs (utils/data.jsx has
+// no dedicated image per platform, so these are cycled across the 15 tiles).
+import platformImg1 from '../assets/banner.jpeg'
+import platformImg2 from '../assets/banner1.webp'
+import platformImg3 from '../assets/banner2.png'
+import platformImg4 from '../assets/hero.png'
+import platformImg5 from '../assets/contact.png'
+import platformImg6 from '../assets/resources.jpg'
+import platformImg7 from '../assets/team.jpg'
+
 // ============================================================
 // ICONS (SVG inline)
 // ============================================================
@@ -268,20 +278,32 @@ export const cards = [
 
 export const cols = [
     {
-        title: "Microsoft Services",
-        links: ["Microsoft 365", "Azure", "Dynamics 365", "Power Platform", "Security", "View All Services →"],
-    },
-    {
-        title: "Solutions",
-        links: ["Modern Work", "Security", "Infrastructure", "Data & AI", "Cloud Migration", "View All Solutions →"],
-    },
-    {
-        title: "Industries",
-        links: ["Manufacturing", "Healthcare", "Construction", "Professional Services", "Education", "View All Industries →"],
+        title: "Get Started",
+        links: [
+            { label: "Onboarding Guide", to: "/onboarding-guide" },
+            { label: "Open A Ticket", href: "https://jjcsystems.com/open-a-ticket/", external: true },
+            { label: "Our Approach", to: "/our-approach" },
+            { label: "Client Portal", href: "https://support.jjcsystems.com/portal/en/signin", external: true },
+            { label: "FAQs", to: "/faq" },
+        ],
     },
     {
         title: "Company",
-        links: ["About Us", "Microsoft Expertise", "Why Choose Us", "Delivery Approach", "Careers"],
+        links: [
+            { label: "About Us", to: "/About" },
+            { label: "Team", to: "/team" },
+            { label: "Locations", to: "/locations" },
+            { label: "Partners", to: "/partners" },
+            { label: "Careers", to: "/careers" },
+        ],
+    },
+    {
+        title: "Legal",
+        links: [
+            { label: "Privacy Policy", to: "/privacy-policy" },
+            { label: "Return Policy", to: "/return-policy" },
+            { label: "Terms of Service", to: "/terms-of-service" },
+        ],
     },
 ];
 
@@ -566,6 +588,8 @@ export const businessServices = [
 export const platformServices = [
     {
         title: "Dynamics 365 Business Central",
+        icon: "Landmark",
+        image: platformImg1,
         subtitle: "Streamline Finance and Operations with Business Central",
         intro: "Microsoft Dynamics 365 Business Central is an all-in-one business management solution that helps organizations connect financials, operations, sales, and customer service. Our Business Central consulting services include:",
         bullets: [
@@ -582,6 +606,8 @@ export const platformServices = [
     },
     {
         title: "Dynamics 365 Sales",
+        icon: "TrendingUp",
+        image: platformImg2,
         subtitle: "Empower Your Sales Team with Intelligent CRM",
         intro: "Dynamics 365 Sales helps sales teams build strong customer relationships and close deals faster. Our implementation services include:",
         bullets: [
@@ -598,6 +624,8 @@ export const platformServices = [
     },
     {
         title: "Dynamics 365 Customer Insights",
+        icon: "Users",
+        image: platformImg3,
         subtitle: "Unify Customer Data and Deliver Personalized Experiences",
         intro: "Dynamics 365 Customer Insights helps organizations create a complete view of their customers by unifying data from multiple sources. Our services include:",
         bullets: [
@@ -614,6 +642,8 @@ export const platformServices = [
     },
     {
         title: "Dynamics 365 Customer Service",
+        icon: "Headset",
+        image: platformImg4,
         subtitle: "Deliver Exceptional Customer Support Experiences",
         intro: "Dynamics 365 Customer Service enables organizations to provide fast, personalized support across all channels. Our consulting services include:",
         bullets: [
@@ -630,6 +660,8 @@ export const platformServices = [
     },
     {
         title: "Dynamics 365 Finance",
+        icon: "Wallet",
+        image: platformImg5,
         subtitle: "Transform Financial Operations and Decision-Making",
         intro: "Dynamics 365 Finance helps organizations gain greater control over financial operations and make smarter decisions. Our services include:",
         bullets: [
@@ -646,6 +678,8 @@ export const platformServices = [
     },
     {
         title: "Dynamics 365 Field Service",
+        icon: "Wrench",
+        image: platformImg6,
         subtitle: "Optimize Field Operations and Improve Customer Satisfaction",
         intro: "Dynamics 365 Field Service helps organizations manage field operations, resources, and customer appointments effectively. Our services include:",
         bullets: [
@@ -662,6 +696,8 @@ export const platformServices = [
     },
     {
         title: "Microsoft 365",
+        icon: "M365",
+        image: platformImg7,
         subtitle: "Empower Modern Work and Collaboration",
         intro: "Microsoft 365 provides a comprehensive suite of productivity and collaboration tools for modern workplaces. Our consulting services include:",
         bullets: [
@@ -678,6 +714,8 @@ export const platformServices = [
     },
     {
         title: "Microsoft Copilot",
+        icon: "Sparkles",
+        image: platformImg1,
         subtitle: "Transform Productivity with AI-Powered Assistance",
         intro: "Microsoft Copilot brings the power of AI to Microsoft 365 applications, helping users accomplish more with less effort. Our services include:",
         bullets: [
@@ -694,6 +732,8 @@ export const platformServices = [
     },
     {
         title: "Microsoft Purview",
+        icon: "Eye",
+        image: platformImg2,
         subtitle: "Manage Data Governance and Compliance with Confidence",
         intro: "Microsoft Purview provides unified data governance and compliance solutions. Our services include:",
         bullets: [
@@ -710,6 +750,8 @@ export const platformServices = [
     },
     {
         title: "Microsoft Fabric",
+        icon: "Layers",
+        image: platformImg3,
         subtitle: "Unify Your Data Analytics and Business Intelligence",
         intro: "Microsoft Fabric is an end-to-end analytics platform that unifies data integration, engineering, warehouse, and business intelligence. Our services include:",
         bullets: [
@@ -726,6 +768,8 @@ export const platformServices = [
     },
     {
         title: "Microsoft Intune",
+        icon: "Smartphone",
+        image: platformImg4,
         subtitle: "Simplify Endpoint Management and Security",
         intro: "Microsoft Intune helps organizations manage and secure devices, apps, and data across the organization. Our services include:",
         bullets: [
@@ -742,6 +786,8 @@ export const platformServices = [
     },
     {
         title: "Microsoft Defender",
+        icon: "ShieldAlert",
+        image: platformImg5,
         subtitle: "Strengthen Your Security Posture with Advanced Threat Protection",
         intro: "Microsoft Defender provides comprehensive security solutions to protect against cyber threats. Our security services include:",
         bullets: [
@@ -758,6 +804,8 @@ export const platformServices = [
     },
     {
         title: "Microsoft Power Platform",
+        icon: "Power",
+        image: platformImg6,
         subtitle: "Automate Workflows and Build Intelligent Business Applications",
         intro: "Microsoft Power Platform empowers organizations to create custom solutions, automate processes, and analyze data. Our services include:",
         bullets: [
@@ -774,6 +822,8 @@ export const platformServices = [
     },
     {
         title: "Microsoft Azure Cloud",
+        icon: "Azure",
+        image: platformImg7,
         subtitle: "Build, Deploy, and Scale Applications with Confidence",
         intro: "Microsoft Azure provides a comprehensive cloud platform for building, deploying, and managing applications. Our Azure consulting services include:",
         bullets: [
@@ -790,6 +840,8 @@ export const platformServices = [
     },
     {
         title: "Microsoft Azure Virtual Desktop",
+        icon: "MonitorSmartphone",
+        image: platformImg1,
         subtitle: "Enable Secure Remote Work with Virtual Desktop Solutions",
         intro: "Microsoft Azure Virtual Desktop provides a secure, scalable virtual desktop experience from the cloud. Our services include:",
         bullets: [

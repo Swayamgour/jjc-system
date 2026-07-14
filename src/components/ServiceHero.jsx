@@ -9,7 +9,7 @@ import '../pages/ServicePage.css'
 import { useSplitText } from "../hooks/useSplitText";
 
 function ServiceHero({ d }) {
-    console.log(d)
+    // console.log(d)
 
 
     const heroRef = useRef(null);
