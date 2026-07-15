@@ -361,6 +361,10 @@ const Navbar = () => {
                             label: "Onboarding Guide",
                             path: "/why-us/onboarding-guide",
                         },
+                        {
+                            label: "Open A Ticket",
+                            path: "/why-us/open-a-ticket",
+                        },
 
                         {
                             label: "Our Approach",
@@ -378,7 +382,7 @@ const Navbar = () => {
                     items: [
                         {
                             label: "About Us",
-                            path: "/why-us/about-us",
+                            path: "/About",
                         },
                         {
                             label: "Team",
@@ -428,23 +432,23 @@ const Navbar = () => {
                     items: [
                         {
                             label: "Blog",
-                            path: "insights/blog",
+                            path: "/blog",
                         },
                         {
                             label: "Guides",
-                            path: "insights/guides",
+                            path: "/resources/guides",
                         },
                         {
                             label: "Checklists",
-                            path: "insights/checklists",
+                            path: "/resources/checklists",
                         },
                         {
                             label: "Whitepaper",
-                            path: "insights/whitepaper",
+                            path: "/resources/whitepapers",
                         },
                         {
                             label: "Infographic",
-                            path: "insights/infographic",
+                            path: "/resources/infographics",
                         },
                     ],
                 },
@@ -453,7 +457,7 @@ const Navbar = () => {
                     items: [
                         {
                             label: "Events",
-                            path: "insights/events",
+                            path: "/resources/events",
                         },
                     ],
                 },

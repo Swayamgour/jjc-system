@@ -15,6 +15,7 @@ import Pagination from "../components/blog/Pagination";
 import { Newsletter } from "../components/blog/Newsletter";
 
 import { blogs, categories, getFeaturedBlog } from "../utils/blogData";
+import ServiceHero from "../components/ServiceHero";
 
 const PAGE_SIZE = 6;
 
@@ -72,58 +73,49 @@ export default function BlogListing() {
         setSearchParams(next, { replace: true });
     };
 
+
+     const blogPageData = {
+        title: "Microsoft Consulting Insights & Perspectives",
+
+        badge: "BLOG",
+
+        breadcrumb: [
+            "Home",
+            "Resources",
+            "Blog"
+        ],
+
+        exploreLabel: "Browse Articles",
+
+        hero: {
+            description:
+                "Stay ahead with expert insights on Microsoft 365, Azure, Dynamics 365, Power Platform, SharePoint, AI, and Cyber Security. Our consultants share practical knowledge, implementation strategies, and industry best practices to help organizations maximize the value of Microsoft technologies.",
+
+            subDescription:
+                "Discover real-world case studies, migration strategies, cloud optimization techniques, Microsoft product updates, and actionable advice designed for business leaders, IT managers, and technology professionals.",
+
+            badges: [
+                "Microsoft 365",
+                "Azure",
+                "Cyber Security",
+                "Power Platform",
+                "Dynamics 365",
+                "Cloud Migration"
+            ],
+
+            image: {
+                url: "https://res.cloudinary.com/sakshichak1/image/upload/v1783428245/jjc-systems/fbxeeyjucyvcxmm2srjt.jpg"
+            }
+        }
+    };
+
+
     return (
         <div className="blog-page">
             {/* ============ HERO ============ */}
-            <section className="blog-listing-hero">
-                <div className="container blog-listing-hero-content">
-                    <motion.div
-                        className="blog-listing-hero-badge"
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <Sparkles size={13} /> JJC Systems Insights
-                    </motion.div>
 
-                    <motion.h1
-                        className="blog-listing-hero-title"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.1 }}
-                    >
-                        Microsoft Consulting Insights &amp; Perspectives
-                    </motion.h1>
+            <ServiceHero d={blogPageData} />
 
-                    <motion.p
-                        className="blog-listing-hero-desc"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                    >
-                        Practical guidance on Microsoft 365, Azure, Dynamics 365, Power Platform,
-                        and security — written by the consultants who deliver the work.
-                    </motion.p>
-
-                    <motion.div
-                        className="blog-listing-hero-search"
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.3 }}
-                    >
-                        <SearchBar value={search} onChange={handleSearchChange} placeholder="Search articles, topics, tags..." />
-                    </motion.div>
-                </div>
-            </section>
-
-            {/* ============ FEATURED ============ */}
-            <section className="blog-listing-section">
-                <div className="container">
-                    <div className="blog-section-tag">Featured</div>
-                    <h2 className="blog-section-title" style={{ marginBottom: 32 }}>Editor's Pick</h2>
-                    <FeaturedBlogCard blog={featuredBlog} />
-                </div>
-            </section>
 
             {/* ============ FILTER + GRID ============ */}
             <section className="blog-listing-section bg-section">
