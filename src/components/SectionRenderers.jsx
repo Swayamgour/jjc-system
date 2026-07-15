@@ -5,6 +5,7 @@ import { useSplitText } from "../hooks/useSplitText";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import contact from '../assets/contact.png'
 import * as Icons from "lucide-react";
+import ContactNewForm from "../pages/ContactNewForm";
 
 // ============================================================
 // ANIMATION VARIANTS
@@ -98,6 +99,18 @@ export function GridSection({ s }) {
     const titleRef = useRef(null);
     useSplitText(titleRef);
 
+    // Helper function to get column class
+    const getColumnClass = () => {
+        switch (cols) {
+            case 2: return 'grid-cols-2';
+            case 3: return 'grid-cols-3';
+            case 4: return 'grid-cols-4';
+            case 5: return 'grid-cols-5';
+            case 6: return 'grid-cols-6';
+            case 7: return 'grid-cols-7';
+            default: return 'grid-cols-4';
+        }
+    };
 
     return (
         <section className={`grid-section ${s?.bg === "section" ? "bg-section" : "bg-white"}`}>
@@ -114,16 +127,15 @@ export function GridSection({ s }) {
                     <h2 ref={titleRef} className="section-title">{s?.title}</h2>
                     {s?.subtitle && <p className="section-subtitle">{s?.subtitle}</p>}
                 </Reveal>
-                <Reveal stagger className={`grid-cards grid-cols-${cols}`}>
+
+                <Reveal stagger className={`grid-cards ${getColumnClass()}`}>
                     {s?.items?.map((item, i) => {
                         const Icon = Icons[item?.icon];
                         return (
-
-
                             <motion.div
                                 key={i}
                                 variants={fadeUp}
-                                className={`grid-card `}
+                                className="grid-card align-left"
                                 whileHover={{
                                     y: -8,
                                     scale: 1.02,
@@ -132,24 +144,24 @@ export function GridSection({ s }) {
                                 }}
                                 whileTap={{ scale: 0.98 }}
                             >
-                                <motion.div
-                                    className="grid-card-icon"
-                                    whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
-                                    transition={{ duration: 0.5 }}
-                                >
-                                    {Icon && <Icon size={32} />}
-                                </motion.div>
+                                {Icon && (
+                                    <motion.div
+                                        className="grid-card-icon"
+                                        whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
+                                        transition={{ duration: 0.5 }}
+                                    >
+                                        <Icon size={32} />
+                                    </motion.div>
+                                )}
                                 <div className="grid-card-title">{item?.title}</div>
-                                <div className="grid-card-sub-title">{item?.subtitle}</div>
-                                <div className="grid-card-desc">{item?.desc || item?.description}</div>
-                                {/* <div className="grid-card-desc">{item?.desc}</div> */}
+                                {item?.subtitle && <div className="grid-card-sub-title">{item?.subtitle}</div>}
+                                {item?.description && <div className="grid-card-desc">{item?.description}</div>}
+                                {item?.summary && <div className="grid-card-desc">{item?.summary}</div>}
                             </motion.div>
-                        )
-
-                    }
-
-                    )}
+                        );
+                    })}
                 </Reveal>
+
                 {s?.footerLink && (
                     <Reveal>
                         <div className="grid-footer">
@@ -226,7 +238,7 @@ export function IconStripSection({ s }) {
                                 >
 
                                     {/* <div className="grid-card-icon"> */}
-                                        <Icon size={32} />
+                                    <Icon size={32} />
 
                                     {/* </div> */}
 
@@ -539,7 +551,7 @@ export function SplitPanelSection({ s }) {
                                 </motion.div>
                             ))}
                         </div>
-                       
+
                     </Reveal>
                 </motion.div>
             </div>
@@ -612,7 +624,7 @@ export function CaseStudiesSection({ s }) {
                         )
                     })}
                 </Reveal>
-               
+
             </div>
         </section>
     );
@@ -743,134 +755,7 @@ export function ContactFormSection({ s }) {
     useSplitText(titleRef);
 
     return (
-        <section className="split-panel-section">
-            <div className="container">
-
-                <Reveal className="section-header-center">
-                    {s?.tag && (
-                        <div className="section-tag">{s.tag}</div>
-                    )}
-
-                    <h2 ref={titleRef} className="section-title">
-                        {s?.title}
-                    </h2>
-
-                    {s?.subtitle && (
-                        <p className="section-subtitle">
-                            {s.subtitle}
-                        </p>
-                    )}
-                </Reveal>
-
-                <div className="split-panel">
-
-                    {/* LEFT */}
-                    <Reveal variants={slideLeft}>
-                        <div className="contact-form-card">
-
-                            <form className="contact-form">
-
-                                <div className="form-grid">
-
-                                    <div className="form-group">
-                                        <label>{s?.fields?.fullName?.label}</label>
-
-                                        <input
-                                            type="text"
-                                            placeholder={s?.fields?.fullName?.placeholder}
-                                        />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label>{s?.fields?.companyName?.label}</label>
-
-                                        <input
-                                            type="text"
-                                            placeholder={s?.fields?.companyName?.placeholder}
-                                        />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label>{s?.fields?.email?.label}</label>
-
-                                        <input
-                                            type="email"
-                                            placeholder={s?.fields?.email?.placeholder}
-                                        />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label>{s?.fields?.phone?.label}</label>
-
-                                        <input
-                                            type="text"
-                                            placeholder={s?.fields?.phone?.placeholder}
-                                        />
-                                    </div>
-
-                                    <div className="form-group full">
-
-                                        <label>{s?.fields?.service?.label}</label>
-
-                                        <select defaultValue="">
-                                            <option value="" disabled>
-                                                {s?.fields?.service?.placeholder}
-                                            </option>
-
-                                            {s?.fields?.service?.options?.map((item, i) => (
-                                                <option key={i} value={item}>
-                                                    {item}
-                                                </option>
-                                            ))}
-                                        </select>
-
-                                    </div>
-
-                                    <div className="form-group full">
-
-                                        <label>{s?.fields?.message?.label}</label>
-
-                                        <textarea
-                                            rows={6}
-                                            placeholder={s?.fields?.message?.placeholder}
-                                        />
-
-                                    </div>
-
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    className="split-panel-btn"
-                                >
-                                    {s?.buttonText}
-                                    <Arrow />
-                                </button>
-
-                            </form>
-
-                        </div>
-                    </Reveal>
-
-                    {/* RIGHT */}
-
-                    <Reveal variants={slideRight}>
-
-                        <div className="contact-side-image">
-
-                            <img
-                                src={contact}
-                                alt={s?.title}
-                            />
-
-                        </div>
-
-                    </Reveal>
-
-                </div>
-
-            </div>
-        </section>
+       <ContactNewForm />
     );
 }
 
@@ -1051,3 +936,6 @@ export function OfficeLocationsSection({ s }) {
         </section>
     );
 }
+
+
+

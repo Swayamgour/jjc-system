@@ -25,6 +25,10 @@ import Careers from "./pages/Careers";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import TermsOfService from "./pages/TermsOfService";
+import OpenTicket from "./pages/OpenTicket";
+import ResourcesPage from "./pages/Resources";
+import BlogListing from "./pages/BlogListing";
+import BlogDetail from "./pages/BlogDetail";
 
 
 
@@ -42,21 +46,21 @@ export default function App() {
           <Route path="/industries/:slug" element={<Industries />} />
           <Route path="/About" element={<AboutUs />} />
           <Route path="/Contact" element={<ContactUs />} />
-          <Route path="/Resources" element={<Resources />} />
+          {/* <Route path="/Resources" element={<ResourcesPage />} /> */}
 
           {/* Get Started */}
           {/* <Route path="/onboarding-guide" element={<OnboardingGuide />} /> */}
           {/* <Route path="/our-approach" element={<OurApproach />} /> */}
           {/* <Route path="/faq" element={<FAQPage />} /> */}
 
-        
 
-         
+
+
 
 
           {/* <Route path="/why-us/about-us" element={<AboutUs />} /> */}
           <Route path="/why-us/onboarding-guide" element={<OnboardingGuide />} />
-          {/* <Route path="/why-us/open-a-ticket" element={<OpenTicket />} /> */}
+          <Route path="/why-us/open-a-ticket" element={<OpenTicket />} />
           <Route path="/why-us/our-approach" element={<OurApproach />} />
           <Route path="/why-us/faq" element={<FAQPage />} />
 
@@ -68,6 +72,21 @@ export default function App() {
           <Route path="/why-us/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/why-us/return-policy" element={<ReturnPolicy />} />
           <Route path="/why-us/terms-of-service" element={<TermsOfService />} />
+
+
+          {/* Other routes */}
+          <Route path="/guides" element={<ResourcesPage />} />
+          <Route path="/checklists" element={<ResourcesPage />} />
+          <Route path="/whitepapers" element={<ResourcesPage />} />
+          <Route path="/infographics" element={<ResourcesPage />} />
+          <Route path="/events" element={<ResourcesPage />} />
+
+          {/* Or use a dynamic route */}
+          <Route path="/resources/:resourceType" element={<ResourcesPage />} />
+
+          {/* Blog */}
+          <Route path="/blog" element={<BlogListing />} />
+          <Route path="/blog/:slug" element={<BlogDetail />} />
 
 
         </Routes>

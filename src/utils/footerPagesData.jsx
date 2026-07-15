@@ -39,11 +39,11 @@ export const onboardingGuideData = {
       "Continuous Support and Optimization",
     ],
   },
-  process: {
+  challenges: {
     tag: "OUR PROVEN IT ONBOARDING PROCESS",
     title: "Six Steps From Kickoff To Full Support",
     subtitle: "A predictable path that keeps your business running while we get to work behind the scenes.",
-    steps: [
+    items: [
       { step: 1, icon: "Search", title: "Initial Consultation and Needs Assessment", description: "We begin with a thorough assessment of your existing IT setup and business objectives. This helps us understand your needs and tailor our onboarding strategy accordingly." },
       { step: 2, icon: "ClipboardList", title: "Customized Onboarding Plan", description: "We develop a detailed plan that outlines every phase of the onboarding process, including timelines, milestones, and resource allocation. Our goal is to ensure that the transition is smooth and aligned with your business goals." },
       { step: 3, icon: "Settings", title: "Technical Setup and Configuration", description: "Our team handles all technical aspects of the setup, including hardware installation, software configuration, and system integration. We ensure that everything is configured to meet your business requirements." },
@@ -109,11 +109,11 @@ export const openTicketData = {
     ],
     checklist: ["Help Center Portal", "Email Support", "Phone Support", "24/7 Availability"],
   },
-  process: {
+  challenges: {
     tag: "HOW TO SUBMIT A TICKET",
     title: "Simple Steps to Get Support",
     subtitle: "Follow these steps to submit your support request through our Help Center Portal.",
-    steps: [
+    items: [
       { step: 1, icon: "LogIn", title: "Log in to the Help Desk Portal", description: "Log in to the JJC Systems Help Desk Portal to access the ticket submission system." },
       { step: 2, icon: "FilePlus", title: "Click on 'Submit a Ticket'", description: "Navigate to the 'New Ticket' section to begin creating your support request." },
       { step: 3, icon: "FileText", title: "Fill in the Required Fields", description: "Enter a subject briefly describing your issue, provide detailed information about the problem, and upload any relevant files or screenshots." },
@@ -186,7 +186,7 @@ export const ourApproachData = {
     ],
     checklist: ["24/7 Live Support", "Proven Track Record", "Dedicated Account Team", "Transparent Reporting"],
   },
-  values: {
+  solutions: {
     tag: "OUR VALUES",
     title: "What Makes Us Different",
     subtitle: "A team built from diverse expertise, all pointed at one outcome: your success.",
@@ -195,10 +195,10 @@ export const ourApproachData = {
       { icon: "Target", title: "Customer-Centric Approach", description: "At JJC Systems, we understand that each client has unique needs. We specialize in creating customized solutions that align with your specific requirements, ensuring maximum efficiency and productivity." },
       { icon: "BookOpen", title: "Empowered Learning", description: "Technology evolves at a rapid pace, and at JJC Systems, we make it our business to stay ahead of the curve. You can trust us to provide the most modern, efficient, and secure IT solutions." },
       { icon: "Network", title: "Collaboration Culture", description: "JJC Systems leverages an extensive network of industry connections. This broad range of resources allows us to tackle any IT challenge that comes our way effectively and efficiently." },
-      { icon: "HeartHandshake", title: "Exceptional Customer Service", description: "JJC Systems prides itself on our exceptional customer service. Our clients can always expect prompt attention and open communication." },
+      // { icon: "HeartHandshake", title: "Exceptional Customer Service", description: "JJC Systems prides itself on our exceptional customer service. Our clients can always expect prompt attention and open communication." },
     ],
   },
-  stats: {
+  industries: {
     tag: "OUR ACHIEVEMENTS",
     title: "By the Numbers",
     subtitle: "Performance metrics that demonstrate our commitment to excellence.",
@@ -210,11 +210,11 @@ export const ourApproachData = {
       { icon: "Clock", title: "2 Mins", description: "Response Time" },
     ],
   },
-  process: {
+  relatedPlatforms: {
     tag: "OUR PROCESS",
     title: "A Six-Step Path To Managed IT",
     subtitle: "Systematic, repeatable, and built around your business — not a template.",
-    steps: [
+    items: [
       { step: 1, icon: "Search", title: "Deep Dive Discovery", description: "We understand your goals, infrastructure and challenges through in-depth consultation and assessment." },
       { step: 2, icon: "Layers", title: "Customized Solutions", description: "A personalized managed IT plan is built around your needs and your budget." },
       { step: 3, icon: "Rocket", title: "Seamless Implementation", description: "The transition to managed services is handled with minimal disruption to daily operations." },
@@ -278,10 +278,39 @@ export const faqPageData = {
   benefits: {
     tag: "WHY OUR SERVICES ARE BETTER",
     title: "Why our services are better than others?",
-    subtitle: "We don't believe in a one-size-fit-all approach. Our services are carefully customized to suit your specific need, ensuring you to achieve your goals.",
+    subtitle:
+      "We don't believe in a one-size-fit-all approach. Our services are carefully customized to suit your specific need, ensuring you to achieve your goals.",
     items: [
-      { icon: "Target", title: "Customized Solutions", description: "We don't believe in a one-size-fit-all approach. Our services are carefully customized to suit your specific need." },
-      { icon: "Zap", title: "Quick Response", description: "We believe in delivering value that extends beyond the immediate project. Our services are designed to provide long-term benefits." },
+      {
+        icon: "Target",
+        title: "Customized Solutions",
+        description:
+          "Every business is unique. We tailor our IT solutions to match your goals, workflows, and long-term growth strategy.",
+      },
+      {
+        icon: "Zap",
+        title: "Quick Response",
+        description:
+          "Our experienced support team responds rapidly to minimize downtime and resolve issues before they impact your business.",
+      },
+      {
+        icon: "ShieldCheck",
+        title: "Enterprise-Grade Security",
+        description:
+          "We implement advanced security practices, proactive monitoring, and compliance-focused solutions to keep your systems protected.",
+      },
+      {
+        icon: "Headphones",
+        title: "24/7 Expert Support",
+        description:
+          "Our dedicated IT professionals are available around the clock to provide reliable assistance whenever you need it.",
+      },
+      {
+        icon: "TrendingUp",
+        title: "Scalable & Future-Ready",
+        description:
+          "Our solutions are designed to grow with your business, making it easy to adapt to new technologies and changing requirements.",
+      },
     ],
   },
   cta: {

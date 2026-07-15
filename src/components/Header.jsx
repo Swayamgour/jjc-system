@@ -11,6 +11,93 @@ import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 
 import headerImage from '../assets/bread-contact.webp';
+import './Header.css'
+
+// ─── Helpers ──────────────────────────────────────────────────────────────
+const slugify = (str) =>
+    str
+        .toLowerCase()
+        .replace(/&/g, 'and')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+
+// ─── Hardcoded 2-level "Services" mega menu ────────────────────────────────
+// 7 top-level groups. Hovering a group reveals its items on the right.
+const SERVICES_MEGA_MENU = [
+    {
+        heading: "Strategy & Advisory",
+        blurb: "Plan the roadmap before you touch a single system.",
+        items: [
+            "IT Strategy & Consulting",
+            "AI Readiness & Copilot Enablement",
+            "Microsoft Licensing & Optimization",
+            "Organizational Change Management",
+        ],
+    },
+    {
+        heading: "Managed & Secure IT",
+        blurb: "Keep the lights on, the data safe, and the lines open.",
+        items: [
+            "Managed IT",
+            "Cybersecurity, Identity & Compliance",
+            "Cloud Infrastructure",
+            "Data Center Hosting",
+            "Teams Calling & Business Voice",
+        ],
+    },
+    {
+        heading: "Business Applications",
+        blurb: "The systems your teams run finance, sales and service on.",
+        items: [
+            "Enterprise Resource Platform",
+            "Finance",
+            "Project Operations",
+            "Sales & CRM",
+            "Customer Service",
+            "Contact Center",
+            "Field Service",
+            "Customer Insights",
+        ],
+    },
+    {
+        heading: "Data, AI & Integration",
+        blurb: "Turn scattered systems into one connected source of truth.",
+        items: [
+            "Business Intelligence & Reporting",
+            "Enterprise System Integration",
+        ],
+    },
+    {
+        heading: "Collaboration & Automation",
+        blurb: "Give teams a faster, tidier way to work together.",
+        items: [
+            "Modern Workplace",
+            "Intranet Portals & Document Management",
+            "Business Process Automation",
+            "Endpoint & Device Management",
+        ],
+    },
+    {
+        heading: "Digital Transformation",
+        blurb: "Modernize the core of the business, not just the edges.",
+        items: [
+            "Enterprise Modernization",
+        ],
+    },
+    {
+        heading: "Talent",
+        blurb: "Bring in the specialists the moment you need them.",
+        items: [
+            "IT Staffing",
+        ],
+    },
+].map((group) => ({
+    ...group,
+    items: group.items.map((label) => ({
+        label,
+        path: `services/${slugify(label)}`,
+    })),
+}));
 
 // ─── Animated Nub (desktop mega-dropdown) ────────────────────────────────────
 const DropdownNub = ({ activeTab }) => {
@@ -48,9 +135,95 @@ const DropdownNub = ({ activeTab }) => {
     );
 };
 
+// ─── Services sub-panel: 7 points on the left, items on hover ─────────────
+const ServicesPanel = ({ subGroups, handlePanelLinkClick }) => {
+    const [activeSub, setActiveSub] = useState(0);
+    const active = subGroups[activeSub];
+
+    return (
+        <div className="services-panel">
+            <div className="services-panel-list">
+                {subGroups.map((sg, i) => (
+                    <a
+                        key={i}
+                        href={`/${sg.items[0]?.path}`}
+                        className={`services-panel-item ${activeSub === i ? 'active' : ''}`}
+                        onMouseEnter={() => setActiveSub(i)}
+                        onFocus={() => setActiveSub(i)}
+                        onClick={(e) => { e.preventDefault(); handlePanelLinkClick(sg.items[0]?.path); }}
+                    >
+                        <span className="services-panel-num">{String(i + 1).padStart(2, '0')}</span>
+                        <span className="services-panel-label">{sg.heading}</span>
+                        <ArrowRight size={15} className="services-panel-arrow" />
+                    </a>
+                ))}
+            </div>
+
+            <div className="services-panel-detail">
+                <AnimatePresence mode="wait">
+                    <motion.div
+                        key={activeSub}
+                        initial={{ opacity: 0, x: 14 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -14 }}
+                        transition={{ duration: 0.2, ease: 'easeInOut' }}
+                    >
+                        <div className="services-panel-detail-head">
+                            <h4>{active.heading}</h4>
+                            <p>{active.blurb}</p>
+                        </div>
+                        <div className="services-panel-grid">
+                            {active.items.map((item, idx) => (
+                                <a
+                                    key={idx}
+                                    href={`/${item.path}`}
+                                    className="services-panel-link"
+                                    onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item.path); }}
+                                >
+                                    <span className="services-panel-dot" />
+                                    <span>{item.label}</span>
+                                </a>
+                            ))}
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
+            </div>
+        </div>
+    );
+};
+
+// ─── "Why Us" / simple side-by-side columns panel: used by both the
+// "Why Us" dropdown (Get Started / Company / Legal) and the "Insights"
+// dropdown (Resources / Events). Bold heading + plain link list per
+// column, every item visible at once, all columns top-aligned ─────────────
+const WhyUsPanel = ({ groups, handlePanelLinkClick }) => {
+    return (
+        <div className="whyus-panel">
+            {groups.map((group, gIdx) => (
+                <div key={gIdx} className="whyus-column">
+                    <h4 className="whyus-column-heading">{group.heading}</h4>
+                    <div className="whyus-column-links">
+                        {group.items.map((item, iIdx) => (
+                            <a
+                                key={iIdx}
+                                href={`/${item.path}`}
+                                className="whyus-column-link"
+                                onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item.path); }}
+                            >
+                                {item.label}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};
+
 // ─── Dropdown Content with directional slide (desktop mega-dropdown) ────────
 const MegaDropdownContent = ({ menu, activeTab, setActiveTab, prevTab, handlePanelLinkClick }) => {
     const dir = prevTab < activeTab ? 1 : -1;
+    const activeGroup = menu.groups[activeTab];
 
     return (
         <div className="tabbed-dropdown-container" id="dropdown-panel" style={{ position: 'relative' }}>
@@ -58,12 +231,14 @@ const MegaDropdownContent = ({ menu, activeTab, setActiveTab, prevTab, handlePan
             <div className="dropdown-sidebar" style={{ position: 'relative' }}>
                 <DropdownNub activeTab={activeTab} />
                 {menu.groups.map((group, gIdx) => (
-                    <div
+                    <a
                         id={`sidebar-tab-${gIdx}`}
                         key={gIdx}
+                        href={group.items?.length > 0 ? `/${group.items[0].path}` : '#'}
                         className={`sidebar-tab-item ${activeTab === gIdx ? 'tab-active' : ''}`}
                         onMouseEnter={() => setActiveTab(gIdx)}
-                        onClick={() => {
+                        onClick={(e) => {
+                            e.preventDefault();
                             if (group.items?.length > 0) {
                                 handlePanelLinkClick(group.items[0].path);
                             }
@@ -71,35 +246,44 @@ const MegaDropdownContent = ({ menu, activeTab, setActiveTab, prevTab, handlePan
                     >
                         <span>{group.heading}</span>
                         <ArrowRight size={16} className="sidebar-arrow" />
-                    </div>
+                    </a>
                 ))}
             </div>
 
             <div className="dropdown-content-panel" style={{ overflow: 'hidden' }}>
-                <AnimatePresence mode="wait" custom={dir}>
-                    <motion.div
+                {activeGroup?.subGroups ? (
+                    <ServicesPanel
                         key={activeTab}
-                        custom={dir}
-                        initial={{ opacity: 0, x: dir * 30 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: dir * -30 }}
-                        transition={{ duration: 0.22, ease: 'easeInOut' }}
-                        style={{ width: '100%' }}
-                    >
-                        <div className="panel-links-grid">
-                            {menu.groups[activeTab]?.items.map((item, iIdx) => (
-                                <div
-                                    key={iIdx}
-                                    style={{ cursor: 'pointer' }}
-                                    onClick={() => handlePanelLinkClick(item?.path)}
-                                    className="panel-grid-link"
-                                >
-                                    <span>{item?.label}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </motion.div>
-                </AnimatePresence>
+                        subGroups={activeGroup.subGroups}
+                        handlePanelLinkClick={handlePanelLinkClick}
+                    />
+                ) : (
+                    <AnimatePresence mode="wait" custom={dir}>
+                        <motion.div
+                            key={activeTab}
+                            custom={dir}
+                            initial={{ opacity: 0, x: dir * 30 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: dir * -30 }}
+                            transition={{ duration: 0.22, ease: 'easeInOut' }}
+                            style={{ width: '100%' }}
+                        >
+                            <div className="panel-links-grid">
+                                {activeGroup?.items.map((item, iIdx) => (
+                                    <a
+                                        key={iIdx}
+                                        href={`/${item?.path}`}
+                                        onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item?.path); }}
+                                        className="panel-grid-link"
+                                    >
+                                        <span className="panel-grid-dot" />
+                                        <span>{item?.label}</span>
+                                    </a>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </AnimatePresence>
+                )}
             </div>
         </div>
     );
@@ -114,6 +298,8 @@ const Navbar = () => {
     const [prevTab, setPrevTab] = useState(0);
 
     const dropdownTimerRef = useRef(null);
+    const justHoverOpenedRef = useRef(false);
+    const hoverGuardTimerRef = useRef(null);
     const navbarRef = useRef(null);
     const logoRef = useRef(null);
     const menuRef = useRef(null);
@@ -124,46 +310,49 @@ const Navbar = () => {
     const { data } = useGetCategoryQuery();
 
     const menuData = [
-        // {
-        //     title: "Home",
-        //     path: "/",
-        //     hasDropdown: false
-        // },
+
         {
             title: "What We Do",
             hasDropdown: true,
             groups:
-                data?.data?.map((category) => ({
-                    heading: category.name,
-                    items:
-                        category.items?.map((item) => ({
-                            label: item.label,
-                            path:
-                                category.slug === "industry-solutions"
-                                    ? `/industries/${item.slug}`
-                                    : category.slug === "services"
-                                        ? `/services/${item.slug}`
+                data?.data?.map((category) => {
+                    // Services gets a richer, two-level menu: 7 groups on the left,
+                    // items revealed on hover on the right.
+                    if (category.slug === "services") {
+                        return {
+                            heading: category.name,
+                            subGroups: SERVICES_MEGA_MENU,
+                            // Fallback flat list (used for the sidebar-tab click target
+                            // and for the mobile accordion's "click heading" fallback).
+                            items: SERVICES_MEGA_MENU[0].items,
+                        };
+                    }
+
+                    return {
+                        heading: category.name,
+                        items:
+                            category.items?.map((item) => ({
+                                label: item.label,
+                                path:
+                                    category.slug === "industry-solutions"
+                                        ? `/industries/${item.slug}`
                                         : category.slug === "platforms"
                                             ? `/platforms/${item.slug}`
                                             : `/${item.slug}`
-                        }))
-                })) || []
+                            }))
+                    };
+                }) || []
         },
         {
-            title: "Cash study",
+            title: "Case study",
             path: "/About",
             hasDropdown: false
         },
-        // {
-        //     title: "Why Us",
-        //     path: "/About",
-        //     hasDropdown: false
-        // },
+
 
         {
             title: "Why Us",
             hasDropdown: true,
-            dropdownType: "whyUs",
             groups: [
                 {
                     heading: "Get Started",
@@ -172,10 +361,7 @@ const Navbar = () => {
                             label: "Onboarding Guide",
                             path: "/why-us/onboarding-guide",
                         },
-                        // {
-                        //     label: "Open A Ticket",
-                        //     path: "/why-us/open-a-ticket",
-                        // },
+
                         {
                             label: "Our Approach",
                             path: "/why-us/our-approach",
@@ -235,8 +421,43 @@ const Navbar = () => {
 
         {
             title: "Insights",
-            path: "/Resources",
-            hasDropdown: false
+            hasDropdown: true,
+            groups: [
+                {
+                    heading: "Resources",
+                    items: [
+                        {
+                            label: "Blog",
+                            path: "insights/blog",
+                        },
+                        {
+                            label: "Guides",
+                            path: "insights/guides",
+                        },
+                        {
+                            label: "Checklists",
+                            path: "insights/checklists",
+                        },
+                        {
+                            label: "Whitepaper",
+                            path: "insights/whitepaper",
+                        },
+                        {
+                            label: "Infographic",
+                            path: "insights/infographic",
+                        },
+                    ],
+                },
+                {
+                    heading: "Events",
+                    items: [
+                        {
+                            label: "Events",
+                            path: "insights/events",
+                        },
+                    ],
+                },
+            ],
         },
         {
             title: "Contact Us",
@@ -247,25 +468,8 @@ const Navbar = () => {
 
     const closeDropdown = () => setActiveDropdown(null);
 
-    // const handleNavItemClick = (menu) => {
-    //     if (menu.hasDropdown) {
-    //         if (menu.path) {
-    //             navigate(menu.path);
-    //         }
-    //     } else {
-    //         navigate(menu.path || `/${menu.title.toLowerCase().replace(/\s+/g, "-")}`);
-    //     }
-
-    //     closeDropdown();
-    //     setIsMobileMenuOpen(false);
-    // };
-
-
     const handleNavItemClick = (menu) => {
-        if (menu.hasDropdown) {
-            closeDropdown(); // dropdown close
-            return;
-        }
+        if (menu.hasDropdown) return; // click toggling is handled by handleDropdownToggleClick
 
         navigate(
             menu.path || `/${menu.title.toLowerCase().replace(/\s+/g, "-")}`
@@ -298,6 +502,35 @@ const Navbar = () => {
         return () => { document.body.style.overflow = 'unset'; };
     }, [isMobileMenuOpen]);
 
+    // The mobile drawer is controlled entirely by React state, not CSS, so
+    // if it's opened at a narrow width and the viewport is then resized (or
+    // rotated) past the desktop breakpoint, it would otherwise stay open and
+    // render with mismatched/broken styling. Force-close it whenever the
+    // viewport crosses back into desktop width. Keep this breakpoint in
+    // sync with the @media (max-width: 1024px) rules in Header.css.
+    useEffect(() => {
+        const DESKTOP_BREAKPOINT = 1024;
+        const handleResize = () => {
+            if (window.innerWidth > DESKTOP_BREAKPOINT) {
+                setIsMobileMenuOpen(false);
+                setActiveMobileSubmenu(null);
+            }
+        };
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    // Close the dropdown on outside click, since click can now open it too.
+    useEffect(() => {
+        const handleOutsideClick = (e) => {
+            if (navbarRef.current && !navbarRef.current.contains(e.target)) {
+                closeDropdown();
+            }
+        };
+        document.addEventListener('mousedown', handleOutsideClick);
+        return () => document.removeEventListener('mousedown', handleOutsideClick);
+    }, []);
+
     useEffect(() => {
         gsap.to(".btn-contact", {
             scale: 1.05,
@@ -307,7 +540,16 @@ const Navbar = () => {
             ease: "sine.inOut"
         });
         gsap.set(".navbar-container", { y: -100 });
-        gsap.to(".navbar-container", { y: 0, duration: 1, ease: "power4.out" });
+        gsap.to(".navbar-container", {
+            y: 0,
+            duration: 1,
+            ease: "power4.out",
+            // Important: clear the inline transform once the intro finishes.
+            // A leftover transform turns .navbar-container into a containing
+            // block for its position:fixed descendants (the mega-dropdown),
+            // which breaks true viewport-relative positioning.
+            onComplete: () => gsap.set(".navbar-container", { clearProps: "transform" }),
+        });
     }, []);
 
     const handleDropdownEnter = (index) => {
@@ -317,14 +559,38 @@ const Navbar = () => {
             setActiveTab(0);
         }
         setActiveDropdown(index);
+
+        // A real mouse click always fires mouseenter right before click, so
+        // the click handler below needs to know "this open was just caused
+        // by hover" and not immediately treat the click as a close-toggle.
+        justHoverOpenedRef.current = true;
+        if (hoverGuardTimerRef.current) clearTimeout(hoverGuardTimerRef.current);
+        hoverGuardTimerRef.current = setTimeout(() => {
+            justHoverOpenedRef.current = false;
+        }, 400);
     };
 
     const handleDropdownLeave = () => {
-        dropdownTimerRef.current = setTimeout(closeDropdown, 200);
+        dropdownTimerRef.current = setTimeout(closeDropdown, 450);
     };
 
     const handleDropdownStay = () => {
         if (dropdownTimerRef.current) clearTimeout(dropdownTimerRef.current);
+    };
+
+    // Click-to-toggle: works standalone on devices/situations where hover
+    // doesn't fire (touch, trackpads, devtools), and doesn't fight the
+    // hover-open thanks to the guard above.
+    const handleDropdownToggleClick = (index) => {
+        if (justHoverOpenedRef.current) {
+            justHoverOpenedRef.current = false;
+            return;
+        }
+        if (activeDropdown === index) {
+            setActiveDropdown(null);
+        } else {
+            handleDropdownEnter(index);
+        }
     };
 
     const toggleMobileSubmenu = (index) => {
@@ -366,28 +632,10 @@ const Navbar = () => {
                                 handleDropdownEnter(idx);
                             }}
                             onMouseLeave={handleDropdownLeave}
-                            // onClick={() => {
-                            //     if (!menu.hasDropdown) return;
-
-                            //     if (activeDropdown === idx) {
-                            //         handleDropdownEnter(idx);
-                            //         // setActiveDropdown(null); // Close if already open
-                            //     } else {
-                            //         handleDropdownEnter(idx); // Open
-                            //     }
-                            // }}
-
-
                             onClick={(e) => {
                                 e.stopPropagation();
-
                                 if (!menu.hasDropdown) return;
-
-                                if (activeDropdown === idx) {
-                                    setActiveDropdown(null); // close on second click
-                                } else {
-                                    handleDropdownEnter(idx);
-                                }
+                                handleDropdownToggleClick(idx);
                             }}
                         >
                             <span
@@ -412,7 +660,7 @@ const Navbar = () => {
                                 <AnimatePresence>
                                     {activeDropdown === idx && (
                                         <motion.div
-                                            className="mega-dropdown"
+                                            className={`mega-dropdown ${menu.dropdownType === 'whyUs' ? 'mega-dropdown--whyus' : ''}`}
                                             initial={{ opacity: 0, y: 12 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: 12 }}
@@ -432,13 +680,20 @@ const Navbar = () => {
                                             </div>
 
                                             <div className="mega-dropdown-left">
-                                                <MegaDropdownContent
-                                                    menu={menu}
-                                                    activeTab={activeTab}
-                                                    prevTab={prevTab}
-                                                    setActiveTab={handleTabChange}
-                                                    handlePanelLinkClick={handlePanelLinkClick}
-                                                />
+                                                {menu.dropdownType === 'whyUs' ? (
+                                                    <WhyUsPanel
+                                                        groups={menu.groups}
+                                                        handlePanelLinkClick={handlePanelLinkClick}
+                                                    />
+                                                ) : (
+                                                    <MegaDropdownContent
+                                                        menu={menu}
+                                                        activeTab={activeTab}
+                                                        prevTab={prevTab}
+                                                        setActiveTab={handleTabChange}
+                                                        handlePanelLinkClick={handlePanelLinkClick}
+                                                    />
+                                                )}
                                             </div>
 
 
@@ -552,17 +807,44 @@ const Navbar = () => {
                                                 >
                                                     {menu.groups.map((group, gIdx) => (
                                                         <div key={gIdx}>
-                                                            <div className="mobile-sub-title">{group.heading}</div>
-                                                            {group.items.map((item, iIdx) => (
-                                                                <a
-                                                                    key={iIdx}
-                                                                    href={`/${item?.label}`}
-                                                                    onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item?.path); }}
-                                                                >
-                                                                    {item?.label}
-                                                                    <ArrowRight size={14} />
-                                                                </a>
-                                                            ))}
+                                                            {group.subGroups ? (
+                                                                <div className="mobile-services-group">
+                                                                    <div className="mobile-sub-title mobile-sub-title--main">
+                                                                        {group.heading}
+                                                                    </div>
+                                                                    {group.subGroups.map((sg, sIdx) => (
+                                                                        <div key={sIdx} className="mobile-services-subgroup">
+                                                                            <div className="mobile-sub-title">
+                                                                                {String(sIdx + 1).padStart(2, '0')} · {sg.heading}
+                                                                            </div>
+                                                                            {sg.items.map((item, iIdx) => (
+                                                                                <a
+                                                                                    key={iIdx}
+                                                                                    href={`/${item?.label}`}
+                                                                                    onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item?.path); }}
+                                                                                >
+                                                                                    {item?.label}
+                                                                                    <ArrowRight size={14} />
+                                                                                </a>
+                                                                            ))}
+                                                                        </div>
+                                                                    ))}
+                                                                </div>
+                                                            ) : (
+                                                                <>
+                                                                    <div className="mobile-sub-title">{group.heading}</div>
+                                                                    {group.items.map((item, iIdx) => (
+                                                                        <a
+                                                                            key={iIdx}
+                                                                            href={`/${item?.label}`}
+                                                                            onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item?.path); }}
+                                                                        >
+                                                                            {item?.label}
+                                                                            <ArrowRight size={14} />
+                                                                        </a>
+                                                                    ))}
+                                                                </>
+                                                            )}
                                                         </div>
                                                     ))}
                                                 </motion.div>

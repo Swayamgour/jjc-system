@@ -1948,3 +1948,110 @@
     color: #ef4444;
     margin-top: 4px;
 }
+
+/* Add to ServicePage.css */
+.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 768px) {
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+/* Add to ServicePage.css */
+
+/* Grid column classes */
+.grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.grid-cols-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.grid-cols-6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+.grid-cols-7 {
+    grid-template-columns: repeat(7, 1fr);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+
+    .grid-cols-4,
+    .grid-cols-5,
+    .grid-cols-6,
+    .grid-cols-7 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .grid-cols-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-cols-2 {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .grid-cols-2,
+    .grid-cols-3,
+    .grid-cols-4,
+    .grid-cols-5,
+    .grid-cols-6,
+    .grid-cols-7 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Grid card alignment */
+.grid-card.align-left {
+    text-align: left;
+}
+
+.grid-card.align-left .grid-card-icon {
+    margin-left: 0;
+}
+
+/* For checklist items - compact cards */
+.grid-section .grid-card:has(.grid-card-desc:empty) {
+    padding: 20px 18px;
+}
+
+.grid-section .grid-card:has(.grid-card-desc:empty) .grid-card-title {
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+/* Event cards styling */
+.grid-section .grid-card .grid-card-sub-title {
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+/* Whitepaper cards */
+.grid-section .grid-card .grid-card-sub-title {
+    color: var(--text-light);
+    font-size: 12px;
+    font-weight: 500;
+}

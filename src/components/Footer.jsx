@@ -6,11 +6,12 @@ import { LiaLinkedin } from 'react-icons/lia';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
 import logo from '../assets/logo.png'
 import { ArrowUp } from 'lucide-react';
-import { ContactFormSection } from './SectionRenderers';
+// import { ContactFormSection } from './SectionRenderers';
 // import BasePage from "../components/BasePage";
 import { contactUsData } from "../utils/servicesData";
 import '../pages/ServicePage.css'
 import { useLocation } from "react-router-dom";
+import ContactNewFrom from '../pages/ContactNewForm'
 
 
 function Footer() {
@@ -44,7 +45,7 @@ function Footer() {
 
     return (
         <>
-            {location.pathname !== '/Contact' && <ContactFormSection s={contactUsData?.contactForm} />}
+            {location.pathname !== '/Contact' && <ContactNewFrom s={contactUsData?.contactForm} />}
             {showBackToTop && (
                 <button
                     className="legal-back-to-top"

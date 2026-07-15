@@ -1,0 +1,428 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --ink: #0b1220;
+  --paper: #000000;
+  --panel: #ffffff;
+  --accent: #2f5fff;
+  --accent-deep: #142a6b;
+  --signal: #2563EB;
+  --line: #dfe4f3;
+  --muted: #6b7590;
+}
+
+
+.cu-root {
+  font-family: 'Inter', sans-serif;
+  background: #000000;
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.cu-wrap {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.cu-eyebrow {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  letter-spacing: 4px;
+  color: var(--signal);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.cu-eyebrow .dot {
+  color: var(--signal);
+  margin-right: 8px;
+  font-size: 9px;
+}
+
+.cu-h1 {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 800;
+  font-size: 44px;
+  letter-spacing: -1.2px;
+  margin: 0 0 14px 0;
+  color: #ffffff;
+}
+
+.cu-lede {
+  font-size: 16px;
+  color: #a7afc9;
+  margin: 0 0 32px 0;
+}
+
+.cu-lede a {
+  color: var(--signal);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1.5px solid rgba(255, 176, 32, 0.35);
+}
+
+.cu-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 0.85fr;
+  gap: 24px;
+  perspective: 1800px;
+}
+
+.cu-card {
+  background: var(--panel);
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 20px 40px -24px rgba(0, 0, 0, 0.6);
+  padding: 32px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out, box-shadow 0.25s ease-out;
+  will-change: transform;
+  overflow: hidden;
+}
+
+.cu-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--signal));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.cu-card:hover::before {
+  transform: scaleX(1);
+}
+
+.cu-card:hover {
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.2),
+    0 30px 60px -20px rgba(255, 176, 32, 0.25);
+}
+
+.cu-card-inner {
+  transform: translateZ(24px);
+  transform-style: preserve-3d;
+}
+
+/* ---------------- form card ---------------- */
+.cu-field-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.cu-field {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.cu-field label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.2px;
+}
+
+.cu-field input,
+.cu-field textarea {
+  border: 1.5px solid var(--line);
+  border-radius: 9px;
+  padding: 12px 14px;
+  font-size: 14.5px;
+  font-family: 'Inter', sans-serif;
+  color: var(--ink);
+  background: #fbfcff;
+  outline: none;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+  width: 100%;
+}
+
+.cu-field input::placeholder,
+.cu-field textarea::placeholder {
+  color: #a4acc4;
+}
+
+.cu-field input:focus,
+.cu-field textarea:focus {
+  border-color: var(--accent);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(47, 95, 255, 0.12);
+}
+
+.cu-field textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.cu-agree {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 4px 0 22px 0;
+  font-size: 13.5px;
+  color: var(--muted);
+}
+
+.cu-agree input {
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--accent);
+}
+
+.cu-agree a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+.cu-submit {
+  width: 100%;
+  background: linear-gradient(135deg, #021B4E 0%, #0B5ED7 100%);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 15px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 15.5px;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 12px 24px -10px rgba(11, 94, 215, 0.55);
+  transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s ease,
+    background-position 0.5s ease;
+}
+
+.cu-submit-text {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.25s ease;
+}
+
+.cu-submit-arrow {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  transform: translateX(-4px);
+  opacity: 0;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+}
+
+.cu-submit:hover {
+  background-position: 100% 50%;
+  transform: translateY(-3px) scale(1.015);
+  box-shadow:
+    0 20px 36px -12px rgba(11, 94, 215, 0.6),
+    0 0 0 3px rgba(96, 165, 250, 0.18);
+}
+
+.cu-submit:hover .cu-submit-text {
+  transform: translateX(-4px);
+}
+
+.cu-submit:hover .cu-submit-arrow {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.cu-submit:active {
+  transform: translateY(-1px) scale(0.99);
+  box-shadow: 0 8px 18px -10px rgba(11, 94, 215, 0.55);
+}
+
+.cu-submit:focus-visible {
+  outline: none;
+  box-shadow:
+    0 12px 24px -10px rgba(11, 94, 215, 0.55),
+    0 0 0 3px rgba(255, 255, 255, 0.9),
+    0 0 0 5px rgba(96, 165, 250, 0.6);
+}
+
+.cu-submit::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+}
+
+.cu-submit:hover::after {
+  left: 130%;
+}
+
+/* ---------------- stats card ---------------- */
+.cu-stat-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 16px 4px;
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  transition: padding-left 0.2s ease;
+}
+
+.cu-stat-row:first-child {
+  padding-top: 2px;
+}
+
+.cu-stat-row:last-child {
+  border-bottom: none;
+  padding-bottom: 2px;
+}
+
+.cu-stat-row::before {
+  content: "";
+  position: absolute;
+  left: -32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 0%;
+  background: var(--signal);
+  border-radius: 2px;
+  transition: height 0.25s ease;
+}
+
+.cu-stat-row:hover {
+  padding-left: 14px;
+}
+
+.cu-stat-row:hover::before {
+  height: 60%;
+}
+
+.cu-stat-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.cu-stat-num .unit {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.cu-stat-label {
+  font-size: 13.5px;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: right;
+  max-width: 130px;
+  line-height: 1.35;
+}
+
+/* ---------------- directory card ---------------- */
+.cu-dir-title {
+  font-family: 'Manrope', sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--ink);
+  margin: 0 0 12px 0;
+}
+
+.cu-dir-block {
+  margin-bottom: 22px;
+}
+
+.cu-dir-line {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.cu-dir-line b {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.cu-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 20px 0;
+  border: none;
+}
+
+.cu-social-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cu-social-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.18s ease, transform 0.18s ease, color 0.18s ease;
+}
+
+.cu-social-item .ic {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #f4f6fb;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  font-size: 13px;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.cu-social-item:hover {
+  background: rgba(47, 95, 255, 0.06);
+  transform: translateX(4px);
+}
+
+.cu-social-item:hover .ic {
+  background: var(--accent);
+  color: #fff;
+  transform: rotate(-6deg) scale(1.08);
+}
+
+@media (max-width: 1100px) {
+  .cu-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cu-h1 {
+    font-size: 34px;
+  }
+}

@@ -2306,34 +2306,8 @@ export const contactUsData = {
       }
     }
   },
-  "contactInfo": {
-    "title": "Contact Information",
-    "phone": "+91 98765 43210",
-    "email": "info@yourcompany.com",
-    "hours": "Monday – Friday | 9:00 AM – 6:00 PM",
-    "address": "Noida, Uttar Pradesh, India",
-    "responseTitle": "We Respond Fast!",
-    "responseText": "Our Microsoft consultants typically respond within 24 business hours."
-  },
-  "officeLocations": {
-    "title": "Our Offices",
-    "items": [
-      {
-        "city": "Noida",
-        "country": "India",
-        "address": "Sector 62, Noida",
-        "phone": "+91 9876543210",
-        "email": "noida@company.com"
-      },
-      {
-        "city": "Dubai",
-        "country": "UAE",
-        "address": "Business Bay, Dubai",
-        "phone": "+971 50 123 4567",
-        "email": "dubai@company.com"
-      }
-    ]
-  },
+ 
+ 
   "faqs": {
     "tag": "GOT QUESTIONS",
     "title": "Frequently Asked Questions",
