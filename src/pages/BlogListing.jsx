@@ -2,20 +2,22 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Sparkles } from "lucide-react";
+// import { Sparkles } from "lucide-react";
 
 import "./BlogListing.css";
 import "../components/blog/blog-shared.css";
 
-import FeaturedBlogCard from "../components/blog/FeaturedBlogCard";
+// import FeaturedBlogCard from "../components/blog/FeaturedBlogCard";
 import BlogCard from "../components/blog/BlogCard";
 import CategoryFilter from "../components/blog/CategoryFilter";
 import SearchBar from "../components/blog/SearchBar";
 import Pagination from "../components/blog/Pagination";
 import { Newsletter } from "../components/blog/Newsletter";
 
-import { blogs, categories, getFeaturedBlog } from "../utils/blogData";
+// import { blogs, categories, getFeaturedBlog } from "../utils/blogData";
+import { useGetPublishedBlogsQuery, useGetBlogCategoriesQuery, } from "../redux/api";
 import ServiceHero from "../components/ServiceHero";
+import { stripHtml } from "../utils/blogData";
 
 const PAGE_SIZE = 6;
 
@@ -39,22 +41,50 @@ export default function BlogListing() {
         setPage(1);
     }, [activeCategory, search]);
 
-    const featuredBlog = getFeaturedBlog();
+    // const featuredBlog = getFeaturedBlog();
 
+    // const filteredBlogs = useMemo(() => {
+    //     return blogs
+    //         .filter((b) => b.slug !== featuredBlog.slug)
+    //         .filter((b) => (activeCategory === "All" ? true : b.category === activeCategory))
+    //         .filter((b) => {
+    //             if (!search.trim()) return true;
+    //             const q = search.toLowerCase();
+    //             return (
+    //                 b.title.toLowerCase().includes(q) ||
+    //                 b.description.toLowerCase().includes(q) ||
+    //                 b.tags.some((t) => t.toLowerCase().includes(q))
+    //             );
+    //         });
+    // }, [activeCategory, search, featuredBlog.slug]);
+    
+    
+    const { data: blogResponse, isLoading, isError } = useGetPublishedBlogsQuery();
+    
+    const {data: categoryResponse} = useGetBlogCategoriesQuery();
+
+    const blogs = blogResponse?.data || [];
+    
+    const categories = [
+        "All",
+        ...(categoryResponse?.data || []).map((cat)=>cat.name )
+    ];
+    
     const filteredBlogs = useMemo(() => {
         return blogs
-            .filter((b) => b.slug !== featuredBlog.slug)
-            .filter((b) => (activeCategory === "All" ? true : b.category === activeCategory))
-            .filter((b) => {
+            .filter((b) => (activeCategory === "All" ? true : b.category?.name === activeCategory))
+            .filter((b)=>{
                 if (!search.trim()) return true;
                 const q = search.toLowerCase();
                 return (
                     b.title.toLowerCase().includes(q) ||
-                    b.description.toLowerCase().includes(q) ||
-                    b.tags.some((t) => t.toLowerCase().includes(q))
+                    stripHtml(b.description).toLowerCase().includes(q) ||
+                    b.category?.name?.toLowerCase().includes(q)
                 );
+
             });
-    }, [activeCategory, search, featuredBlog.slug]);
+    }, [blogs, activeCategory, search]);
+    
 
     const totalPages = Math.max(1, Math.ceil(filteredBlogs.length / PAGE_SIZE));
     const paginatedBlogs = filteredBlogs.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
@@ -108,8 +138,30 @@ export default function BlogListing() {
             }
         }
     };
+    
 
 
+    if(isLoading){
+
+    return (
+        <div className="blog-results-empty">
+            Loading blogs...
+        </div>
+    );
+
+}
+
+
+if(isError){
+
+    return (
+        <div className="blog-results-empty">
+            Failed to load blogs.
+        </div>
+    );
+
+}
+    
     return (
         <div className="blog-page">
             {/* ============ HERO ============ */}

@@ -36,7 +36,16 @@ function CodeBlock({ language, code }) {
     );
 }
 
-export default function ArticleContent({ blocks }) {
+export default function ArticleContent({ blocks, html }) {
+    if (html) {
+        return (
+            <div
+                className="article-content"
+                dangerouslySetInnerHTML={{ __html: html }}
+            />
+        );
+    }
+    
     if (!blocks) return null;
 
     return (

@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 // const BASE_URL = "https://daryoo.lead.crm.amaxjobs.com/api";
 // const BASE_URL = "https://jjc-backend-new-two.onrender.com/api";
-// const BASE_URL = "http://localhost:5009/api";
+// const BASE_URL = "http://localhost:5008/api";
 const BASE_URL = "https://jjc.admin.amaxjobs.com/api";
 
 const baseQuery = fetchBaseQuery({
@@ -31,6 +31,8 @@ export const api = createApi({
         "Users",
         "HomeHero",
         "HomeSection",
+        "BlogCategories",
+        "Blogs",
     ],
 
     endpoints: (builder) => ({
@@ -70,6 +72,24 @@ export const api = createApi({
             query: (slug) => `/industries/${slug}`,
             providesTags: ["Users"],
         }),
+        
+        getBlogCategories: builder.query({
+            query: () => "/blog-categories",
+            providesTags: ["BlogCategories"],
+        }),
+        
+        // Public Published Blogs
+        getPublishedBlogs: builder.query({
+            query: () => "/blog/published",
+            providesTags: ["Blogs"],
+        }),
+
+
+        // Blog detail
+        getBlogBySlug: builder.query({
+            query: (slug) => `/blog/${slug}`,
+            providesTags: ["Blogs"],
+        }),
 
 
     }),
@@ -83,5 +103,9 @@ export const {
     useGetPlatformBySlugQuery,
     useGetServiceBySlugQuery,
     useGetIndustryBySlugQuery,
+    
+    useGetBlogCategoriesQuery,
+    useGetPublishedBlogsQuery,
+    useGetBlogBySlugQuery,
 
 } = api;

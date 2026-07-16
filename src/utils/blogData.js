@@ -287,15 +287,42 @@ export const getBlogBySlug = (slug) => blogs.find((b) => b.slug === slug);
 
 export const getFeaturedBlog = () => blogs.find((b) => b.featured) || blogs[0];
 
-export const getRelatedBlogs = (blog) => {
+// export const getRelatedBlogs = (blog) => {
+//     if (!blog) return [];
+//     return blog.relatedBlogs
+//         .map((slug) => blogs.find((b) => b.slug === slug))
+//         .filter(Boolean);
+// };
+
+export const getRelatedBlogs = (blogs, blog) => {
     if (!blog) return [];
-    return blog.relatedBlogs
-        .map((slug) => blogs.find((b) => b.slug === slug))
-        .filter(Boolean);
+
+    return blogs
+        .filter(
+            (item) =>
+                item._id !== blog._id &&
+                item.category?._id === blog.category?._id
+        )
+        .slice(0, 3);
 };
 
-export const getRecentBlogs = (excludeSlug, count = 5) =>
-    blogs.filter((b) => b.slug !== excludeSlug).slice(0, count);
+// export const getRecentBlogs = (excludeSlug, count = 5) =>
+//     blogs.filter((b) => b.slug !== excludeSlug).slice(0, count);
+
+// export const getRecentBlogs = (blogs, excludeSlug, count = 5) =>
+//     blogs
+//         .filter((b) => b.slug !== excludeSlug)
+//         .slice(0, count);
+
+export const getRecentBlogs = (blogs = [], excludeSlug, count = 5) =>
+    blogs
+        .filter((b) => b.slug !== excludeSlug)
+        .sort(
+            (a, b) =>
+                new Date(b.blogDate) -
+                new Date(a.blogDate)
+        )
+        .slice(0, count);
 
 export const getAllTags = () => {
     const tagSet = new Set();
@@ -309,3 +336,14 @@ export const formatDate = (dateStr) =>
         day: "numeric",
         year: "numeric",
     });
+
+export const stripHtml = (html = "") => {
+    const div = document.createElement("div");
+    div.innerHTML = html;
+    return div.textContent || div.innerText || "";
+};
+
+export const getReadingTime = (html = "") => {
+    const words = stripHtml(html).trim().split(/\s+/).filter(Boolean).length;
+    return Math.max(1, Math.ceil(words / 200));
+};

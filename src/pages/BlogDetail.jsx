@@ -15,23 +15,40 @@ import BlogSidebar from "../components/blog/BlogSidebar";
 import { Newsletter } from "../components/blog/Newsletter";
 
 import {
-    blogs,
-    getBlogBySlug,
     getRelatedBlogs,
     getRecentBlogs,
     getAllTags,
     formatDate,
+    getReadingTime 
 } from "../utils/blogData";
+
+import { useGetBlogBySlugQuery, useGetPublishedBlogsQuery} from "../redux/api";
 
 export default function BlogDetail() {
     const { slug } = useParams();
     const navigate = useNavigate();
-    const blog = getBlogBySlug(slug);
+    
+    const { data, isLoading } = useGetBlogBySlugQuery(slug);
+    const { data: blogsData } = useGetPublishedBlogsQuery();
+    
+    
+    const blog = data?.blog;
+    const blogs = blogsData?.data || [];
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     }, [slug]);
+    
+    
 
+    if (isLoading) {
+    return (
+        <div className="container" style={{ padding: "100px 20px" }}>
+            Loading...
+        </div>
+    );
+}
+    
     if (!blog) {
         return (
             <div className="blog-page">
@@ -47,10 +64,17 @@ export default function BlogDetail() {
             </div>
         );
     }
+    
 
-    const relatedBlogs = getRelatedBlogs(blog);
-    const recentBlogs = getRecentBlogs(blog.slug, 4);
-    const tags = getAllTags();
+    // const relatedBlogs = getRelatedBlogs(blog);
+    // const recentBlogs = getRecentBlogs(blog.slug, 4);
+    // const tags = getAllTags();
+    
+    const relatedBlogs = getRelatedBlogs(blogs, blog);
+    const recentBlogs = getRecentBlogs(blogs, blog.slug, 4);
+    const tags = getAllTags(blogs);
+    const readingTime = getReadingTime(blog.description);
+    
 
     const currentIndex = blogs.findIndex((b) => b.slug === blog.slug);
     const prevBlog = blogs[currentIndex - 1] || null;
@@ -66,11 +90,15 @@ export default function BlogDetail() {
                         <span>/</span>
                         <Link to="/blog">Blog</Link>
                         <span>/</span>
-                        <span style={{ color: "#fff" }}>{blog.category}</span>
+                        <span style={{ color: "#fff" }}>{blog.category?.name}</span>
                     </div>
 
                     <div className="blog-detail-hero-content">
-                        <span className="blog-badge on-image">{blog.category}</span>
+                        {/* <span className="blog-badge on-image">{blog.category}</span> */}
+                        
+                        <span className="blog-badge on-image">
+    {blog.category?.name}
+</span>
 
                         <motion.h1
                             className="blog-detail-hero-title"
@@ -82,25 +110,30 @@ export default function BlogDetail() {
                         </motion.h1>
 
                         <div className="blog-detail-hero-meta">
-                            <div className="blog-detail-author">
+                            {/* <div className="blog-detail-author">
                                 <img src={blog.author.avatar} alt={blog.author.name} />
                                 <span>
                                     <span className="blog-detail-author-name">{blog.author.name}</span>
                                     <span className="blog-detail-author-role">{blog.author.role}</span>
                                 </span>
-                            </div>
+                            </div> */}
                             <span className="blog-detail-meta-item">
-                                <Calendar size={14} /> {formatDate(blog.publishDate)}
+                                <Calendar size={14} /> {formatDate(blog.blogDate)}
                             </span>
                             <span className="blog-detail-meta-item">
-                                <Clock size={14} /> {blog.readingTime} min read
+                                {/* <Clock size={14} /> {blog.readingTime} min read */}
+                                <Clock size={14} /> {readingTime} min read
                             </span>
                         </div>
                     </div>
                 </div>
 
                 <div className="blog-detail-cover-wrap">
-                    <img src={blog.coverImage} alt={blog.title} />
+                    {/* <img src={blog.coverImage} alt={blog.title} /> */}
+                    <img
+    src={blog.image}
+    alt={blog.imageAlt || blog.title}
+/>
                 </div>
             </section>
 
@@ -109,15 +142,16 @@ export default function BlogDetail() {
                 <div className="container">
                     <div className="blog-detail-layout">
                         <div>
-                            <ArticleContent blocks={blog.content} />
+                            {/* <ArticleContent blocks={blog.content} /> */}
+                            <ArticleContent html={blog.description} />
 
-                            <div className="article-tags-row">
+                            {/* <div className="article-tags-row">
                                 {blog.tags.map((tag) => (
                                     <span key={tag} className="article-tag-pill">
                                         #{tag}
                                     </span>
                                 ))}
-                            </div>
+                            </div> */}
 
                             <ShareButtons title={blog.title} />
 

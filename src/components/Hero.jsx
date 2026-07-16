@@ -188,7 +188,8 @@ export default function Hero({
                             className="btn-primary"
                             href={primaryButton?.link || "/contact"}
                         >
-                            {primaryButton?.text}
+                            {/* {primaryButton?.text} */}
+                            Schedule a Consultation
                             <Icons.Arrow />
                         </a>
 

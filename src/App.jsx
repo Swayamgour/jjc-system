@@ -46,19 +46,6 @@ export default function App() {
           <Route path="/industries/:slug" element={<Industries />} />
           <Route path="/About" element={<AboutUs />} />
           <Route path="/Contact" element={<ContactUs />} />
-          {/* <Route path="/Resources" element={<ResourcesPage />} /> */}
-
-          {/* Get Started */}
-          {/* <Route path="/onboarding-guide" element={<OnboardingGuide />} /> */}
-          {/* <Route path="/our-approach" element={<OurApproach />} /> */}
-          {/* <Route path="/faq" element={<FAQPage />} /> */}
-
-
-
-
-
-
-          {/* <Route path="/why-us/about-us" element={<AboutUs />} /> */}
           <Route path="/why-us/onboarding-guide" element={<OnboardingGuide />} />
           <Route path="/why-us/open-a-ticket" element={<OpenTicket />} />
           <Route path="/why-us/our-approach" element={<OurApproach />} />

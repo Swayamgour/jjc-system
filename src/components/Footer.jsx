@@ -41,11 +41,12 @@ function Footer() {
     };
 
 
+    console.log(location.pathname === '/contact')
 
 
     return (
         <>
-            {location.pathname !== '/Contact' && <ContactNewFrom s={contactUsData?.contactForm} />}
+            {(location.pathname !== '/Contact' && location.pathname !== '/contact') && <ContactNewFrom s={contactUsData?.contactForm} />}
             {showBackToTop && (
                 <button
                     className="legal-back-to-top"

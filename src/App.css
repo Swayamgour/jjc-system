@@ -9,10 +9,29 @@
 /* End Header */
 
 
-section {
+/* section {
     overflow-x: hidden;
+} */
+
+.container-hero {
+    /* max-width: 128px; */
+
+    margin-left: 80px;
+    margin-right: 0;
+    padding-left: 24px;
+    /* padding: 0 24px; */
 }
 
+
+@media (min-width: 1600px) {
+    .container-hero ,
+    .header-container {
+        max-width: 1280px;
+        margin: auto;
+
+
+    }
+}
 
 
 /* Hero Start  */
@@ -343,7 +362,7 @@ section {
 /* Shared Container */
 
 .container {
-    max-width: 1280px;
+    max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 24px;
 }
@@ -1981,6 +2000,7 @@ section {
 
 .challenge-icon {
     margin-bottom: 16px;
+
 }
 
 .challenge-title {
@@ -2009,6 +2029,7 @@ section {
     border-radius: 16px;
 
     background: rgba(37, 99, 235, 0.07);
+    color: var(--primary);
 }
 
 .challenge-title {

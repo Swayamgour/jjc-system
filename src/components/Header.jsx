@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { ChevronDown, Menu, X, ArrowRight } from 'lucide-react';
+import {
+    ChevronDown, Menu, X, ArrowRight, ArrowUpRight,
+    Layers, Building2, Boxes, BookOpen, Sparkles,
+    Rocket, LifeBuoy, Compass, HelpCircle,
+    Users, Handshake, MapPin, Briefcase,
+    ShieldCheck, FileCheck, Scale,
+    Newspaper, ClipboardList, FileText, PieChart, CalendarClock,
+} from 'lucide-react';
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
-import logo from '../assets/Original.jpg';
+import logo from '../assets/Original.png';
 import { useNavigate } from 'react-router';
 import { useGetCategoryQuery } from '../redux/api';
 
@@ -20,6 +27,51 @@ const slugify = (str) =>
         .replace(/&/g, 'and')
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/(^-|-$)/g, '');
+
+// Purely presentational: picks a lucide icon for a group/category heading
+// so the sidebar + cards feel enterprise-grade. Falls back to a generic
+// icon when nothing matches — never affects data, routing, or logic.
+const HEADING_ICON_MAP = [
+    [/service/i, Layers],
+    [/industry|industries/i, Building2],
+    [/platform/i, Boxes],
+    [/resource/i, BookOpen],
+    [/event/i, CalendarClock],
+    [/get started/i, Rocket],
+    [/compan/i, Users],
+    [/legal/i, Scale],
+];
+
+const getHeadingIcon = (heading = '') => {
+    const match = HEADING_ICON_MAP.find(([re]) => re.test(heading));
+    return match ? match[1] : Sparkles;
+};
+
+// Icon + one-line description for the hardcoded "Why Us" / "Insights" links.
+// Purely presentational metadata layered onto the existing static data —
+// labels and paths are untouched, so routing behavior is identical.
+const STATIC_ITEM_META = {
+    "Onboarding Guide": { icon: Rocket, desc: "Get set up in a few simple steps" },
+    "Open A Ticket": { icon: LifeBuoy, desc: "Get help from our support desk" },
+    "Our Approach": { icon: Compass, desc: "How we deliver every engagement" },
+    "FAQs": { icon: HelpCircle, desc: "Answers to common questions" },
+    "About Us": { icon: Building2, desc: "Our story and mission" },
+    "Team": { icon: Users, desc: "Meet the people behind the work" },
+    "Partners": { icon: Handshake, desc: "Our technology alliances" },
+    "Locations": { icon: MapPin, desc: "Where to find us" },
+    "Careers": { icon: Briefcase, desc: "Join our growing team" },
+    "Privacy Policy": { icon: ShieldCheck, desc: "How we handle your data" },
+    "Return Policy": { icon: FileCheck, desc: "Our returns & refunds terms" },
+    "Terms of Service": { icon: Scale, desc: "The terms that govern our services" },
+    "Blog": { icon: Newspaper, desc: "News, ideas & perspectives" },
+    "Guides": { icon: BookOpen, desc: "Step-by-step how-to resources" },
+    "Checklists": { icon: ClipboardList, desc: "Practical, ready-to-use lists" },
+    "Whitepaper": { icon: FileText, desc: "In-depth research & analysis" },
+    "Infographic": { icon: PieChart, desc: "Insights, visualized" },
+    "Events": { icon: CalendarClock, desc: "Webinars & upcoming events" },
+};
+
+const getItemMeta = (label) => STATIC_ITEM_META[label] || null;
 
 // ─── Hardcoded 2-level "Services" mega menu ────────────────────────────────
 // 7 top-level groups. Hovering a group reveals its items on the right.
@@ -99,7 +151,7 @@ const SERVICES_MEGA_MENU = [
     })),
 }));
 
-// ─── Animated Nub (desktop mega-dropdown) ────────────────────────────────────
+// ─── Animated Nub (desktop mega-dropdown) ────────────────────────────────
 const DropdownNub = ({ activeTab }) => {
     const [left, setLeft] = useState(0);
 
@@ -132,6 +184,59 @@ const DropdownNub = ({ activeTab }) => {
                 clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
             }}
         />
+    );
+};
+
+// ─── Promo panel: gradient/glass card shown on the right of every ────────
+// desktop mega-dropdown. Copy adapts to the open menu, but the image,
+// navigation, and click behavior use the same handlers as the rest of
+// the header — purely additive UI, no new routes.
+const MENU_PROMO_COPY = {
+    "What We Do": {
+        badge: "Microsoft Solutions Partner",
+        heading: "Need Microsoft experts?",
+        desc: "Schedule a free consultation with our certified Microsoft consultants.",
+        cta: "Book a Consultation",
+    },
+    "Why Us": {
+        badge: "Trusted Advisors",
+        heading: "See why enterprises choose us",
+        desc: "Meet the team and process behind every engagement we deliver.",
+        cta: "Talk to Our Team",
+    },
+    "Insights": {
+        badge: "Resources & Events",
+        heading: "Stay ahead of the curve",
+        desc: "Guides, whitepapers, and events from our Microsoft practice.",
+        cta: "Explore Insights",
+    },
+};
+
+const PromoPanel = ({ menuTitle, navigate, closeDropdown }) => {
+    const copy = MENU_PROMO_COPY[menuTitle] || MENU_PROMO_COPY["What We Do"];
+
+    const handleClick = () => {
+        navigate('/contact');
+        closeDropdown();
+    };
+
+    return (
+        <div className="promo-panel">
+            <img className="promo-panel-image" src={headerImage} alt={menuTitle} />
+            <div className="promo-panel-scrim" />
+            <div className="promo-panel-body">
+                <span className="promo-badge">
+                    <Sparkles size={12} />
+                    {copy.badge}
+                </span>
+                <h3>{copy.heading}</h3>
+                <p>{copy.desc}</p>
+                <button type="button" className="promo-panel-cta" onClick={handleClick}>
+                    {copy.cta}
+                    <ArrowUpRight size={16} />
+                </button>
+            </div>
+        </div>
     );
 };
 
@@ -194,28 +299,44 @@ const ServicesPanel = ({ subGroups, handlePanelLinkClick }) => {
 
 // ─── "Why Us" / simple side-by-side columns panel: used by both the
 // "Why Us" dropdown (Get Started / Company / Legal) and the "Insights"
-// dropdown (Resources / Events). Bold heading + plain link list per
+// dropdown (Resources / Events). Bold heading + icon link list per
 // column, every item visible at once, all columns top-aligned ─────────────
 const WhyUsPanel = ({ groups, handlePanelLinkClick }) => {
     return (
         <div className="whyus-panel">
-            {groups.map((group, gIdx) => (
-                <div key={gIdx} className="whyus-column">
-                    <h4 className="whyus-column-heading">{group.heading}</h4>
-                    <div className="whyus-column-links">
-                        {group.items.map((item, iIdx) => (
-                            <a
-                                key={iIdx}
-                                href={`/${item.path}`}
-                                className="whyus-column-link"
-                                onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item.path); }}
-                            >
-                                {item.label}
-                            </a>
-                        ))}
+            {groups.map((group, gIdx) => {
+                const HeadingIcon = getHeadingIcon(group.heading);
+                return (
+                    <div key={gIdx} className="whyus-column">
+                        <h4 className="whyus-column-heading">
+                            <HeadingIcon size={14} />
+                            {group.heading}
+                        </h4>
+                        <div className="whyus-column-links">
+                            {group.items.map((item, iIdx) => {
+                                const meta = getItemMeta(item.label);
+                                const ItemIcon = meta?.icon || ArrowRight;
+                                return (
+                                    <a
+                                        key={iIdx}
+                                        href={`/${item.path}`}
+                                        className="whyus-column-link"
+                                        onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item.path); }}
+                                    >
+                                        <span className="whyus-link-icon">
+                                            <ItemIcon size={15} />
+                                        </span>
+                                        <span className="whyus-link-text">
+                                            {item.label}
+                                            {meta?.desc && <span className="whyus-link-desc">{meta.desc}</span>}
+                                        </span>
+                                    </a>
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
-            ))}
+                );
+            })}
         </div>
     );
 };
@@ -230,27 +351,33 @@ const MegaDropdownContent = ({ menu, activeTab, setActiveTab, prevTab, handlePan
 
             <div className="dropdown-sidebar" style={{ position: 'relative' }}>
                 <DropdownNub activeTab={activeTab} />
-                {menu.groups.map((group, gIdx) => (
-                    <a
-                        id={`sidebar-tab-${gIdx}`}
-                        key={gIdx}
-                        href={group.items?.length > 0 ? `/${group.items[0].path}` : '#'}
-                        className={`sidebar-tab-item ${activeTab === gIdx ? 'tab-active' : ''}`}
-                        onMouseEnter={() => setActiveTab(gIdx)}
-                        onClick={(e) => {
-                            e.preventDefault();
-                            if (group.items?.length > 0) {
-                                handlePanelLinkClick(group.items[0].path);
-                            }
-                        }}
-                    >
-                        <span>{group.heading}</span>
-                        <ArrowRight size={16} className="sidebar-arrow" />
-                    </a>
-                ))}
+                {menu.groups.map((group, gIdx) => {
+                    const HeadingIcon = getHeadingIcon(group.heading);
+                    return (
+                        <a
+                            id={`sidebar-tab-${gIdx}`}
+                            key={gIdx}
+                            href={group.items?.length > 0 ? `/${group.items[0].path}` : '#'}
+                            className={`sidebar-tab-item ${activeTab === gIdx ? 'tab-active' : ''}`}
+                            onMouseEnter={() => setActiveTab(gIdx)}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                if (group.items?.length > 0) {
+                                    handlePanelLinkClick(group.items[0].path);
+                                }
+                            }}
+                        >
+                            <span className="sidebar-tab-icon">
+                                <HeadingIcon size={16} />
+                            </span>
+                            <span className="sidebar-tab-label">{group.heading}</span>
+                            <ArrowRight size={16} className="sidebar-arrow" />
+                        </a>
+                    );
+                })}
             </div>
 
-            <div className="dropdown-content-panel" style={{ overflow: 'hidden' }}>
+            <div className="dropdown-content-panel" style={{ overflowX: 'hidden' }}>
                 {activeGroup?.subGroups ? (
                     <ServicesPanel
                         key={activeTab}
@@ -269,17 +396,24 @@ const MegaDropdownContent = ({ menu, activeTab, setActiveTab, prevTab, handlePan
                             style={{ width: '100%' }}
                         >
                             <div className="panel-links-grid">
-                                {activeGroup?.items.map((item, iIdx) => (
-                                    <a
-                                        key={iIdx}
-                                        href={`/${item?.path}`}
-                                        onClick={(e) => { e.preventDefault(); handlePanelLinkClick(item?.path); }}
-                                        className="panel-grid-link"
-                                    >
-                                        <span className="panel-grid-dot" />
-                                        <span>{item?.label}</span>
-                                    </a>
-                                ))}
+                                {activeGroup?.items.map((item, iIdx) => {
+                                    const meta = getItemMeta(item?.label);
+                                    const ItemIcon = meta?.icon || getHeadingIcon(activeGroup?.heading);
+                                    return (
+                                        <div
+                                            key={iIdx}
+                                            onClick={() => handlePanelLinkClick(item?.path)}
+                                            className="panel-grid-link"
+                                        >
+
+                                            <span className="panel-grid-text">
+                                                <span className="panel-grid-title">{item?.label}</span>
+                                                {meta?.desc && <span className="panel-grid-desc">{meta.desc}</span>}
+                                            </span>
+                                            <ArrowRight size={15} className="panel-grid-arrow" />
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </motion.div>
                     </AnimatePresence>
@@ -318,15 +452,15 @@ const Navbar = () => {
                 data?.data?.map((category) => {
                     // Services gets a richer, two-level menu: 7 groups on the left,
                     // items revealed on hover on the right.
-                    if (category.slug === "services") {
-                        return {
-                            heading: category.name,
-                            subGroups: SERVICES_MEGA_MENU,
-                            // Fallback flat list (used for the sidebar-tab click target
-                            // and for the mobile accordion's "click heading" fallback).
-                            items: SERVICES_MEGA_MENU[0].items,
-                        };
-                    }
+                    // if () {
+                    //     return {
+                    //         heading: category.name,
+                    //         subGroups: SERVICES_MEGA_MENU,
+                    //         // Fallback flat list (used for the sidebar-tab click target
+                    //         // and for the mobile accordion's "click heading" fallback).
+                    //         items: SERVICES_MEGA_MENU[0].items,
+                    //     };
+                    // }
 
                     return {
                         heading: category.name,
@@ -338,7 +472,9 @@ const Navbar = () => {
                                         ? `/industries/${item.slug}`
                                         : category.slug === "platforms"
                                             ? `/platforms/${item.slug}`
-                                            : `/${item.slug}`
+                                            : category.slug === "services"
+                                                ? `/services/${item.slug}`
+                                                : `/${item.slug}`,
                             }))
                     };
                 }) || []
@@ -506,12 +642,7 @@ const Navbar = () => {
         return () => { document.body.style.overflow = 'unset'; };
     }, [isMobileMenuOpen]);
 
-    // The mobile drawer is controlled entirely by React state, not CSS, so
-    // if it's opened at a narrow width and the viewport is then resized (or
-    // rotated) past the desktop breakpoint, it would otherwise stay open and
-    // render with mismatched/broken styling. Force-close it whenever the
-    // viewport crosses back into desktop width. Keep this breakpoint in
-    // sync with the @media (max-width: 1024px) rules in Header.css.
+
     useEffect(() => {
         const DESKTOP_BREAKPOINT = 1024;
         const handleResize = () => {
@@ -664,7 +795,7 @@ const Navbar = () => {
                                 <AnimatePresence>
                                     {activeDropdown === idx && (
                                         <motion.div
-                                            className={`mega-dropdown ${menu.dropdownType === 'whyUs' ? 'mega-dropdown--whyus' : ''}`}
+                                            className={`mega-dropdown  ${menu.dropdownType === 'whyUs' ? 'mega-dropdown--whyus' : ''}`}
                                             initial={{ opacity: 0, y: 12 }}
                                             animate={{ opacity: 1, y: 0 }}
                                             exit={{ opacity: 0, y: 12 }}
@@ -677,9 +808,10 @@ const Navbar = () => {
 
 
                                             <div className="mega-dropdown-right">
-                                                <img
-                                                    src={headerImage}
-                                                    alt={menu.title}
+                                                <PromoPanel
+                                                    menuTitle={menu.title}
+                                                    navigate={navigate}
+                                                    closeDropdown={closeDropdown}
                                                 />
                                             </div>
 
@@ -875,7 +1007,7 @@ const Navbar = () => {
                     <div className="mobile-menu-footer">
                         <button
                             className="mobile-cta"
-                            onClick={() => { navigate('/contact'); closeMobileMenu(); }}
+                            onClick={() => { navigate('/Contact'); closeMobileMenu(); }}
                         >
                             Contact Us <ArrowRight size={18} />
                         </button>
