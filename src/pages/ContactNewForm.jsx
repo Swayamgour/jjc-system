@@ -1,5 +1,7 @@
-import React, { useRef } from "react";
+import React, { useRef  , useState} from "react";
 import "./ContactNewForm.css";
+// import React, { useRef,  } from "react";
+import { useCreateContactMutation } from "../redux/api"; // path apne project ke hisab se
 
 /**
  * ContactUs
@@ -52,6 +54,46 @@ function TiltCard({ children }) {
 }
 
 export default function ContactNewForm() {
+  const [createContact, { isLoading }] = useCreateContactMutation();
+
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      await createContact(formData).unwrap();
+
+      alert("Message sent successfully!");
+
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        message: "",
+      });
+    } catch (error) {
+      console.error(error);
+      alert(error?.data?.message || "Something went wrong");
+    }
+  };
+
   return (
     <div className="cu-root">
       <div className="cu-wrap">
@@ -65,45 +107,88 @@ export default function ContactNewForm() {
 
         <div className="cu-grid">
           {/* FORM */}
+          {/* <TiltCard> */}
           <TiltCard>
-            <div className="cu-field-row">
-              <div className="cu-field">
-                <label>First Name</label>
-                <input type="text" placeholder="First Name" />
+            <form onSubmit={handleSubmit}>
+
+
+              <div className="cu-field-row">
+                <div className="cu-field">
+                  <label>First Name</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    placeholder="First Name"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="cu-field">
+                  <label>Last Name</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    placeholder="Last Name"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-              <div className="cu-field">
-                <label>Last Name</label>
-                <input type="text" placeholder="Last Name" />
+              <div className="cu-field-row">
+                <div className="cu-field">
+                  <label>Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Your Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="cu-field-row">
-              <div className="cu-field">
-                <label>Email</label>
-                <input type="email" placeholder="Your Email" />
+              <div className="cu-field-row">
+                <div className="cu-field">
+                  <label>Phone Number</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    placeholder="Your Number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="cu-field-row">
-              <div className="cu-field">
-                <label>Phone Number</label>
-                <input type="text" placeholder="Your Number" />
+              <div className="cu-field-row">
+                <div className="cu-field">
+                  <label>Message</label>
+                  <textarea
+                    name="message"
+                    placeholder="Leave us a message...."
+                    value={formData.message}
+                    onChange={handleChange}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="cu-field-row">
-              <div className="cu-field">
-                <label>Message</label>
-                <textarea placeholder="Leave us a message...." />
-              </div>
-            </div>
-            <label className="cu-agree">
-              <input type="checkbox" defaultChecked />
-              <span>
-                You agree to our <a href="#">terms and conditions.</a>
-              </span>
-            </label>
-            <button className="cu-submit">
-              <span className="cu-submit-text">Get Started</span>
-              <span className="cu-submit-arrow" aria-hidden="true">→</span>
-            </button>
+              <label className="cu-agree">
+                <input type="checkbox" defaultChecked />
+                <span>
+                  You agree to our <a href="#">terms and conditions.</a>
+                </span>
+              </label>
+              <button
+                type="submit"
+                className="cu-submit"
+                disabled={isLoading}
+              >
+                <span className="cu-submit-text">
+                  {isLoading ? "Sending..." : "Get Started"}
+                </span>
+
+                {!isLoading && (
+                  <span className="cu-submit-arrow">→</span>
+                )}
+              </button>
+            </form>
           </TiltCard>
 
           {/* STATS */}

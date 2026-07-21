@@ -13,7 +13,7 @@ function Services() {
     const titleRef = useRef(null);
     const cardsRef = useRef(null);
 
-    const { section, items, ready, isPublished } = useHomeSection("platformCards");
+    const { section, items, ready, isPublished } = useHomeSection("platformCards", sectionRef);
 
     useSectionAnimation({
         sectionRef,

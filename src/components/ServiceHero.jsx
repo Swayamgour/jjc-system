@@ -7,6 +7,7 @@ import SplitType from "split-type";
 
 import '../pages/ServicePage.css'
 import { useSplitText } from "../hooks/useSplitText";
+import { useNavigate } from "react-router";
 
 function ServiceHero({ d }) {
     // console.log(d)
@@ -23,6 +24,8 @@ function ServiceHero({ d }) {
     const actionsRef = useRef(null);
     const badgesRef = useRef(null);
     const imageRef = useRef(null);
+
+    const navigate = useNavigate()
 
     useLayoutEffect(() => {
         if (!heroRef.current) return;
@@ -234,12 +237,14 @@ function ServiceHero({ d }) {
                         <motion.button
                             className="service-btn-primary"
                             whileTap={{ scale: 0.95 }}
+                            onClick={() => navigate('/Contact')}
                         >
                             Schedule a Consultation <Icons.Arrow />
                         </motion.button>
                         <motion.button
                             className="service-btn-secondary"
                             whileTap={{ scale: 0.95 }}
+                            onClick={() => navigate('/Contact')}
                         >
                             {d?.exploreLabel || "Explore Our Services"}
                         </motion.button>

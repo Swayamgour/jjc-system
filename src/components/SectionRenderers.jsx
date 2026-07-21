@@ -6,6 +6,7 @@ import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import contact from '../assets/contact.png'
 import * as Icons from "lucide-react";
 import ContactNewForm from "../pages/ContactNewForm";
+import { useNavigate } from "react-router";
 
 // ============================================================
 // ANIMATION VARIANTS
@@ -702,6 +703,7 @@ export function FaqSection({ s }) {
 }
 
 export function CtaSection({ s }) {
+    const navigate = useNavigate()
     return (
         <section className="cta-section">
             <motion.div
@@ -733,6 +735,7 @@ export function CtaSection({ s }) {
                         className="cta-btn-primary"
                         whileHover={{ scale: 1.05, boxShadow: "0 12px 30px rgba(0,0,0,0.3)" }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => navigate('/Contact')}
                     >
                         {s?.primaryLabel || "Schedule a Consultation"} <Arrow />
                     </motion.button>
@@ -740,6 +743,7 @@ export function CtaSection({ s }) {
                         className="cta-btn-secondary"
                         whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.15)" }}
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => navigate('/Contact')}
                     >
                         {s?.secondaryLabel || "Request an Assessment"}
                     </motion.button>
@@ -755,7 +759,7 @@ export function ContactFormSection({ s }) {
     useSplitText(titleRef);
 
     return (
-       <ContactNewForm />
+        <ContactNewForm />
     );
 }
 

@@ -46,8 +46,8 @@ function DeliveryProcess() {
     const tagRef = useRef(null);
     const descRef = useRef(null);
 
-    const { section, items, ready, isPublished } = useHomeSection("deliveryProcess");
-    const { section: partnerSection } = useHomeSection("whyJJCPartner");
+    const { section, items, ready, isPublished } = useHomeSection("deliveryProcess", sectionRef);
+    const { section: partnerSection } = useHomeSection("whyJJCPartner", sectionRef);
 
     useSectionAnimation({
         sectionRef,

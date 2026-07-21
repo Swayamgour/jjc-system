@@ -13,7 +13,7 @@ function SolutionAreas() {
   const titleRef = useRef(null);
   const cardsRef = useRef(null);
 
-  const { section, items, ready, isPublished } = useHomeSection("solutionAreas");
+  const { section, items, ready, isPublished } = useHomeSection("solutionAreas", sectionRef);
 
   useSectionAnimation({
     sectionRef,

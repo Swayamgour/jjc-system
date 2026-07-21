@@ -204,8 +204,8 @@ function Footer() {
                         <div className="footer-bottom-links">
 
                             {[
-                                { label: "Privacy Policy", to: "/privacy-policy" },
-                                { label: "Terms of Use", to: "/terms-of-service" },
+                                { label: "Privacy Policy", to: "/why-us/privacy-policy" },
+                                { label: "Terms of Use", to: "/why-us/terms-of-service" },
                             ].map((item) => (
                                 <Link
                                     key={item.label}

@@ -11,7 +11,7 @@ function ClientLogos() {
     const tagRef = useRef(null);
     const marqueeRef = useRef(null);
 
-    const { section, items, ready, isPublished } = useHomeSection("clientLogos");
+    const { section, items, ready, isPublished } = useHomeSection("clientLogos", sectionRef);
 
     useSectionAnimation({
         sectionRef,

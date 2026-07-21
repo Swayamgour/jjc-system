@@ -14,7 +14,7 @@ function WhyJJCPartner() {
     const descRef = useRef(null);
     const outroRef = useRef(null);
 
-    const { section, ready, isPublished } = useHomeSection("whyJJCPartner");
+    const { section, ready, isPublished } = useHomeSection("whyJJCPartner", sectionRef);
 
     useSectionAnimation({
         sectionRef,

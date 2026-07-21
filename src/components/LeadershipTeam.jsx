@@ -13,7 +13,7 @@ function LeadershipTeam() {
     const cardsRef = useRef(null);
     const [hoveredIndex, setHoveredIndex] = useState(null);
 
-    const { section, items, ready, isPublished } = useHomeSection("leadershipTeam");
+    const { section, items, ready, isPublished } = useHomeSection("leadershipTeam", sectionRef);
 
     useSectionAnimation({
         sectionRef,

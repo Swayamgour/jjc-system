@@ -72,12 +72,12 @@ export const api = createApi({
             query: (slug) => `/industries/${slug}`,
             providesTags: ["Users"],
         }),
-        
+
         getBlogCategories: builder.query({
             query: () => "/blog-categories",
             providesTags: ["BlogCategories"],
         }),
-        
+
         // Public Published Blogs
         getPublishedBlogs: builder.query({
             query: () => "/blog/published",
@@ -89,6 +89,20 @@ export const api = createApi({
         getBlogBySlug: builder.query({
             query: (slug) => `/blog/${slug}`,
             providesTags: ["Blogs"],
+        }),
+
+        createContact: builder.mutation({
+            query: (data) => ({
+                url: "/contact",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["Contact"],
+        }),
+
+        getCategoriesBySlug: builder.query({
+            query: (slug) => `/categories/${slug}`,
+            providesTags: ["Users"],
         }),
 
 
@@ -103,9 +117,12 @@ export const {
     useGetPlatformBySlugQuery,
     useGetServiceBySlugQuery,
     useGetIndustryBySlugQuery,
-    
+
     useGetBlogCategoriesQuery,
     useGetPublishedBlogsQuery,
     useGetBlogBySlugQuery,
+
+    useCreateContactMutation,
+    useGetCategoriesBySlugQuery
 
 } = api;

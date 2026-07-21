@@ -23,6 +23,7 @@ import {
 } from "../utils/blogData";
 
 import { useGetBlogBySlugQuery, useGetPublishedBlogsQuery} from "../redux/api";
+import Loader from "../components/Loader";
 
 export default function BlogDetail() {
     const { slug } = useParams();
@@ -43,9 +44,7 @@ export default function BlogDetail() {
 
     if (isLoading) {
     return (
-        <div className="container" style={{ padding: "100px 20px" }}>
-            Loading...
-        </div>
+       <Loader />
     );
 }
     

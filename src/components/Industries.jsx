@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { Icons, industries } from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
+import { useGetCategoriesBySlugQuery } from "../redux/api";
+import { getIndustryIcon } from "../utils/industryIcons";
 
 function Industries() {
     const sectionRef = useRef(null);
@@ -18,6 +20,9 @@ function Industries() {
         listRef: cardsRef,
         outroRef: buttonRef,
     });
+
+    const { data } = useGetCategoriesBySlugQuery("industry-solutions");
+    // console.log(data)
 
     return (
         <section
@@ -58,20 +63,19 @@ function Industries() {
                     ref={cardsRef}
                     className="industries-grid"
                 >
-                    {industries.map((industry, index) => (
-                        <div
-                            key={index}
-                            className="industry-card"
-                        >
-                            <div className="industry-icon">
-                                {industry.icon}
-                            </div>
+                    {data?.data?.items?.map((industry, index) => {
+                        const Icon = getIndustryIcon(industry.label);
 
-                            <div className="service-card-title">
-                                {industry.label}
+                        return (
+                            <div key={index} className="industry-card">
+                                <span className="industry-icon">
+                                    <Icon size={36} strokeWidth={1.8} />
+                                </span>
+
+                                <h3>{industry.label}</h3>
                             </div>
-                        </div>
-                    ))}
+                        );
+                    })}
                 </div>
 
                 {/* <div

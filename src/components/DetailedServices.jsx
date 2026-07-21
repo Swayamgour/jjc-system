@@ -28,7 +28,7 @@ function PlatformServices() {
 
     const [active, setActive] = useState(0);
 
-    const { section, ready, isPublished } = useHomeSection("detailedServices");
+    const { section, ready, isPublished } = useHomeSection("detailedServices", sectionRef);
 
     // console.log(section)
 

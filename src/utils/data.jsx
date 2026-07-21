@@ -280,29 +280,37 @@ export const cols = [
     {
         title: "Get Started",
         links: [
-            { label: "Onboarding Guide", to: "/onboarding-guide" },
-            { label: "Open A Ticket", href: "https://jjcsystems.com/open-a-ticket/", external: true },
-            { label: "Our Approach", to: "/our-approach" },
-            { label: "Client Portal", href: "https://support.jjcsystems.com/portal/en/signin", external: true },
-            { label: "FAQs", to: "/faq" },
+            { label: "Onboarding Guide", to: "/why-us/onboarding-guide" },
+            {
+                label: "Open A Ticket",
+                href: "https://jjcsystems.com/open-a-ticket/",
+                external: true,
+            },
+            { label: "Our Approach", to: "/why-us/our-approach" },
+            {
+                label: "Client Portal",
+                href: "https://support.jjcsystems.com/portal/en/signin",
+                external: true,
+            },
+            { label: "FAQs", to: "/why-us/faq" },
         ],
     },
     {
         title: "Company",
         links: [
             { label: "About Us", to: "/About" },
-            { label: "Team", to: "/team" },
-            { label: "Locations", to: "/locations" },
-            { label: "Partners", to: "/partners" },
-            { label: "Careers", to: "/careers" },
+            { label: "Team", to: "/why-us/team" },
+            { label: "Locations", to: "/why-us/locations" },
+            { label: "Partners", to: "/why-us/partners" },
+            { label: "Careers", to: "/why-us/careers" },
         ],
     },
     {
         title: "Legal",
         links: [
-            { label: "Privacy Policy", to: "/privacy-policy" },
-            { label: "Return Policy", to: "/return-policy" },
-            { label: "Terms of Service", to: "/terms-of-service" },
+            { label: "Privacy Policy", to: "/why-us/privacy-policy" },
+            { label: "Return Policy", to: "/why-us/return-policy" },
+            { label: "Terms of Service", to: "/why-us/terms-of-service" },
         ],
     },
 ];

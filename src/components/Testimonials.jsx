@@ -4,6 +4,12 @@ import { Icons, reviews as DEFAULT_REVIEWS } from "../utils/data";
 import { useSectionAnimation } from "../hooks/useSectionAnimation";
 import { useHomeSection } from "../hooks/useHomeSection";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/pagination";
+
 const DEFAULT_TAG = "WHAT OUR CLIENTS SAY";
 const DEFAULT_TITLE = "Testimonials";
 
@@ -13,7 +19,7 @@ function Testimonials() {
     const titleRef = useRef(null);
     const cardsRef = useRef(null);
 
-    const { section, items, ready, isPublished } = useHomeSection("testimonials");
+    const { section, items, ready, isPublished } = useHomeSection("testimonials", sectionRef);
 
     useSectionAnimation({
         sectionRef,
@@ -62,50 +68,76 @@ function Testimonials() {
                     ref={cardsRef}
                     className="testimonials-grid"
                 >
-                    {testimonials.map((review, index) => (
-                        <div
-                            key={index}
-                            className="testimonial-card"
-                        >
-                            <div className="testimonial-quote">
-                                <FaQuoteLeft />
-                            </div>
+                    <Swiper
+                        modules={[Autoplay, Pagination]}
+                        spaceBetween={30}
+                        slidesPerView={3}
+                        centeredSlides={false}
+                        speed={800}
+                         loop={true}
+                        autoplay={{
+                            delay: 3500,
+                            disableOnInteraction: false,
+                            pauseOnMouseEnter: true,
+                        }}
+                        pagination={{ clickable: true }}
+                        loop={testimonials.length > 3}
+                        grabCursor
+                        breakpoints={{
+                            0: {
+                                slidesPerView: 1,
+                                spaceBetween: 16,
+                            },
+                            768: {
+                                slidesPerView: 2,
+                                spaceBetween: 20,
+                            },
+                            1200: {
+                                slidesPerView: 3,
+                                spaceBetween: 30,
+                            },
+                        }}
+                    >
+                        {testimonials.map((review, index) => (
+                            <SwiperSlide key={index}>
+                                <div className="testimonial-card">
+                                    <div className="testimonial-quote">
+                                        <FaQuoteLeft />
+                                    </div>
 
-                            <p className="testimonial-text">
-                                {review.text}
-                            </p>
+                                    <p className="testimonial-text">
+                                        {review.text}
+                                    </p>
 
-                            <div className="testimonial-user">
+                                    <div className="testimonial-user">
+                                        <div className="testimonial-avatar">
+                                            {review.name?.[0]}
+                                        </div>
 
-                                <div className="testimonial-avatar">
-                                    {review.name?.[0]}
+                                        <div>
+                                            <div className="testimonial-name">
+                                                {review.name}
+                                            </div>
+
+                                            <div className="testimonial-role">
+                                                {review.title}
+                                            </div>
+
+                                            <div className="testimonial-stars">
+                                                {[...Array(5)].map((_, i) => (
+                                                    <Icons.Star
+                                                        key={i}
+                                                        filled
+                                                    />
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                            </SwiperSlide>
+                        ))}
+                    </Swiper>
 
-                                <div>
-
-                                    <div className="testimonial-name">
-                                        {review.name}
-                                    </div>
-
-                                    <div className="testimonial-role">
-                                        {review.title}
-                                    </div>
-
-                                    <div className="testimonial-stars">
-                                        {[...Array(5)].map((_, i) => (
-                                            <Icons.Star
-                                                key={i}
-                                                filled
-                                            />
-                                        ))}
-                                    </div>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                    ))}
                 </div>
 
             </div>

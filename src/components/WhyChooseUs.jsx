@@ -26,7 +26,7 @@ function WhyChooseUs() {
     const listRef = useRef(null);
     const outroRef = useRef(null);
 
-    const { section, items, ready, isPublished } = useHomeSection("whyChooseUs");
+    const { section, items, ready, isPublished } = useHomeSection("whyChooseUs", sectionRef);
 
     useSectionAnimation({
         sectionRef,

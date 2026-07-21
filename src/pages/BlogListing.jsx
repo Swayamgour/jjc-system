@@ -18,6 +18,7 @@ import { Newsletter } from "../components/blog/Newsletter";
 import { useGetPublishedBlogsQuery, useGetBlogCategoriesQuery, } from "../redux/api";
 import ServiceHero from "../components/ServiceHero";
 import { stripHtml } from "../utils/blogData";
+import Loader from "../components/Loader";
 
 const PAGE_SIZE = 6;
 
@@ -144,9 +145,7 @@ export default function BlogListing() {
     if(isLoading){
 
     return (
-        <div className="blog-results-empty">
-            Loading blogs...
-        </div>
+       <Loader />
     );
 
 }

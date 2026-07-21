@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
 import { Icons } from "./utils/data";
 import Header from "./components/Header";
 import './App.css'
@@ -29,59 +28,60 @@ import OpenTicket from "./pages/OpenTicket";
 import ResourcesPage from "./pages/Resources";
 import BlogListing from "./pages/BlogListing";
 import BlogDetail from "./pages/BlogDetail";
+import Loader from "./components/Loader";
 
 
 
 
 export default function App() {
   return (
-    <div >
+    <>
 
+    
       <Header />
-      <main >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Services/:slug" element={<ServiceRoute />} />
-          <Route path="/Platforms/:slug" element={<Platforms />} />
-          <Route path="/industries/:slug" element={<Industries />} />
-          <Route path="/About" element={<AboutUs />} />
-          <Route path="/Contact" element={<ContactUs />} />
-          <Route path="/why-us/onboarding-guide" element={<OnboardingGuide />} />
-          <Route path="/why-us/open-a-ticket" element={<OpenTicket />} />
-          <Route path="/why-us/our-approach" element={<OurApproach />} />
-          <Route path="/why-us/faq" element={<FAQPage />} />
 
-          <Route path="/why-us/team" element={<Team />} />
-          <Route path="/why-us/partners" element={<Partners />} />
-          <Route path="/why-us/locations" element={<Locations />} />
-          <Route path="/why-us/careers" element={<Careers />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Services/:slug" element={<ServiceRoute />} />
+        <Route path="/Platforms/:slug" element={<Platforms />} />
+        <Route path="/industries/:slug" element={<Industries />} />
+        <Route path="/About" element={<AboutUs />} />
+        <Route path="/Contact" element={<ContactUs />} />
+        <Route path="/why-us/onboarding-guide" element={<OnboardingGuide />} />
+        <Route path="/why-us/open-a-ticket" element={<OpenTicket />} />
+        <Route path="/why-us/our-approach" element={<OurApproach />} />
+        <Route path="/why-us/faq" element={<FAQPage />} />
 
-          <Route path="/why-us/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/why-us/return-policy" element={<ReturnPolicy />} />
-          <Route path="/why-us/terms-of-service" element={<TermsOfService />} />
+        <Route path="/why-us/team" element={<Team />} />
+        <Route path="/why-us/partners" element={<Partners />} />
+        <Route path="/why-us/locations" element={<Locations />} />
+        <Route path="/why-us/careers" element={<Careers />} />
 
-
-          {/* Other routes */}
-          <Route path="/guides" element={<ResourcesPage />} />
-          <Route path="/checklists" element={<ResourcesPage />} />
-          <Route path="/whitepapers" element={<ResourcesPage />} />
-          <Route path="/infographics" element={<ResourcesPage />} />
-          <Route path="/events" element={<ResourcesPage />} />
-
-          {/* Or use a dynamic route */}
-          <Route path="/resources/:resourceType" element={<ResourcesPage />} />
-
-          {/* Blog */}
-          <Route path="/blog" element={<BlogListing />} />
-          <Route path="/blog/:slug" element={<BlogDetail />} />
+        <Route path="/why-us/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/why-us/return-policy" element={<ReturnPolicy />} />
+        <Route path="/why-us/terms-of-service" element={<TermsOfService />} />
 
 
-        </Routes>
+        {/* Other routes */}
+        <Route path="/guides" element={<ResourcesPage />} />
+        <Route path="/checklists" element={<ResourcesPage />} />
+        <Route path="/whitepapers" element={<ResourcesPage />} />
+        <Route path="/infographics" element={<ResourcesPage />} />
+        <Route path="/events" element={<ResourcesPage />} />
 
-        {/* <Home /> */}
+        {/* Or use a dynamic route */}
+        <Route path="/resources/:resourceType" element={<ResourcesPage />} />
 
-      </main>
+        {/* Blog */}
+        <Route path="/blog" element={<BlogListing />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
+
+
+      </Routes>
+
+
+
       <Footer />
-    </div>
+    </>
   );
 }

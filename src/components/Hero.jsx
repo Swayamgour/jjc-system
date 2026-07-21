@@ -6,6 +6,7 @@ import SplitType from "split-type";
 import { motion } from "framer-motion";
 
 import { Icons } from "../utils/data";
+import { useNavigate } from "react-router";
 
 const fadeLeft = {
     hidden: { opacity: 0, x: -60 },
@@ -156,6 +157,8 @@ export default function Hero({
 
     }, [ready]);
 
+    const navigate = useNavigate()
+
 
     return (
         <section ref={heroRef} className="hero">
@@ -184,21 +187,22 @@ export default function Hero({
 
                     <div ref={actionsRef} className="hero-actions">
 
-                        <a
+                        <button
+                            type="button"
                             className="btn-primary"
-                            href={primaryButton?.link || "/contact"}
+                            onClick={() => navigate("/contact")}
                         >
-                            {/* {primaryButton?.text} */}
                             Schedule a Consultation
                             <Icons.Arrow />
-                        </a>
+                        </button>
 
-                        <a
+                        <button
+                            type="button"
                             className="btn-secondary"
-                            href={secondaryButton?.link || "/services"}
+                            onClick={() => navigate(secondaryButton?.link || "/services")}
                         >
                             {secondaryButton?.text}
-                        </a>
+                        </button>
 
                     </div>
 

@@ -2,6 +2,7 @@ import { useInView, motion } from 'framer-motion';
 import React, { useRef } from 'react'
 import { Icons } from '../utils/data';
 import { useHomeSection } from '../hooks/useHomeSection';
+import { useNavigate } from 'react-router';
 
 const DEFAULT_TITLE = "Ready to Transform Your Business with Microsoft Solutions?";
 const DEFAULT_DESCRIPTION = "Let's build the future together.";
@@ -10,9 +11,9 @@ const DEFAULT_SECONDARY_LABEL = "Request Assessment";
 
 function CTASection() {
     const ref = useRef(null);
-    const inView = useInView(ref, { once: true, amount: 0.2 });
+    const inView = useInView(ref, { once: true });
 
-    const { section, isPublished } = useHomeSection("cta");
+    const { section, isPublished } = useHomeSection("cta", ref);
 
     const slideRight = {
         hidden: { opacity: 0, x: 50 },
@@ -23,6 +24,8 @@ function CTASection() {
         hidden: { opacity: 0, x: -50 },
         visible: { opacity: 1, x: 0, transition: { duration: 0.7, ease: "easeOut" } },
     };
+
+    const navigate = useNavigate()
 
     if (!isPublished) return null;
 
@@ -53,24 +56,24 @@ function CTASection() {
                     className="cta-actions"
                 >
 
-                    <motion.a
+                    <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.97 }}
                         className="cta-btn-primary"
-                        href={section?.primaryLink || "/contact"}
+                        onClick={() => navigate('/Contact')}
                     >
                         {section?.primaryLabel || DEFAULT_PRIMARY_LABEL}
                         <Icons.Arrow />
-                    </motion.a>
+                    </motion.div>
 
-                    <motion.a
+                    <motion.div
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.97 }}
                         className="cta-btn-secondary"
-                        href={section?.secondaryLink || "/contact"}
+                        onClick={() => navigate('/Contact')}
                     >
                         {section?.secondaryLabel || DEFAULT_SECONDARY_LABEL}
-                    </motion.a>
+                    </motion.div>
 
                 </motion.div>
 

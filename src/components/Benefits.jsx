@@ -16,7 +16,7 @@ function Benefits() {
     const descRef = useRef(null);
     const cardsRef = useRef(null);
 
-    const { section, items, ready, isPublished } = useHomeSection("benefits");
+    const { section, items, ready, isPublished } = useHomeSection("benefits", sectionRef);
 
     useSectionAnimation({
         sectionRef,

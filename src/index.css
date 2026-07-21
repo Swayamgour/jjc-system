@@ -185,3 +185,7 @@ img {
     --section-pad-y: 50px;
   }
 }
+
+section {
+  overflow-x: clip;
+}

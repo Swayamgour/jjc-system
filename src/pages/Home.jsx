@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import Hero from '../components/Hero'
 import WhyChooseUs from '../components/WhyChooseUs'
 
@@ -23,6 +23,7 @@ import heroImage from "../assets/1-01.png";
 import { useGetHomeHeroQuery } from '../redux/api';
 import { useHomeSection } from '../hooks/useHomeSection';
 import { resolveIcon } from '../utils/resolveIcon';
+import Loader from '../components/Loader'
 
 // ---- Fallback content (used until real data loads, or for any field the
 // admin hasn't filled in yet) so the homepage never renders empty. ----
@@ -135,7 +136,8 @@ function Home() {
     };
 
     // ---- FAQs (drives the ContactFAQ accordion) ----
-    const { section: faqSection, items: faqItems, ready: faqReady } = useHomeSection("faqs");
+    const faqSectionRef = useRef(null);
+    const { section: faqSection, items: faqItems, ready: faqReady } = useHomeSection("faqs", faqSectionRef);
     const faqs = faqItems.length
         ? faqItems.map((item, i) => ({
             id: item._id || i + 1,
@@ -146,7 +148,12 @@ function Home() {
 
     return (
         <div>
-            <Hero {...heroContent} ready={!heroLoading} />
+            {/* <Hero {...heroContent} ready={!heroLoading} /> */}
+            {heroLoading ? (
+                <Loader />
+            ) : (
+                <Hero {...heroContent} ready={true} />
+            )}
             <WhyChooseUs />
             <BusinessServices />
             <DetailedServices />
@@ -162,14 +169,16 @@ function Home() {
             <LeadershipTeam />
             <WhyJJCPartner />
 
-            <ContactFAQ
-                faqs={faqs}
-                tag={faqSection?.tag}
-                title={faqSection?.title}
-                description={faqSection?.description}
-                ready={faqReady}
-            />
-       
+            <div ref={faqSectionRef}>
+                <ContactFAQ
+                    faqs={faqs}
+                    tag={faqSection?.tag}
+                    title={faqSection?.title}
+                    description={faqSection?.description}
+                    ready={faqReady}
+                />
+            </div>
+
             <CTASection />
         </div>
     )
