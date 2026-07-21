@@ -5,6 +5,8 @@ import { useHomeSection } from "../hooks/useHomeSection";
 import { resolveIcon } from "../utils/resolveIcon";
 import { useGetCategoriesBySlugQuery } from "../redux/api";
 import { getServiceIcon } from "../utils/serviceIcons";
+import * as Icons from "lucide-react";
+
 // import { getServiceIcon } from "../utils/serviceIcons";
 
 const DEFAULT_TAG = "BUSINESS OUTCOMES";
@@ -16,8 +18,7 @@ function BusinessServices() {
     const titleRef = useRef(null);
     const cardsRef = useRef(null);
 
-    const { section, items, ready, isPublished } =
-        useHomeSection("businessServices", sectionRef);
+    const { section, items, ready, isPublished } = useHomeSection("businessServices", sectionRef);
 
     const { data } = useGetCategoriesBySlugQuery("Services");
 
@@ -31,14 +32,6 @@ function BusinessServices() {
 
     if (!isPublished) return null;
 
-    const services = data?.data?.items?.length
-        ? data.data.items
-        : items.length
-            ? items.map((item) => ({
-                label: item.title,
-                icon: resolveIcon(item.icon),
-            }))
-            : DEFAULT_SERVICES;
 
     return (
         <section ref={sectionRef} className="business-services-section">
@@ -57,8 +50,8 @@ function BusinessServices() {
                     ref={cardsRef}
                     className="business-services-grid"
                 >
-                    {services.map((service, index) => {
-                        const Icon =  getServiceIcon(service.label);
+                    {data?.data?.map((service, index) => {
+                         const Icon = Icons[service.icon] || Icons.Briefcase;
 
                         return (
                             <div
@@ -66,15 +59,14 @@ function BusinessServices() {
                                 className="business-service-card"
                             >
                                 <span className="solution-icon">
-                                    <Icon
-                                        size={36}
-                                        strokeWidth={1.8}
-                                    />
+                                    <Icon  />
                                 </span>
 
                                 <h3 className="service-card-title">
-                                    {service.label}
+                                    {service.name}
                                 </h3>
+
+                                <p>{service.description}</p>
                             </div>
                         );
                     })}

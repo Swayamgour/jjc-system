@@ -101,10 +101,11 @@ export const api = createApi({
         }),
 
         getCategoriesBySlug: builder.query({
-            query: (slug) => `/categories/${slug}`,
+            query: (slug) => `/categories/${slug}/items`,
             providesTags: ["Users"],
         }),
 
+       
 
     }),
 });
