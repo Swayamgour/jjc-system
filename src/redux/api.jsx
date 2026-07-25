@@ -44,6 +44,11 @@ export const api = createApi({
             providesTags: ["Auth"],
         }),
 
+        getCaseStudyCategory: builder.query({
+            query: () => "/case-study-categories",
+            providesTags: ["Auth"],
+        }),
+
         // Home page hero (singleton)
         getHomeHero: builder.query({
             query: () => "/home-content/hero",
@@ -105,7 +110,7 @@ export const api = createApi({
             providesTags: ["Users"],
         }),
 
-       
+
 
     }),
 });
@@ -113,6 +118,7 @@ export const api = createApi({
 export const {
 
     useGetCategoryQuery,
+    useGetCaseStudyCategoryQuery,
     useGetHomeHeroQuery,
     useGetHomeSectionQuery,
     useGetPlatformBySlugQuery,

@@ -1,199 +1,332 @@
-/* ═══════════════════════════════════════════════════════════ */
-/* =====================  HEADER SHELL  ======================= */
-/* ═══════════════════════════════════════════════════════════ */
-html {
-    scrollbar-gutter: stable;
+/* ============================================================
+   HEADER SHELL (new design)
+   ============================================================ */
+.jjc-hdr {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    transition: background 0.3s ease, box-shadow 0.3s ease, padding 0.3s ease;
+    padding-block: 18px;
 }
 
-.navbar-container {
-    background-color: rgba(255, 255, 255, 0.72);
-    color: var(--text-main);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    border-bottom: 1px solid rgba(15, 23, 42, 0.06);
-    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.02), 0 12px 32px -20px rgba(15, 23, 42, 0.18);
-    -webkit-backdrop-filter: saturate(180%) blur(18px);
-    backdrop-filter: saturate(180%) blur(18px);
+.jjc-hdr.is-scrolled {
+    background: rgba(0, 10, 28, 0.92);
+    backdrop-filter: saturate(160%) blur(14px);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+    padding-block: 12px;
 }
 
-.navbar {
-    max-width: 1320px;
-    margin: 0 auto;
+.jjc-hdr .jjc-wrap {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0 2rem;
-    height: 76px;
+    gap: 28px;
+    /* No position here on purpose: .jjc-hdr (position: fixed) must stay the
+     nearest positioned ancestor for .mega-dropdown below. If this wrapper
+     (or .jjc-nav-item) becomes positioned too, the dropdown's
+     left:0/right:0 resolves against that narrower box instead of the
+     full header — which is exactly what made the mega menu render as a
+     tiny box under the nav label instead of a full-width panel. */
 }
 
-/* Logo */
-.nav-logo {
-    font-size: 1.5rem;
+.jjc-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--jjc-font-display);
+    font-weight: 800;
+    font-size: 22px;
+    color: #fff;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+}
+
+.jjc-brand-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, var(--jjc-brand-blue), var(--jjc-cyan-accent));
+    color: #fff;
+    font-weight: 800;
+    font-size: 15px;
+    filter: drop-shadow(0 5px 12px rgba(0, 0, 0, 0.2));
+}
+
+.jjc-brand-name {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.28em;
+}
+
+.jjc-brand-name strong {
+    color: #fff;
+    font-weight: 800;
+}
+
+.jjc-brand-name span {
+    color: var(--jjc-brand-gold);
     font-weight: 700;
-    letter-spacing: -0.05em;
-    cursor: pointer;
+}
+
+/* ============================================================
+   DESKTOP NAV
+   ============================================================ */
+.jjc-nav {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    transition: opacity 0.2s ease;
+    gap: 26px;
+    margin-left: auto;
 }
 
-.nav-logo:hover {
-    opacity: 0.85;
-}
-
-.nav-logo img {
-    height: 55px;
-    width: auto;
-}
-
-/* Desktop Menu Links */
-.nav-menu {
-    display: flex;
-    list-style: none;
-    gap: 0.25rem;
-    height: 100%;
-    align-items: center;
-}
-
-.nav-item {
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: 100%;
-}
-
-.nav-links {
-    color: var(--text-main);
-    text-decoration: none;
-    font-size: 0.93rem;
+.jjc-nav>a {
+    font-family: var(--jjc-font-display);
     font-weight: 600;
-    letter-spacing: -0.005em;
+    font-size: 15px;
+    color: #d6e2f5;
+    padding: 6px 0;
+    position: relative;
+    text-decoration: none;
+}
+
+.jjc-nav>a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    height: 2px;
+    background: var(--jjc-brand-gold);
+    transition: right 0.25s ease;
+}
+
+.jjc-nav>a:hover {
+    color: #fff;
+}
+
+.jjc-nav>a:hover::after {
+    right: 0;
+}
+
+/* Dropdown-capable nav item — intentionally NOT position:relative; see
+   the note on .jjc-wrap above for why. */
+.jjc-nav-item {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
-    padding: 0.6rem 1rem;
-    height: fit-content;
+    height: 100%;
+}
+
+.jjc-nav-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    font-family: var(--jjc-font-display);
+    font-weight: 600;
+    font-size: 15px;
+    color: #d6e2f5;
+    padding: 6px 0;
     cursor: pointer;
-    border-radius: 8px;
-    transition: color 0.2s ease, background-color 0.2s ease;
     position: relative;
 }
 
-.nav-links:hover {
-    background-color: rgba(15, 23, 42, 0.045);
-}
-
-/* Underline indicator */
-.nav-indicator {
+.jjc-nav-trigger::after {
+    content: "";
     position: absolute;
-    bottom: -1px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
+    left: 0;
+    right: 100%;
+    bottom: -2px;
     height: 2px;
-    background: linear-gradient(90deg, var(--primary), var(--primary-dark, var(--primary)));
-    border-radius: 2px;
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: var(--jjc-brand-gold);
+    transition: right 0.25s ease;
 }
 
-.nav-item.active .nav-indicator {
-    width: 26px;
+.jjc-nav-trigger:hover,
+.jjc-nav-item.is-active .jjc-nav-trigger {
+    color: #fff;
 }
 
-.nav-links:hover .nav-indicator,
-.nav-item:hover .nav-indicator {
-    width: 26px;
+.jjc-nav-trigger:hover::after,
+.jjc-nav-item.is-active .jjc-nav-trigger::after {
+    right: 0;
 }
 
-.nav-links:hover,
-.nav-item.active .nav-links {
-    color: var(--primary);
-}
-
-.chevron-icon {
+.jjc-nav-trigger .chevron-icon {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
-.nav-item:hover .chevron-icon {
+.jjc-nav-item.is-active .chevron-icon {
     transform: rotate(180deg);
     opacity: 1;
 }
 
-/* Right Actions Side (CTA) */
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
+.jjc-hdr .jjc-btn {
+    padding: 12px 22px;
+    font-size: 15px;
 }
 
-.btn-contact {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-    color: #fff;
-    border: none;
-    padding: 0.65rem 1.4rem;
-    font-size: 0.9rem;
-    font-weight: 600;
-    letter-spacing: -0.005em;
-    border-radius: 9px;
-    cursor: pointer;
-    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08), 0 6px 16px -6px rgba(37, 99, 235, 0.45);
-    transition: box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    overflow: hidden;
-}
-
-.btn-contact::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), transparent 60%);
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.btn-contact:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(15, 23, 42, 0.1), 0 10px 24px -6px rgba(37, 99, 235, 0.55);
-}
-
-.btn-contact:hover::before {
-    opacity: 1;
-}
-
-.btn-contact:active {
-    transform: translateY(0);
-}
-
-/* Hamburger Menu Button (base — overridden for mobile below) */
-.menu-toggle {
+.jjc-burger {
     display: none;
     background: none;
-    border: none;
-    color: var(--text-main);
+    border: 0;
+    padding: 8px;
     cursor: pointer;
-    padding: 0.5rem;
+    margin-left: auto;
+}
+
+.jjc-burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #fff;
+    margin: 5px 0;
+    transition: 0.25s;
+}
+
+.jjc-burger[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.jjc-burger[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.jjc-burger[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 1080px) {
+    .jjc-nav {
+        display: none;
+    }
+
+    .jjc-nav.is-open {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        max-height: calc(100vh - 100%);
+        overflow-y: auto;
+        background: rgba(0, 10, 28, 0.98);
+        backdrop-filter: blur(14px);
+        padding: 12px var(--jjc-gutter) 22px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .jjc-nav.is-open>a {
+        padding: 14px 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+        font-size: 16px;
+    }
+
+    .jjc-nav.is-open .jjc-nav-item {
+        flex-direction: column;
+        align-items: stretch;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .jjc-nav.is-open .jjc-nav-trigger {
+        justify-content: space-between;
+        width: 100%;
+        padding: 14px 0;
+        font-size: 16px;
+    }
+
+    .jjc-nav.is-open .jjc-nav-trigger::after {
+        display: none;
+    }
+
+    /* On mobile the desktop mega dropdown never renders (hidden below);
+     only the accordion (.jjc-mobile-submenu) shows. */
+    .jjc-nav.is-open .mega-dropdown {
+        display: none;
+    }
+
+    .jjc-burger {
+        display: block;
+    }
+
+    .jjc-hdr .jjc-btn {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .jjc-brand-mark {
+        width: 38px;
+        height: 38px;
+    }
+
+    .jjc-brand {
+        font-size: 20px;
+    }
+}
+
+/* ============================================================
+   MOBILE ACCORDION SUBMENU (ported/adapted from old mobile menu)
+   ============================================================ */
+/* Defensive: the mobile accordion must never be visible on desktop —
+   desktop opens the mega dropdown on hover instead. Without this,
+   accidentally toggling activeMobileSubmenu on desktop would render
+   this inline (in normal flow) and disrupt the hover mega-dropdown. */
+@media (min-width: 1081px) {
+    .jjc-mobile-submenu {
+        display: none !important;
+    }
+}
+
+.jjc-mobile-submenu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    overflow: hidden;
+    padding-bottom: 10px;
+}
+
+.jjc-mobile-submenu .mobile-sub-title {
+    font-size: 0.7rem;
+    color: rgba(214, 226, 245, 0.6);
+    text-transform: uppercase;
+    margin-top: 0.6rem;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+}
+
+.jjc-mobile-submenu a {
+    color: #d6e2f5;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 0.55rem 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     border-radius: 8px;
-    transition: background-color 0.2s;
+    transition: background-color 0.15s, color 0.15s, padding-left 0.15s;
 }
 
-.menu-toggle:hover {
-    background-color: rgba(0, 0, 0, 0.05);
+.jjc-mobile-submenu a:hover {
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.06);
+    padding-left: 1rem;
 }
 
-/* ═══════════════════════════════════════════════════════════ */
-/* ===============  MEGA DROPDOWN (DESKTOP)  ================= */
-/* ═══════════════════════════════════════════════════════════ */
-
-/* Motion-controlled: opacity + clip-path are animated inline by
-   Framer Motion (see Header.jsx). No competing CSS transform/opacity
-   rules live here anymore — that was the cause of the old glitchy,
-   "opening from nowhere" behavior. */
+/* ============================================================
+   MEGA DROPDOWN (ported from old Header.css)
+   Sits directly under the fixed header — .jjc-hdr is the nearest
+   positioned ancestor, so top: 100% tracks the header's real
+   height automatically (no matter its scrolled/unscrolled padding).
+   ============================================================ */
 .mega-dropdown {
-    position: fixed;
-    top: 76px;
+    position: absolute;
+    top: 100%;
     left: 0;
     right: 0;
     z-index: 1001;
@@ -208,10 +341,10 @@ html {
 
 .mega-dropdown-bridge {
     position: absolute;
-    top: -40px;
+    top: -16px;
     left: 0;
     width: 100%;
-    height: 40px;
+    height: 16px;
 }
 
 .mega-dropdown-content {
@@ -222,25 +355,21 @@ html {
 }
 
 .mega-dropdown-wrapper {
-    height: 500px;
-    max-height: 500px;
+    height: 600px;
+    max-height: 600px;
 
     background: rgba(255, 255, 255, 0.98);
+    color: #111827;
 
     border-top: 1px solid rgba(15, 23, 42, 0.06);
     border-radius: 0 0 24px 24px;
 
-    box-shadow: 0 40px 80px -16px rgba(15, 23, 42, 0.22);
+    box-shadow: 0 40px 80px -16px rgba(0, 0, 0, 0.45);
 
-    /* -webkit-backdrop-filter: saturate(180%) blur(24px); */
     backdrop-filter: saturate(180%) blur(24px);
 
     overflow: hidden;
 }
-
-/* ═══════════════════════════════════════════════════════════ */
-/* =====================  MEGA MENU LAYOUT  ==================== */
-/* ═══════════════════════════════════════════════════════════ */
 
 .mega-layout {
     display: flex;
@@ -248,51 +377,6 @@ html {
     gap: 40px;
     width: 100%;
     height: 100%;
-}
-
-.dropdown-left-card {
-    flex: 0 0 360px;
-    width: 360px;
-    background: #1b2a6c;
-    color: #fff;
-    margin: 0;
-    padding: 32px 24px;
-    border-bottom-left-radius: 24px;
-    overflow-y: auto;
-}
-
-.dropdown-left-inner {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.dropdown-left-image-wrapper {
-    width: 100%;
-    margin-bottom: 20px;
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.dropdown-left-image-wrapper img {
-    display: block;
-    width: 100%;
-    height: 220px;
-    object-fit: cover;
-}
-
-.dropdown-left-content h3 {
-    margin: 0 0 12px;
-    color: #fff;
-    font-size: 24px;
-    font-weight: 700;
-}
-
-.dropdown-left-content p {
-    margin: 0;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 14px;
-    line-height: 1.6;
 }
 
 .dropdown-main {
@@ -304,28 +388,6 @@ html {
     padding: 28px 40px 28px 0;
 }
 
-.dropdown-header {
-    margin-bottom: 10px;
-    flex-shrink: 0;
-}
-
-.dropdown-header h2 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-    font-size: 24px;
-    font-weight: 700;
-    color: #111827;
-}
-
-.dropdown-title-icon {
-    color: var(--primary);
-    flex-shrink: 0;
-}
-
-/* Scrolls only if a menu's content is taller than the fixed 500px
-   panel — the panel itself never grows or shrinks. */
 .dropdown-scroll {
     flex: 1;
     min-height: 0;
@@ -337,7 +399,7 @@ html {
 .dropdown-columns {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 32px 40px;
+    gap: 20px;
     align-items: start;
 }
 
@@ -363,13 +425,12 @@ html {
     bottom: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, var(--primary), var(--primary-dark, var(--primary)));
+    background: linear-gradient(90deg, var(--jjc-brand-blue), var(--jjc-cyan-accent));
 }
 
 .dropdown-links {
     display: flex;
     flex-direction: column;
-    gap: 8px;
 }
 
 .dropdown-link {
@@ -384,297 +445,15 @@ html {
 }
 
 .dropdown-link:hover {
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
     transform: translateX(4px);
 }
 
-/* .dropdown-links::-webkit-scrollbar {
-    width: 3px;
-}
-
-.dropdown-links::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.dropdown-links::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
-    border-radius: 3px;
-}
-
-.dropdown-links::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8;
-} */
-
-/* ═══════════════════════════════════════════════════════════ */
-/* ===========  MOBILE MENU & RESPONSIVE LAYOUT  ============== */
-/* ═══════════════════════════════════════════════════════════ */
-@media (max-width: 1024px) {
-
-    .nav-menu,
-    .nav-actions .btn-contact {
-        display: none;
-    }
-
-    .menu-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: rgba(37, 99, 235, 0.08);
-        border-radius: 10px;
-        width: 42px;
-        height: 42px;
-        transition: background-color 0.2s, transform 0.2s;
-    }
-
-    .menu-toggle:hover {
-        background-color: rgba(37, 99, 235, 0.15);
-        transform: scale(1.05);
-    }
-
-    .mobile-menu-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.25rem 1.25rem 1rem;
-        border-bottom: 1px solid var(--border-color);
-        background-color: var(--bg-white);
-        width: 100%;
-        box-sizing: border-box;
-        flex-shrink: 0;
-        overflow: hidden;
-        width: 300px;
-    }
-
-    .mobile-menu-header img {
-        height: 40px !important;
-        width: auto !important;
-        max-width: 140px;
-        max-height: 40px;
-        object-fit: contain;
-        display: block;
-        flex-shrink: 0;
-    }
-
-    .mobile-menu-close {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        background-color: rgba(0, 0, 0, 0.05);
-        border: none;
-        color: var(--text-main);
-        cursor: pointer;
-        transition: background-color 0.2s, color 0.2s, transform 0.2s;
-    }
-
-    .mobile-menu-close:hover {
-        background-color: rgba(239, 68, 68, 0.1);
-        color: #ef4444;
-        transform: rotate(90deg);
-    }
-
-    .mobile-menu-body {
-        flex: 1;
-        overflow-y: auto;
-        padding: 1rem 1.25rem 0;
-    }
-
-    .mobile-nav-item {
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 0.5rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .mobile-nav-link {
-        display: flex;
-        align-items: center;
-        gap: 0.85rem;
-        font-size: 1.05rem;
-        font-weight: 600;
-        color: var(--text-main);
-        padding: 0.85rem 0.5rem;
-        width: 100%;
-        background: none;
-        border: none;
-        text-align: left;
-        text-decoration: none;
-        cursor: pointer;
-        border-radius: 10px;
-        transition: background-color 0.2s, color 0.2s;
-    }
-
-    .mobile-nav-link:hover,
-    .mobile-nav-link:active {
-        background-color: rgba(37, 99, 235, 0.06);
-        color: var(--primary);
-    }
-
-    .mobile-nav-icon-wrap {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        border-radius: 10px;
-        background: linear-gradient(135deg, rgba(37, 99, 235, 0.12), rgba(37, 99, 235, 0.04));
-        color: var(--primary);
-    }
-
-    .mobile-nav-link-text {
-        flex: 1;
-    }
-
-    .mobile-nav-link .chevron-icon {
-        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        color: var(--text-muted);
-    }
-
-    .mobile-submenu {
-        display: flex;
-        flex-direction: column;
-        gap: 0.35rem;
-        overflow: hidden;
-    }
-
-    .mobile-sub-title {
-        font-size: 0.7rem;
-        color: var(--text-muted);
-        text-transform: uppercase;
-        margin-top: 0.6rem;
-        letter-spacing: 0.06em;
-        font-weight: 700;
-    }
-
-    .mobile-submenu a {
-        color: var(--text-main);
-        text-decoration: none;
-        font-size: 0.80rem;
-        font-weight: 500;
-        padding: 0.55rem 0.75rem;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-radius: 8px;
-        transition: background-color 0.15s, color 0.15s, padding-left 0.15s;
-        width: 250px;
-    }
-
-    .mobile-submenu a:hover {
-        color: var(--primary);
-        background-color: rgba(37, 99, 235, 0.08);
-        padding-left: 1rem;
-    }
-
-    .mobile-menu-footer {
-        padding: 1rem 1.25rem 1.5rem;
-        background-color: var(--bg-white);
-        border-top: 1px solid var(--border-color);
-    }
-
-    .mobile-cta {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        margin-top: 0;
-        width: 100%;
-        padding: 0.95rem;
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        border: none;
-        border-radius: 12px;
-        font-weight: 700;
-        font-size: 1rem;
-        cursor: pointer;
-        box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .mobile-cta:hover {
-        background-color: var(--primary-dark);
-        transform: translateY(-2px);
-        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
-    }
-
-    .mobile-cta:active {
-        transform: translateY(0);
-    }
-}
-
-/* Medium screens */
-@media (max-width: 1180px) {
-
-    .dropdown-left-card {
-        flex: 0 0 240px;
-        width: 240px;
-        padding: 20px 18px;
-    }
-
-    .dropdown-left-image-wrapper img {
-        height: 130px;
-    }
-
-    .dropdown-left-content h3 {
-        font-size: 20px;
-    }
-
-    .dropdown-left-content p {
-        font-size: 12px;
-    }
-
-    .dropdown-main {
-        padding: 18px 20px 18px 0;
-    }
-
-    .dropdown-columns {
-        gap: 16px;
-    }
-
-    .dropdown-column h3 {
-        font-size: 15px;
-    }
-
-    .dropdown-link {
-        font-size: 13px;
-    }
-}
-
-/* Small screens */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 0 1rem;
-        height: 60px;
-    }
-
-    .nav-logo img {
-        height: 32px;
-    }
-
-    .mega-dropdown {
-        display: none !important;
-    }
-}
-
-/* ═══════════════════════════════════════════════════════════ */
-/* ===========  "WHAT WE DO" — 3-PART MEGA MENU  =============== */
-/* Left: top-level category rail (Services / Industries /        */
-/* Platforms). Middle: the active category's subcategories laid  */
-/* out as columns (reuses .dropdown-columns/.dropdown-column/    */
-/* .dropdown-links) plus a two-link footer row. Right: a dark     */
-/* promo card whose copy swaps with the active category. Scoped   */
-/* entirely under .what-we-do-* so Why Us / Insights / Contact Us */
-/* (built on InfoDropdownContent) and any generic MegaDropdownContent */
-/* menu stay completely unaffected.                                */
-/* ═══════════════════════════════════════════════════════════ */
-
+/* ── "What We Do" left category rail (Services / Industries / Platforms) ── */
 .what-we-do-layout {
     gap: 0;
 }
 
-/* Left rail */
 .what-we-do-category-col {
     flex: 0 0 220px;
     width: 220px;
@@ -701,6 +480,13 @@ html {
     font-weight: 600;
     color: #4b5563;
     transition: background-color 0.2s, color 0.2s;
+
+    /* position: relative; */
+    /* margin: 0 0 8px; */
+    /* padding-bottom: 8px; */
+    color: #111827;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .what-we-do-category-icon {
@@ -712,146 +498,19 @@ html {
     flex-shrink: 0;
     border-radius: 8px;
     background: rgba(37, 99, 235, 0.08);
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
     transition: background-color 0.2s, color 0.2s;
 }
 
 .what-we-do-category-item:hover,
 .what-we-do-category-item.active {
     background-color: rgba(37, 99, 235, 0.06);
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
 }
 
 .what-we-do-category-item.active .what-we-do-category-icon {
-    background: var(--primary, #2563eb);
+    background: var(--jjc-brand-blue, #2563eb);
     color: #fff;
-}
-
-/* Middle — subcategory columns + footer */
-.what-we-do-main {
-    padding: 28px 32px;
-    gap: 16px;
-}
-
-.what-we-do-footer {
-    display: flex;
-    gap: 24px;
-    padding-top: 18px;
-    border-top: 1px solid rgba(15, 23, 42, 0.07);
-    flex-shrink: 0;
-}
-
-.what-we-do-footer-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1;
-    background: none;
-    border: none;
-    padding: 10px;
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: left;
-    transition: background-color 0.2s;
-}
-
-.what-we-do-footer-link:hover {
-    background-color: rgba(37, 99, 235, 0.06);
-}
-
-.what-we-do-footer-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    flex-shrink: 0;
-    border-radius: 9px;
-    background: rgba(37, 99, 235, 0.08);
-    color: var(--primary, #2563eb);
-}
-
-.what-we-do-footer-text {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.what-we-do-footer-text strong {
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: #111827;
-}
-
-.what-we-do-footer-text small {
-    font-size: 0.72rem;
-    font-weight: 500;
-    color: #6b7280;
-}
-
-/* Right — dark promo card (shared by "What We Do" and all "info" menus) */
-.what-we-do-promo-card {
-    flex: 0 0 320px;
-    width: 320px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: #1b2a6c;
-    color: #fff;
-    padding: 32px 28px;
-    border-bottom-right-radius: 24px;
-    overflow-y: auto;
-}
-
-.what-we-do-promo-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.12);
-    color: #fff;
-    margin-bottom: 20px;
-}
-
-.what-we-do-promo-card h3 {
-    margin: 0 0 12px;
-    color: #fff;
-    font-size: 22px;
-    font-weight: 700;
-    line-height: 1.3;
-}
-
-.what-we-do-promo-card p {
-    margin: 0 0 24px;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 14px;
-    line-height: 1.6;
-    flex: 1;
-}
-
-.what-we-do-promo-cta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    background: #22c55e;
-    color: #fff;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 9px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: background-color 0.2s, transform 0.2s;
-}
-
-.what-we-do-promo-cta:hover {
-    background: #16a34a;
-    transform: translateY(-1px);
 }
 
 @media (max-width: 1180px) {
@@ -865,35 +524,16 @@ html {
         font-size: 0.85rem;
         padding: 10px;
     }
-
-    .what-we-do-main {
-        padding: 18px 20px;
-    }
-
-    .what-we-do-promo-card {
-        flex: 0 0 220px;
-        width: 220px;
-        padding: 22px 18px;
-    }
-
-    .what-we-do-promo-card h3 {
-        font-size: 18px;
-    }
-
-    .what-we-do-promo-card p {
-        font-size: 12px;
-    }
 }
 
-/* ═══════════════════════════════════════════════════════════ */
-/* =========  "INFO" MEGA MENU — WHY US / INSIGHTS /  ========= */
-/* =========  CONTACT US (icon-headed columns, no left  ======== */
-/* =========  category rail; reuses .what-we-do-footer   ======= */
-/* =========  and .what-we-do-promo-card from above)      ====== */
-/* ═══════════════════════════════════════════════════════════ */
-
+/* ── "info" mega menu layout (Why Us / What We Do / Insights / Contact) ── */
 .info-dropdown-layout {
     gap: 0;
+}
+
+.what-we-do-main {
+    padding: 28px 32px;
+    gap: 16px;
 }
 
 .info-dropdown-main {
@@ -938,7 +578,7 @@ html {
     flex-shrink: 0;
     border-radius: 9px;
     background: rgba(37, 99, 235, 0.08);
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
 }
 
 .info-column-items {
@@ -962,14 +602,10 @@ html {
     margin-top: 2px;
     font-size: 12.5px;
     font-weight: 600;
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
     cursor: pointer;
 }
 
-/* Icon rows — used for Contact Us columns (Get In Touch / Office
-   Locations / Connect). Renders as a <button>, an <a> (tel:, mailto:,
-   external), or a plain non-interactive <div> depending on whether the
-   item has a `path` or `href`. */
 .info-row {
     display: flex;
     align-items: flex-start;
@@ -1006,7 +642,7 @@ a.info-row {
     flex-shrink: 0;
     border-radius: 9px;
     background: rgba(37, 99, 235, 0.08);
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
 }
 
 .info-row-text {
@@ -1029,9 +665,6 @@ a.info-row {
     white-space: pre-line;
 }
 
-/* Featured card — used by the Insights "Featured Insight" column.
-   Icon on the left, title/description/CTA content on the right —
-   no image, same visual language as .info-extra-card below. */
 .info-featured-card {
     display: flex;
     align-items: flex-start;
@@ -1050,7 +683,7 @@ a.info-row {
     flex-shrink: 0;
     border-radius: 50%;
     background: rgba(37, 99, 235, 0.1);
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
 }
 
 .info-featured-content {
@@ -1074,6 +707,20 @@ a.info-row {
     line-height: 1.5;
 }
 
+.info-featured-image-wrapper {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 4px;
+}
+
+.info-featured-image-wrapper img {
+    display: block;
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+}
+
 .info-featured-cta {
     display: inline-flex;
     align-items: center;
@@ -1087,11 +734,10 @@ a.info-row {
     font-weight: 700;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
     cursor: pointer;
 }
 
-/* Extra full-width highlight card — used below the columns on Why Us */
 .info-extra-card {
     display: flex;
     align-items: flex-start;
@@ -1110,7 +756,7 @@ a.info-row {
     flex-shrink: 0;
     border-radius: 50%;
     background: rgba(37, 99, 235, 0.08);
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
 }
 
 .info-extra-content strong {
@@ -1140,12 +786,136 @@ a.info-row {
     font-weight: 700;
     letter-spacing: 0.02em;
     text-transform: uppercase;
-    color: var(--primary, #2563eb);
+    color: var(--jjc-brand-blue, #2563eb);
     cursor: pointer;
 }
 
+/* Footer quick-links row (shared by all "info" dropdowns) */
+.what-we-do-footer {
+    display: flex;
+    gap: 24px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(15, 23, 42, 0.07);
+    flex-shrink: 0;
+}
+
+.what-we-do-footer-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.2s;
+}
+
+.what-we-do-footer-link:hover {
+    background-color: rgba(37, 99, 235, 0.06);
+}
+
+.what-we-do-footer-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    flex-shrink: 0;
+    border-radius: 9px;
+    background: rgba(37, 99, 235, 0.08);
+    color: var(--jjc-brand-blue, #2563eb);
+}
+
+.what-we-do-footer-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.what-we-do-footer-text strong {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.what-we-do-footer-text small {
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+/* Right — dark promo card */
+.what-we-do-promo-card {
+    flex: 0 0 320px;
+    width: 320px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #0a1a3f;
+    color: #fff;
+    padding: 32px 28px;
+    border-bottom-right-radius: 24px;
+    overflow-y: auto;
+}
+
+.what-we-do-promo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.what-we-do-promo-card h3 {
+    margin: 0 0 12px;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.what-we-do-promo-card p {
+    margin: 0 0 24px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 14px;
+    line-height: 1.6;
+    flex: 1;
+}
+
+.what-we-do-promo-cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--jjc-brand-gold, #22c55e);
+    color: #0a1a3f;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 9px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: filter 0.2s, transform 0.2s;
+}
+
+.what-we-do-promo-cta:hover {
+    filter: brightness(0.9);
+    transform: translateY(-1px);
+}
+
 @media (max-width: 1180px) {
-    .info-dropdown-main {
+
+    .info-dropdown-main,
+    .what-we-do-main {
         padding: 18px 20px;
     }
 
@@ -1156,5 +926,26 @@ a.info-row {
 
     .info-column-heading {
         font-size: 12px;
+    }
+
+    .what-we-do-promo-card {
+        flex: 0 0 220px;
+        width: 220px;
+        padding: 22px 18px;
+    }
+
+    .what-we-do-promo-card h3 {
+        font-size: 18px;
+    }
+
+    .what-we-do-promo-card p {
+        font-size: 12px;
+    }
+}
+
+/* Mega dropdown never shows on small screens — mobile accordion takes over */
+@media (max-width: 1080px) {
+    .mega-dropdown {
+        display: none !important;
     }
 }

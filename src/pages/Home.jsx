@@ -24,6 +24,7 @@ import { useGetHomeHeroQuery } from '../redux/api';
 import { useHomeSection } from '../hooks/useHomeSection';
 import { resolveIcon } from '../utils/resolveIcon';
 import Loader from '../components/Loader'
+import HomeHero from '../components/HomeHero'
 
 // ---- Fallback content (used until real data loads, or for any field the
 // admin hasn't filled in yet) so the homepage never renders empty. ----
@@ -152,7 +153,7 @@ function Home() {
             {heroLoading ? (
                 <Loader />
             ) : (
-                <Hero {...heroContent} ready={true} />
+                <HomeHero {...heroContent} ready={true} />
             )}
             <WhyChooseUs />
             <BusinessServices />

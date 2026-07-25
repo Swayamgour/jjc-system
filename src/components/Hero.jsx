@@ -21,12 +21,16 @@ export default function Hero({
     tag,
     title,
     description,
+    subDescription,
     primaryButton,
     secondaryButton,
     partners,
     image,
     floatingCards,
     ready = true,
+    budge,
+    align,
+    d
 }) {
 
     const heroRef = useRef(null);
@@ -159,11 +163,31 @@ export default function Hero({
 
     const navigate = useNavigate()
 
+    const CheckCircle = (color) => (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <motion.circle
+                cx="8" cy="8" r="7"
+                stroke={color} strokeWidth="1.4" fill="none"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.6, ease: "easeInOut" }}
+            />
+            <motion.path
+                d="M5 8l2 2 4-4"
+                stroke={color} strokeWidth="1.6"
+                strokeLinecap="round" strokeLinejoin="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
+            />
+        </svg>
+    );
+
 
     return (
         <section ref={heroRef} className="hero">
 
-            <div className="container-hero hero-container">
+            <div style={{ alignItems: align ? "end" : "flex-start" }} className="container-hero hero-container" >
 
                 {/* Left */}
 
@@ -173,17 +197,36 @@ export default function Hero({
                     initial="hidden"
                     animate="show"
                 >
-                    <span ref={tagRef} className="hero-tag">
-                        {tag}
+
+                    <div className="breadcrumb-bar">
+                        <div className="breadcrumb">
+                            {d?.breadcrumb?.map((item, i) => (
+                                <span key={i} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                    {i > 0 && <span className="breadcrumb-sep">/</span>}
+                                    <span className={i === d?.breadcrumb?.length - 1 ? "breadcrumb-current" : "breadcrumb-link"}>
+                                        {item}
+                                    </span>
+                                </span>
+                            ))}
+                        </div>
+                    </div>
+
+                    <span ref={tagRef} className="service-hero-tag">
+                        {tag || d?.badge}
                     </span>
 
                     <h1 ref={titleRef} className="hero-title">
                         {title}
                     </h1>
 
-                    <p ref={descRef} className="hero-description">
+                    <p ref={descRef} className="service-hero-desc">
                         {description}
                     </p>
+
+                    {subDescription &&
+                        <p ref={descRef} className="service-hero-desc">
+                            {subDescription}
+                        </p>}
 
                     <div ref={actionsRef} className="hero-actions">
 
@@ -201,7 +244,7 @@ export default function Hero({
                             className="btn-secondary"
                             onClick={() => navigate(secondaryButton?.link || "/services")}
                         >
-                            {secondaryButton?.text}
+                            {secondaryButton?.text || secondaryButton}
                         </button>
 
                     </div>
@@ -216,13 +259,21 @@ export default function Hero({
                             ))}
                         </div>
                     )}
+
+                    {budge && <div ref={imageRef} className="service-hero-badges">
+                        {budge?.map((b, i) => (
+                            <div key={i} className="service-hero-badge">
+                                {CheckCircle("rgba(255,255,255,0.85)")} {b}
+                            </div>
+                        ))}
+                    </div>}
                 </motion.div>
 
                 {/* Right */}
 
                 <div ref={imageRef} className="hero-image-area">
 
-                    <img src={image} alt="JJC Systems" />
+                    <img style={{ borderRadius: '10px' }} src={image} alt="JJC Systems" />
 
                     {floatingCards?.map((card, index) => (
                         <motion.div

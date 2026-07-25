@@ -6,6 +6,11 @@ import { resolveIcon } from "../utils/resolveIcon";
 import { useGetCategoriesBySlugQuery } from "../redux/api";
 import { getServiceIcon } from "../utils/serviceIcons";
 import * as Icons from "lucide-react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Grid, Autoplay } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/grid";
 
 // import { getServiceIcon } from "../utils/serviceIcons";
 
@@ -46,31 +51,60 @@ function BusinessServices() {
                     </h2>
                 </div>
 
-                <div
-                    ref={cardsRef}
-                    className="business-services-grid"
+                <Swiper
+                    modules={[Grid, Autoplay]}
+                    slidesPerView={3}
+                    grid={{
+                        rows: 2,
+                        fill: "row",
+                    }}
+                    spaceBetween={24}
+                    autoplay={{
+                        delay: 2500,
+                        disableOnInteraction: false,
+                    }}
+                    // loop={true}
+                    breakpoints={{
+                        0: {
+                            slidesPerView: 1,
+                            grid: {
+                                rows: 2,
+                            },
+                        },
+                        768: {
+                            slidesPerView: 2,
+                            grid: {
+                                rows: 2,
+                            },
+                        },
+                        1200: {
+                            slidesPerView: 3,
+                            grid: {
+                                rows: 2,
+                            },
+                        },
+                    }}
                 >
                     {data?.data?.map((service, index) => {
-                         const Icon = Icons[service.icon] || Icons.Briefcase;
+                        const Icon = Icons[service.icon] || Icons.Briefcase;
 
                         return (
-                            <div
-                                key={index}
-                                className="business-service-card"
-                            >
-                                <span className="solution-icon">
-                                    <Icon  />
-                                </span>
+                            <SwiperSlide key={index}>
+                                <div className="business-service-card">
+                                    <span className="solution-icon">
+                                        <Icon />
+                                    </span>
 
-                                <h3 className="service-card-title">
-                                    {service.name}
-                                </h3>
+                                    <h3 className="service-card-title">
+                                        {service.name}
+                                    </h3>
 
-                                <p>{service.description}</p>
-                            </div>
+                                    <p>{service.description}</p>
+                                </div>
+                            </SwiperSlide>
                         );
                     })}
-                </div>
+                </Swiper>
             </div>
         </section>
     );

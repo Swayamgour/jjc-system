@@ -29,6 +29,10 @@ import ResourcesPage from "./pages/Resources";
 import BlogListing from "./pages/BlogListing";
 import BlogDetail from "./pages/BlogDetail";
 import Loader from "./components/Loader";
+// import CaseStudies from "./components/CaseStudies";
+// import CaseStudiesSection from "./pages/CaseStudiesSection";
+import CaseStudyDetail from "./pages/CaseStudyDetailV2";
+import CaseStudyRoute from "./pages/CaseStudyRoute";
 
 
 
@@ -37,7 +41,7 @@ export default function App() {
   return (
     <>
 
-    
+
       <Header />
 
       <Routes>
@@ -75,6 +79,11 @@ export default function App() {
         {/* Blog */}
         <Route path="/blog" element={<BlogListing />} />
         <Route path="/blog/:slug" element={<BlogDetail />} />
+
+
+        {/* <Route path="/case-studies/industry/healthcare" element={<CaseStudiesSection />} /> */}
+        
+        <Route path="/CaseStudyDetail/:id" element={<CaseStudyRoute />} />
 
 
       </Routes>

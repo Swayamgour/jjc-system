@@ -99,6 +99,140 @@
   --section-pad-y-mobile: 50px;
 }
 
+/* ============================================================
+   JJC SYSTEMS — DESIGN TOKENS (renamed variable set)
+   Original names -> new names (same values, different naming
+   convention so this file is easy to tell apart from the source):
+
+   --navy-900   -> --jjc-bg-deep
+   --navy-800   -> --jjc-bg-base
+   --navy-700   -> --jjc-bg-mid
+   --navy-600   -> --jjc-bg-light
+   --navy-line  -> --jjc-line-soft
+   --cyan       -> --jjc-cyan-accent
+   --blue       -> --jjc-brand-blue
+   --blue-deep  -> --jjc-brand-blue-deep
+   --rule-a     -> --jjc-rule-gold
+   --rule-b     -> --jjc-rule-blue
+   --orange     -> --jjc-brand-gold
+   --orange-dark-> --jjc-brand-gold-dark
+   --ink        -> --jjc-text-ink
+   --ink-soft   -> --jjc-text-ink-soft
+   --body       -> --jjc-text-body
+   --body-dim   -> --jjc-text-dim
+   --paper      -> --jjc-surface-white
+   --mist       -> --jjc-surface-mist
+   --tile       -> --jjc-surface-tile
+   --line       -> --jjc-border
+   --display    -> --jjc-font-display
+   --text       -> --jjc-font-body
+   --wrap       -> --jjc-container-w
+   --gutter     -> --jjc-gutter
+   --sec-y      -> --jjc-section-y
+   --r-sm       -> --jjc-radius-sm
+   --r          -> --jjc-radius-md
+   --r-lg       -> --jjc-radius-lg
+   --shadow-sm  -> --jjc-shadow-sm
+   --shadow     -> --jjc-shadow-md
+   --shadow-lg  -> --jjc-shadow-lg
+   ============================================================ */
+
+:root {
+  /* Brand backgrounds */
+  --jjc-bg-deep: #00142e;
+  --jjc-bg-base: #002449;
+  --jjc-bg-mid: #00366d;
+  --jjc-bg-light: #07569f;
+  --jjc-line-soft: rgba(98, 164, 232, 0.22);
+
+  /* Brand colors */
+  --jjc-cyan-accent: #58a9f0;
+  --jjc-brand-blue: #0258b7;
+  --jjc-brand-blue-deep: #00438f;
+  --jjc-rule-gold: #f7ac13;
+  --jjc-rule-blue: #0258b7;
+
+  --jjc-brand-gold: #f7ac13;
+  --jjc-brand-gold-dark: #da9200;
+
+  /* Neutrals */
+  --jjc-text-ink: #0b1220;
+  --jjc-text-ink-soft: #22304a;
+  --jjc-text-body: #46546b;
+  --jjc-text-dim: #6b7a91;
+  --jjc-surface-white: #ffffff;
+  --jjc-surface-mist: #f9fafc;
+  --jjc-surface-tile: #eef5fc;
+  --jjc-border: #e4e9f2;
+
+  /* Type */
+  /* --jjc-font-display: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif; */
+  --jjc-font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  /* Space */
+  --jjc-container-w: 1290px;
+  --jjc-gutter: clamp(20px, 5vw, 48px);
+  --jjc-section-y: clamp(64px, 8vw, 112px);
+  --jjc-radius-sm: 10px;
+  --jjc-radius-md: 16px;
+  --jjc-radius-lg: 22px;
+
+  --jjc-shadow-sm: 0 1px 2px rgba(11, 18, 32, 0.05);
+  --jjc-shadow-md: 0 10px 30px -12px rgba(11, 18, 32, 0.16);
+  --jjc-shadow-lg: 0 26px 60px -24px rgba(11, 18, 32, 0.3);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.jjc-wrap {
+  width: 100%;
+  max-width: var(--jjc-container-w);
+  margin-inline: auto;
+  padding-inline: var(--jjc-gutter);
+}
+
+.jjc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--jjc-font-display);
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  padding: 16px 28px;
+  border-radius: var(--jjc-radius-sm);
+  border: 0;
+  cursor: pointer;
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+
+.jjc-btn svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  transition: transform 0.18s ease;
+}
+
+.jjc-btn:hover svg {
+  transform: translateX(4px);
+}
+
+.jjc-btn-primary {
+  background: var(--jjc-brand-gold);
+  color: var(--jjc-bg-deep);
+  box-shadow: 0 12px 26px -14px rgba(247, 172, 19, 0.78);
+}
+
+.jjc-btn-primary:hover {
+  background: var(--jjc-brand-gold-dark);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
 /* ===== RESET ===== */
 * {
   margin: 0;

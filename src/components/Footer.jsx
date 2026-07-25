@@ -4,7 +4,7 @@ import { cols, Icons } from '../utils/data';
 import { useInView, motion } from 'framer-motion';
 import { LiaLinkedin } from 'react-icons/lia';
 import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
-import logo from '../assets/logo.png'
+import logo from '../assets/logo1.png'
 import { ArrowUp } from 'lucide-react';
 // import { ContactFormSection } from './SectionRenderers';
 // import BasePage from "../components/BasePage";

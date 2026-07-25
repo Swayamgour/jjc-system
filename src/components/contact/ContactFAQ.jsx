@@ -80,7 +80,8 @@ const ContactFAQ = ({
     const ctx = gsap.context(() => {
       // Split text for title
       const split = new SplitType(titleRef.current, {
-        types: 'chars'
+        // types: 'chars'
+        types: "lines, words, chars",
       });
 
       const tl = gsap.timeline({

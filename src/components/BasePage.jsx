@@ -15,6 +15,7 @@ import {
     OfficeLocationsSection,
 } from "../components/SectionRenderers";
 import { useEffect } from "react";
+import Hero from "./Hero";
 
 export default function BasePage({ data, pageType = "service", key }) {
 
@@ -229,17 +230,34 @@ export default function BasePage({ data, pageType = "service", key }) {
 
     };
 
+    console.log(d)
+
     return (
 
         <div
             className="service-page"
             style={themeVars}
         >
+            <Hero
+                tag={d?.tag}
+                title={d?.title}
+                description={d?.hero?.description || d?.hero?.shortDescription}
+                subDescription={d?.hero?.subDescription || d?.hero?.subHeading}
+                primaryButton={d?.primaryButton}
+                secondaryButton={d?.exploreLabel || "Explore Our Services"}
+                partners={d?.partners}
+                image={d?.hero?.image?.url || "https://res.cloudinary.com/sakshichak1/image/upload/v1783428245/jjc-systems/fbxeeyjucyvcxmm2srjt.jpg"}
+                floatingCards={d?.floatingCards}
+                ready={d?.ready}
+                budge={d?.hero?.badges}
+                align={true}
+                d={d}
+            />
 
-            <ServiceHero
+            {/* <ServiceHero
                 d={d}
                 pageType={pageType}
-            />
+            /> */}
 
             {sections.map((section, index) => {
 
