@@ -1,6 +1,13 @@
 /* ============================================================
    HEADER SHELL (new design)
    ============================================================ */
+
+
+html {
+    scrollbar-gutter: stable;
+}
+
+
 .jjc-hdr {
     position: fixed;
     inset: 0 0 auto 0;
@@ -326,7 +333,7 @@
    ============================================================ */
 .mega-dropdown {
     position: absolute;
-    top: 100%;
+    top: 80px;
     left: 0;
     right: 0;
     z-index: 1001;
